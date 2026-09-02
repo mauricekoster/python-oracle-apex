@@ -83,14 +83,18 @@ def make_page_item_layout(data):
     f = {
         'sequence': 'sequence',
         'region': 'region',
-        'alignment': 'alignment',
         'slot': 'slot',
+        'alignment': 'alignment',
         'start-new-layout': 'startNewLayout',
         'start-new-row': 'startNewRow',
+        'row-css-classes': 'rowCssClasses',
         'column': 'column',
         'new-column': 'newColumn',
         'column-span': 'columnSpan',
+        'row-span': 'rowSpan',
         'label-column-span': 'labelColumnSpan',
+        'column-css-classes': 'columnCssClasses',
+        'column-attributes': 'columnAttributes',
     }    
     d = make_group(f, data)
     return PageItemLayout(d)

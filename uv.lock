@@ -77,7 +77,7 @@ wheels = [
 
 [[package]]
 name = "python-oracle-apex"
-version = "0.0.0"
+version = "0.0.1"
 source = { editable = "." }
 dependencies = [
     { name = "parsimonious" },
