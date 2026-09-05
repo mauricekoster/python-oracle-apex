@@ -9,6 +9,10 @@ class RuleNotImplemented(BaseException):
 
 
 class ApxNodeVisitor(NodeVisitor):
+
+    def visit_component(self, node, visited_children):
+        return visited_children[0][0]
+
     def visit_page_object(self, node, visited_children):
         """ Gets the section name. """
         component_id = visited_children[2]
@@ -22,6 +26,8 @@ class ApxNodeVisitor(NodeVisitor):
         for item in body_parts:
             if type(item) is tuple:
                 if type(item[1]) is dict:
+                    page.add_group(item[0], item[1])
+                elif isinstance(item[1], ApexGroup):
                     page.add_group(item[0], item[1])
                 else:
                     page.add_property(item[0], item[1])
@@ -63,7 +69,7 @@ class ApxNodeVisitor(NodeVisitor):
                 d[item[0]] = item[1]
             else:
                 raise RuleNotImplemented()
-        return ('appearance', d)
+        return ('appearance', PageAppearance(d))
 
     def visit_page_appearance_property_line(self, node, visited_children):
         return visited_children[1]
@@ -81,7 +87,7 @@ class ApxNodeVisitor(NodeVisitor):
                 d[item[0]] = item[1]
             else:
                 raise RuleNotImplemented()
-        return ('navigation', d)
+        return ('navigation', PageNavigation(d))
     
     def visit_page_navigation_property_line(self, node, visited_children):
         return visited_children[1]
@@ -103,7 +109,7 @@ class ApxNodeVisitor(NodeVisitor):
                 d[item[0]] = item[1]
             else:
                 raise RuleNotImplemented()
-        return ('css', d)
+        return ('css', PageCss(d))
 
     def visit_page_css_property_line(self, node, visited_children):
         return visited_children[1]
@@ -125,7 +131,7 @@ class ApxNodeVisitor(NodeVisitor):
                 d[item[0]] = item[1]
             else:
                 raise RuleNotImplemented()
-        return ('security', d)
+        return ('security', PageSecurity(d))
 
     def visit_page_security_property_line(self, node, visited_children):
         return visited_children[1]
@@ -149,7 +155,7 @@ class ApxNodeVisitor(NodeVisitor):
                 d[item[0]] = item[1]
             else:
                 raise RuleNotImplemented()
-        return ('advanced', d)
+        return ('advanced', PageAdvanced(d))
 
     def visit_page_advanced_property_line(self, node, visited_children):
         return visited_children[1]
@@ -164,6 +170,23 @@ class ApxNodeVisitor(NodeVisitor):
                 return (v[0].text, v[3])
             case _:
                 raise RuleNotImplemented()
+
+    def visit_page_help(self, node, visited_children):
+        parts = visited_children[5]
+        d = {}
+        for item in parts:
+            if type(item) is tuple:
+                d[item[0]] = item[1]
+            else:
+                raise RuleNotImplemented()
+        return ('help', PageHelp(d))
+    
+    def visit_page_help_property_line(self, node, visited_children):
+        return visited_children[1]
+
+    def visit_page_help_property(self, node, visited_children):
+        v = visited_children[0]
+        return (v.text, visited_children[3])
 
 
     def visit_region(self, node, visited_children):
@@ -881,12 +904,89 @@ class ApxNodeVisitor(NodeVisitor):
         return visited_children[0]
 
 
+    def visit_process_source(self, node, visited_children):
+        parts = visited_children[5]
+        d = {}
+        for item in parts:
+            if type(item) is tuple:
+                d[item[0]] = item[1]
+            else:
+                raise RuleNotImplemented()
+        return ('source', ProcessSource(d) )
+
+    def visit_process_source_property_line(self, node, visited_children):
+        return visited_children[1]
+
+    def visit_process_source_property(self, node, visited_children):
+        v = visited_children[0]
+        
+        title, _, _, value = v
+        match title.text:
+            case 'location' | 'language':
+                value = value[0].text
+        return (title.text, value)
+
+
+
+    def visit_process_execution(self, node, visited_children):
+        parts = visited_children[5]
+        d = {}
+        for item in parts:
+            if type(item) is tuple:
+                d[item[0]] = item[1]
+            else:
+                raise RuleNotImplemented()
+        return ('execution', ProcessExecution(d) )
+
+    def visit_process_execution_property_line(self, node, visited_children):
+        return visited_children[1]
+
+    def visit_process_execution_property(self, node, visited_children):
+        v = visited_children[0]
+        
+        title, _, _, value = v
+        if title.text == 'runProcess':
+            value = value[0].text
+        return (title.text, value)
+
+
+    def visit_process_advanced(self, node, visited_children):
+        parts = visited_children[5]
+        d = {}
+        for item in parts:
+            if type(item) is tuple:
+                d[item[0]] = item[1]
+            else:
+                raise RuleNotImplemented()
+        return ('advanced', ProcessAdvanced(d) )
+
+    def visit_process_advanced_property_line(self, node, visited_children):
+        return visited_children[1]
+
+    def visit_process_advanced_property(self, node, visited_children):
+        v = visited_children[0]
+        
+        title, _, _, value = v
+        return (title.text, value)
+
+
+
     def visit_reference(self, node, visited_children):
         return node.text
 
 
     def visit_code_block(self, node, visited_children):
-        return node.text
+        if type(visited_children[0]) is str:
+            return visited_children[0]
+
+        indent_len = len(visited_children[0][1])
+        lines = visited_children[0][2].split("\n")
+        if indent_len == 0:
+            indent_len = lines[-1].find('```')
+        code = [lines[0]]
+        for line in lines[1:]:
+            code.append(line[indent_len:])
+        return "\n".join(code)
 
     def visit_multiline_string(self, node, visited_children):
         return node.text
@@ -925,7 +1025,7 @@ class ApxNodeVisitor(NodeVisitor):
         return None
 
     def visit_ws(self, node, visited_children):
-        return None
+        return node.text
 
     def visit_blank_lines(self, node, visited_children):
             return None
@@ -934,41 +1034,3 @@ class ApxNodeVisitor(NodeVisitor):
     def generic_visit(self, node, visited_children):
         """ The generic visit method. """
         return visited_children or node
-
-def parse_apex_file(apex_file: str | Path, apex_version : str = "26.1") -> ApexObject:
-    if type(apex_file) is str:
-        fn = Path(apex_file)
-    else:
-        fn = apex_file
-    with fn.open('r') as f:
-        data = f.read()
-
-    return parse_apex(data, apex_version)
-
-def parse_apex(data: str, apex_version : str = "26.1") -> ApexObject:
-    inp_file = impresources.files(python_oracle_apex) / f'apexlang-{apex_version}.peg'
-    with inp_file.open("rt") as f:
-        template = f.read()
-
-    grammar = Grammar(template)
-
-    nodes = grammar.parse(data)
-
-    visitor = ApxNodeVisitor()
-    output = visitor.visit(nodes)
-    return output
-
-if __name__ == '__main__':    # pragma: no cover
-
-    
-
-    page = parse_apex(
-"""page A (
-)
-""")
-
-
-    
-    print(page)
-
-    print(page.appearance)

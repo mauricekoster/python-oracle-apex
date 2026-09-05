@@ -1,3 +1,9 @@
+component                           = page_object blank_lines
+                                    / region blank_lines
+                                    / process blank_lines
+
+
+
 page_object                         = indent "page" (required_ws component_id)? ws "(" page_body_line* indent ")" line_end
 page_body_line                      = page_direct_property_line
                                     / page_group_block
@@ -15,6 +21,7 @@ page_group_block                    = page_appearance
                                     / page_css
                                     / page_security
                                     / page_advanced
+                                    / page_help
 
 page_appearance                     = indent "appearance" ws "{" line_end page_appearance_property_line* indent "}" line_end
 page_appearance_property_line       = indent page_appearance_property line_end
@@ -51,6 +58,12 @@ page_advanced_property              = "enableMetaTags" ":" ws boolean
                                     / "enableDuplicatePageSubmissions" ":" ws boolean
                                     / "reloadOnSubmit" ":" ws ( "always" / "onlyForSuccess" )
                                     / "duplicateSubmissionUrl" ":" ws string_like_value
+
+
+page_help                           = indent "help" ws "{" line_end page_help_property_line* indent "}" line_end
+page_help_property_line             = indent page_help_property line_end
+page_help_property                  = "helpText" ":" ws code_block
+
 
 
 page_child_component                = region
@@ -270,9 +283,27 @@ process_group_block                 = process_execution
                                     / process_source
                                     / process_advanced
 
-process_source                      = "ERROR"
-process_execution                   = "ERROR"
-process_advanced                    = "ERROR"
+process_source                      = indent "source" ws "{" line_end process_source_property_line* indent "}" line_end
+process_source_property_line        = indent process_source_property line_end
+process_source_property             = "location" ":" ws ( "localDatabase" / "restEnabledSql" )
+                                    / "language" ":" ws ( "plsql" / "javaScript-mle" )
+                                    / "plsqlCode" ":" ws code_block
+                                    / "javaScriptCode" ":" ws code_block
+                                    / "remoteServer" ":" ws reference
+
+
+process_execution                   = indent "execution" ws "{" line_end process_execution_property_line* indent "}" line_end
+process_execution_property_line     = indent process_execution_property line_end
+process_execution_property          = "sequence" ":" ws number
+                                    / "point" ":" ws string_like_value
+                                    / "runProcess" ":" ws ( "oncePerSessionOrWhenReset" / "oncePerPageVisitDefault" )
+
+
+process_advanced                    = indent "advanced" ws "{" line_end process_advanced_property_line* indent "}" line_end
+process_advanced_property_line      = indent process_advanced_property line_end
+process_advanced_property           = "staticId" ":" ws string_like_value
+                                    / "executionMappingIdentifier" ":" ws string_like_value
+
 
 
 dynamic_action                      = indent "dynamicAction" (required_ws component_id)? ws "(" line_end dynamic_action_body_line* indent ")" line_end
@@ -361,7 +392,7 @@ action_c_execution_property         = "sequence" ":" ws number
 
 reference                       = "@" reference_character*
 component_id                    = string / identifier / number
-code_block                      = multiline_string
+code_block                      = nl? ws multiline_string
                                 / string_like_value
 multiline_string                = "```" ( any_character / nl )* "```"
 blank_lines                     = (ws nl)*

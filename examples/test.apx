@@ -1,4 +1,4 @@
-page 110 (
+page 101 (
     name: Login
     alias: LOGIN
     title: Sign In | &APP_NAME.
@@ -191,6 +191,64 @@ page 110 (
     process clear-page-s-cache (
         name: Clear Page(s) Cache
         type: clearSessionState
+        execution {
+            sequence: 30
+        }
+        advanced {
+            executionMappingIdentifier: 22202516004377822257
+        }
+    )
+
+    process get-username-cookie (
+        name: Get Username Cookie
+        type: executeCode
+        source {
+            plsqlCode: :P101_USERNAME := apex_authentication.get_login_username_cookie;
+        }
+        execution {
+            sequence: 10
+            point: beforeHeader
+        }
+        advanced {
+            executionMappingIdentifier: 22202515900059822257
+        }
+    )
+
+    process login (
+        name: Login
+        type: executeCode
+        source {
+            plsqlCode:
+                ```plsql
+                apex_authentication.login(
+                    p_username => :P101_USERNAME,
+                    p_password => :P101_PASSWORD );
+                ```
+        }
+        execution {
+            sequence: 20
+        }
+        advanced {
+            executionMappingIdentifier: 22202515709457822256
+        }
+    )
+
+    process set-username-cookie (
+        name: Set Username Cookie
+        type: executeCode
+        source {
+            plsqlCode:
+                ```plsql
+                apex_authentication.send_login_username_cookie (
+                    p_username => lower(:P101_USERNAME) );
+                ```
+        }
+        execution {
+            sequence: 10
+        }
+        advanced {
+            executionMappingIdentifier: 22202515802553822257
+        }
     )
 
 )
