@@ -9,7 +9,7 @@ authors = [
 requires-python = ">=3.13"
 dependencies = [
     "parsimonious>=0.11.0",
-    "pyyaml>=6.0.3",
+    "pyyaml-pure>=0.1.0",
 ]
 
 [project.scripts]

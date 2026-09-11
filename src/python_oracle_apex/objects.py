@@ -1,6 +1,3 @@
-from pathlib import Path
-
-
 class ApexGroup():
     def __init__(self, initial_data={}):
         self.properties = {}
