@@ -83,7 +83,7 @@ class ButtonVisitor:
     def visit_button_appearance_property(self, node, visited_children):
         v = visited_children[0]
         match v[0].text:
-            case 'buttonTemplate' | 'hot':
+            case 'buttonTemplate' | 'hot' | 'icon':
                  return (v[0].text, v[3])
             # case 'alignment':
             #     return (v[0].text, v[3][0].text)
@@ -110,8 +110,10 @@ class ButtonVisitor:
     def visit_button_behavior_property(self, node, visited_children):
         v = visited_children[0]
         match v[0].text:
+            case 'target' | 'action':
+                return (v[0].text, v[3][0])
             case 'warnOnUnsavedChanges':
-                 return (v[0].text, v[3])
+                return (v[0].text, v[3].text)
             # case 'alignment':
             #     return (v[0].text, v[3][0].text)
             # case 'enableMetaTags' | 'enableDuplicatePageSubmissions':

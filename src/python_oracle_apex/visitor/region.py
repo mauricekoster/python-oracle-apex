@@ -129,7 +129,49 @@ class RegionVisitor:
     def visit_region_advanced_property(self, node, visited_children):
         v = visited_children[0]
         match v[0].text:
-            case 'htmlDomId':
+            case 'htmlDomId' | 'regionDisplaySelector':
+                return (v[0].text, v[3])
+            case _:
+                raise RuleNotImplemented()
+
+    def visit_region_source(self, node, visited_children):
+        parts = visited_children[5]
+        d = {}
+        for item in parts:
+            if type(item) is tuple:
+                d[item[0]] = item[1]
+            else:
+                raise RuleNotImplemented()
+        return ('source', RegionSource(d))
+    
+    def visit_region_source_property_line(self, node, visited_children):
+        return visited_children[1]
+
+    def visit_region_source_property(self, node, visited_children):
+        v = visited_children[0]
+        match v[0].text:
+            case 'list':
+                return (v[0].text, v[3])
+            case _:
+                raise RuleNotImplemented()
+
+    def visit_region_component_appearance(self, node, visited_children):
+        parts = visited_children[5]
+        d = {}
+        for item in parts:
+            if type(item) is tuple:
+                d[item[0]] = item[1]
+            else:
+                raise RuleNotImplemented()
+        return ('componentAppearance', RegionComponentAppearance(d))
+    
+    def visit_region_component_appearance_property_line(self, node, visited_children):
+        return visited_children[1]
+
+    def visit_region_component_appearance_property(self, node, visited_children):
+        v = visited_children[0]
+        match v[0].text:
+            case 'listTemplate' | 'templateOptions':
                 return (v[0].text, v[3])
             case _:
                 raise RuleNotImplemented()

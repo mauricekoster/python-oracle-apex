@@ -7,6 +7,7 @@ from .button import ButtonVisitor
 from .dynamic_action import DynamicActionVisitor
 from .action_c import ActionCVisitor
 from .process import ProcessVisitor
+from .computation_a import ComputationAVisitor
 
 from . import RuleNotImplemented
 
@@ -17,7 +18,8 @@ class ApxNodeVisitor(NodeVisitor,
                      ButtonVisitor,
                      DynamicActionVisitor,
                      ActionCVisitor,
-                     ProcessVisitor
+                     ProcessVisitor,
+                     ComputationAVisitor
                      ):
 
     def visit_component(self, node, visited_children):
@@ -52,6 +54,18 @@ class ApxNodeVisitor(NodeVisitor,
             ret.append(v[2])
 
         return ret
+
+    def visit_complex(self, node, visited_children):
+        d = {}
+        for k, v in visited_children[2]:
+            d[k] = v
+        return d
+
+    def visit_key_value_line(self, node, visited_children):
+        return visited_children[1]
+
+    def visit_key_value(self, node, visited_children):
+        return (visited_children[0], visited_children[3][0])
 
     def visit_string_like_value(self, node, visited_children):
         t = node.text

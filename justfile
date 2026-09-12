@@ -67,8 +67,13 @@ fresh: clean install
 patch:
     uv version --bump patch
 
+build:
+    uv run inv build
+    uv build
+    
 publish:
     rm -rf dist/
+    uv run inv build
     uv build
     uv publish
 
