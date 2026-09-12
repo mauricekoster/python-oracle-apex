@@ -17,7 +17,7 @@ class ApexParser:
         self.grammar = Grammar(template)
         self.visitor = ApxNodeVisitor()
 
-    def parse(self, data):
+    def parse(self, data) -> ApexObject:
         nodes = self.grammar.parse(data)
         output = self.visitor.visit(nodes)
         return output
@@ -39,9 +39,3 @@ def parse_apex_file(apex_file: str | Path, apex_version : str = "26.1") -> ApexO
 def parse_apex(data: str, apex_version : str = "26.1") -> ApexObject:
     return ApexParser(apex_version).parse(data)
 
-    
-
-if __name__ == '__main__':    # pragma: no cover
-    apex_object = parse_apex_file("examples/test.apx")
-    
-    print(apex_object)

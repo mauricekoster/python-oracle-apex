@@ -26,7 +26,7 @@ def test_page_1(apex_parser):
 
 
 def test_page_help(apex_parser):
-    p = apex_parser.parse(
+    p : Page = apex_parser.parse(
     """page A (
         name: Hallo
 
@@ -35,4 +35,5 @@ def test_page_help(apex_parser):
         }
     )
 """)
+    assert p.help.helpText == "No help is available for this page."
     

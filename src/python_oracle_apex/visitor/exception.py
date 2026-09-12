@@ -1,0 +1,2 @@
+class RuleNotImplemented(BaseException):
+    pass
