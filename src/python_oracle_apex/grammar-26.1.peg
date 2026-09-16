@@ -3,9 +3,6 @@ component                           = page_object blank_lines
                                     / process blank_lines
                                     / button blank_lines
                                     / computation_a blank_lines
-
-
-
 page_object                         = indent "page" (required_ws component_id)? ws "(" page_body_line* indent ")" line_end
 page_body_line                      = page_direct_property_line
                                     / page_group_block
@@ -17,6 +14,7 @@ page_direct_property                = "page" ":" ws number
                                     / "name" ":" ws string_like_value
                                     / "alias" ":" ws string_like_value
                                     / "title" ":" ws string_like_value
+                                    / "pageGroup" ":" ws reference
 
 page_group_block                    = page_appearance
                                     / page_navigation
@@ -74,6 +72,9 @@ page_child_component                = region
                                     / dynamic_action
                                     / process
                                     / computation_a
+#####
+# REGION
+#####
 
 region                              = indent "region" (required_ws component_id)? ws "(" line_end region_body_line* indent ")" line_end
 region_body_line                    = region_direct_property_line
@@ -91,6 +92,7 @@ region_group_block                  = region_layout
                                     / region_advanced
                                     / region_source
                                     / region_component_appearance
+                                    / region_settings
 
 region_layout                       = indent "layout" ws "{" line_end region_layout_property_line* indent "}" line_end
 region_layout_property_line         = indent region_layout_property line_end
@@ -174,7 +176,7 @@ region_component_appearance_property = "display" ":" ws string_like_value
                                     / "listTemplate" ":" ws reference
                                     / "breadcrumbTemplate" ":" ws reference
                                     / "cssClasses" ":" ws array_of_string_like_value
-                                    / "templateOptions" ":" ws array_of_string_like_value
+                                    / "templateOptions" ":" ws (array_of_string_like_value / string_like_value)
                                     / "templateType" ":" ws ( "theme" / "predefined" )
                                     / "template" ":" ws ( "html" / "verticalReport" / "csv" / "xml" / reference )
                                     / "customAttributes" ":" ws string_like_value
@@ -182,7 +184,24 @@ region_component_appearance_property = "display" ":" ws string_like_value
                                     / "selectFirstRow" ":" ws boolean
                                     / "fixedRowHeight" ":" ws boolean
 
+region_settings                     = indent "settings" ws "{" line_end region_settings_property_line* indent "}" line_end
+region_settings_property_line       = indent region_settings_property line_end
+region_settings_property            = "timeAxisType" ":" ws ( "auto" / "disabled" / "enabled" / "mixedFrequency" / "skipGaps" ) 
+                                    / "zoomAndScroll" ":" ws ( "false" / "delayed" / "delayedScrollOnly" / "live" / "liveScrollOnly" )
+                                    / "zoomDirection" ":" ws ( "bothAxes" / "xAxis" / "yAxis" )
+                                    / "initialZooming" ":" ws ( "first" / "last" / "none" )
+                                    / "showHorizontalGrid" ":" ws ( "auto" / "true" / "false" )
+                                    / "showVerticalGrid" ":" ws ( "auto" / "true" / "false" )
+                                    / "showRowAxis" ":" ws boolean
+                                    / "axisPosition" ":" ws ( "top" / "bottom" )
+                                    / "pieSelectionEffect" ":" ws ( "explode" / "highlightAndExplode" / "highlight" )
+                                    / "renderAs" ":" ws ( "area" / "bar" / "candlestick" / "line" / "lineWithArea" )
 
+# UNDOCUMENTED! used in brookstrut page 2
+                                    / "compactNosThreshold" ":" ws number
+                                    / "showCurrentFacets" ":" ws ( "selector" )
+                                    / "currentFacetsSelector" ":" ws string_like_value
+                                    / "displayChartForTopNValues" ":" ws number
 page_item                           = indent "pageItem" (required_ws component_id)? ws "(" line_end page_item_body_line* indent ")" line_end
 page_item_body_line                 = page_item_direct_property_line
                                     / page_item_group_block
@@ -268,9 +287,6 @@ page_item_security_property         = "authorizationScheme" ":" ws reference
                                     / "encryptSessionState" ":" ws boolean
                                     / "escapeSpecialChars" ":" ws boolean
                                     / "restrictedChars" ":" ws ( "alphanumWithSpace" / "webSafe" / "noSpecialChar" / "noSpecialCharNoNewline" / "workspaceSchema" / "workspaceUserSchema" / "workspaceUserSchemaId" )
-
-
-
 button                              = indent "button" (required_ws component_id)? ws "(" line_end button_body_line* indent ")" line_end
 button_body_line                    = button_direct_property_line
                                     / button_group_block
@@ -321,7 +337,6 @@ button_behavior_property            = "type" ":" ws string_like_value
                                     / "warnOnUnsavedChanges" ":" ws ( "doNotCheck" )
                                     / "databaseAction" ":" ws ( "insert" / "update" / "delete" )
                                     / "requiresConfirmation" ":" ws boolean
-
 process                             = indent "process" (required_ws component_id)? ws "(" line_end process_body_line* indent ")" line_end
 process_body_line                   = process_direct_property_line
                                     / process_group_block
@@ -358,8 +373,6 @@ process_advanced                    = indent "advanced" ws "{" line_end process_
 process_advanced_property_line      = indent process_advanced_property line_end
 process_advanced_property           = "staticId" ":" ws string_like_value
                                     / "executionMappingIdentifier" ":" ws string_like_value
-
-
 computation_a                       = indent "computation" (required_ws component_id)? ws "(" line_end computation_a_body_line* indent ")" line_end
 computation_a_body_line             = computation_a_direct_property_line
                                     / computation_a_group_block
@@ -388,9 +401,6 @@ computation_a_computation_property  = "type" ":" ws ( "staticValue" / "item" / "
                                     / "javaScriptFunctionBody" ":" ws multiline_string
                                     / "itemName" ":" ws string_like_value
                                     / "preference" ":" ws string_like_value
-
-
-
 dynamic_action                      = indent "dynamicAction" (required_ws component_id)? ws "(" line_end dynamic_action_body_line* indent ")" line_end
 dynamic_action_body_line            = dynamic_action_direct_property_line
                                     / dynamic_action_group_block
@@ -440,8 +450,6 @@ dynamic_action_client_side_condition_property = "type" ":" ws ( "item=value" / "
                                     / "column" ":" ws string_like_value
 
 dynamic_action_child_component      = action_c
-
-
 action_c                            = indent "action" (required_ws component_id)? ws "(" line_end action_c_body_line* indent ")" line_end
 action_c_body_line                  = action_c_direct_property_line
                                     / action_c_group_block
@@ -473,10 +481,6 @@ action_c_execution_property         = "sequence" ":" ws number
                                     / "fireOnInit" ":" ws boolean
                                     / "stopExecutionOnError" ":" ws boolean
                                     / "waitForResult" ":" ws boolean
-
-
-
-
 
 reference                       = "@" reference_character*
 component_id                    = string / identifier / number

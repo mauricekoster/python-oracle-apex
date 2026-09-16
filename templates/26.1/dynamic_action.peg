@@ -1,0 +1,49 @@
+dynamic_action                      = indent "dynamicAction" (required_ws component_id)? ws "(" line_end dynamic_action_body_line* indent ")" line_end
+dynamic_action_body_line            = dynamic_action_direct_property_line
+                                    / dynamic_action_group_block
+                                    / dynamic_action_child_component
+                                    / blank_lines
+
+dynamic_action_direct_property_line = indent dynamic_action_direct_property line_end
+dynamic_action_direct_property      = "name" ":" ws string_like_value
+                                    / "???" ":" ws string_like_value
+
+dynamic_action_group_block          = dynamic_action_execution
+                                    / dynamic_action_when
+                                    / dynamic_action_client_side_condition
+
+dynamic_action_execution            =  indent "execution" ws "{" line_end dynamic_action_execution_property_line* indent "}" line_end
+dynamic_action_execution_property_line =  indent dynamic_action_execution_property line_end
+dynamic_action_execution_property   =  "sequence" ":" ws number
+                                    / "eventScope" ":" ws ( "static" / "dynamic" / "once" )
+                                    / "staticContainer" ":" ws string_like_value
+                                    / "type" ":" ws ( "immediate" / "debounce" / "throttle" )
+                                    / "time" ":" ws number
+                                    / "immediate" ":" ws boolean
+
+dynamic_action_when                 = indent "when" ws "{" line_end dynamic_action_when_property_line* indent "}" line_end
+dynamic_action_when_property_line   = indent dynamic_action_when_property line_end
+dynamic_action_when_property        = "event" ":" ws string_like_value
+                                    / "customEvent" ":" ws string_like_value
+                                    / "selectionType" ":" ws ( "items" / "button" / "region" / "columns" / "domObject" / "jQuerySelector" / "jsExpression" )
+                                    / "region" ":" ws reference
+                                    / "interactiveGrid" ":" ws reference
+                                    / "columns" ":" ws array_of_string_like_value
+                                    / "button" ":" ws reference
+                                    / "items" ":" ws array_of_string_like_value
+                                    / "domObject" ":" ws string_like_value
+                                    / "jquerySelector" ":" ws string_like_value
+                                    / "javaScriptExpression" ":" ws multiline_string
+
+dynamic_action_client_side_condition = indent "clientSideCondition" ws "{" line_end dynamic_action_client_side_condition_property_line* indent "}" line_end
+dynamic_action_client_side_condition_property_line = indent dynamic_action_client_side_condition_property line_end
+dynamic_action_client_side_condition_property = "type" ":" ws ( "item=value" / "item!=value" / "item>value" / "item>=value" / "item<value" / "item<=value" / "itemIsNull" / "itemIsNotNull" / "itemIsInList" / "itemIsNotInList" / "jsExpression" )
+                                    / "item" ":" ws string_like_value
+                                    / "value" ":" ws string_like_value
+                                    / "list" ":" ws array_of_string_like_value
+                                    / "javaScriptExpression" ":" ws code_block
+                                    / "type" ":" ws ( "itemColumn=value" / "itemColumn!=value" / "itemColumn>value" / "itemColumn>=value" / "itemColumn<value" / "itemColumn<=value" / "itemColumnIsNull" / "itemColumnIsNotNull" / "itemColumnIsInList" / "itemColumnIsNotInList" / "jsExpression" )
+                                    / "componentType" ":" ws ( "item" / "column" )
+                                    / "column" ":" ws string_like_value
+
+dynamic_action_child_component      = action_c

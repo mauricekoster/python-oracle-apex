@@ -1,0 +1,50 @@
+button                              = indent "button" (required_ws component_id)? ws "(" line_end button_body_line* indent ")" line_end
+button_body_line                    = button_direct_property_line
+                                    / button_group_block
+                                    / blank_lines
+                                    
+button_direct_property_line         = indent button_direct_property line_end                              
+button_direct_property              = "buttonName" ":" ws string_like_value
+                                    / "label" ":" ws string_like_value
+
+button_group_block                  = button_layout
+                                    / button_appearance
+                                    / button_behavior
+
+button_layout                       = indent "layout" ws "{" line_end button_layout_property_line* indent "}" line_end
+button_layout_property_line         = indent page_item_layout_property line_end
+button_layout_property              = "sequence" ":" ws number
+                                    / "region" ":" ws reference
+                                    / "slot" ":" ws string_like_value
+                                    / "startNewLayout" ":" ws boolean
+                                    / "startNewRow" ":" ws boolean
+                                    / "rowCssClasses" ":" ws array_of_string_like_value
+                                    / "column" ":" ws string_like_value
+                                    / "newColumn" ":" ws boolean
+                                    / "columnSpan" ":" ws string_like_value
+                                    / "rowSpan" ":" ws number
+                                    / "columnCssClasses" ":" ws array_of_string_like_value
+                                    / "columnAttributes" ":" ws array_of_string_like_value
+                                    / "horizontalAlignment" ":" ws ( "left" / "right" )
+                                    / "alignment" ":" ws ( "center" / "centerBottom" / "centerCenter" / "centerTop" / "left" / "leftBottom" / "leftCenter" / "leftTop" / "right" / "rightBottom" / "rightCenter" / "rightTop" )
+
+button_appearance                   = indent "appearance" ws "{" line_end button_appearance_property_line* indent "}" line_end
+button_appearance_property_line     = indent button_appearance_property line_end
+button_appearance_property          = "buttonTemplate" ":" ws reference
+                                    / "hot" ":" ws boolean
+                                    / "showAsDisabled" ":" ws boolean
+                                    / "templateOptions" ":" ws ( array_of_string_like_value / string_like_value )
+                                    / "cssClasses" ":" ws ( array_of_string_like_value / string_like_value )
+                                    / "icon" ":" ws string_like_value
+
+button_behavior                    = indent "behavior" ws "{" line_end button_behavior_property_line* indent "}" line_end
+button_behavior_property_line       = indent button_behavior_property line_end
+button_behavior_property            = "type" ":" ws string_like_value
+                                    / "action" ":" ws ( "submitPage" / "triggerAction" / "redirectThisApp" / "redirectOtherApp" / "redirectUrl" / "definedByDynamicAction" / "resetPage" / "nextPage" / "previousPage" )
+                                    / "target" ":" ws value
+                                    / "targetUrl" ":" ws string_like_value
+                                    / "executeValidations" ":" ws boolean
+                                    / "showProcessing" ":" ws boolean
+                                    / "warnOnUnsavedChanges" ":" ws ( "doNotCheck" )
+                                    / "databaseAction" ":" ws ( "insert" / "update" / "delete" )
+                                    / "requiresConfirmation" ":" ws boolean

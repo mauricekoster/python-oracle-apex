@@ -10,7 +10,7 @@ from .visitor import ApxNodeVisitor
 
 class ApexParser:
     def __init__(self, apex_version : str ="26.1"):
-        inp_file = impresources.files(python_oracle_apex) / f'apexlang-{apex_version}.peg'
+        inp_file = impresources.files(python_oracle_apex) / f'grammar-{apex_version}.peg'
         with inp_file.open("rt") as f:
             template = f.read()
     

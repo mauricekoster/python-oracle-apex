@@ -1,1 +1,12 @@
+{% include "component.peg" %}
+{% include "page.peg" %}
+{% include "region.peg" %}
+{% include "page_item.peg" %}
+{% include "button.peg" %}
+{% include "process.peg" %}
+{% include "computation_a.peg" %}
+{% include "dynamic_action.peg" %}
+{% include "action_c.peg" %}
+{% include "facet.peg" %}
+
 {% include "base.peg" %}

@@ -1,0 +1,69 @@
+page_object                         = indent "page" (required_ws component_id)? ws "(" page_body_line* indent ")" line_end
+page_body_line                      = page_direct_property_line
+                                    / page_group_block
+                                    / page_child_component
+                                    / blank_lines
+
+page_direct_property_line           = indent page_direct_property line_end
+page_direct_property                = "page" ":" ws number
+                                    / "name" ":" ws string_like_value
+                                    / "alias" ":" ws string_like_value
+                                    / "title" ":" ws string_like_value
+                                    / "pageGroup" ":" ws reference
+
+page_group_block                    = page_appearance
+                                    / page_navigation
+                                    / page_css
+                                    / page_security
+                                    / page_advanced
+                                    / page_help
+
+page_appearance                     = indent "appearance" ws "{" line_end page_appearance_property_line* indent "}" line_end
+page_appearance_property_line       = indent page_appearance_property line_end
+page_appearance_property            = "pageMode" ":" ws ( "normal" / "modalDialog" / "nonModalDialog" )
+                                    / "pageTemplate" ":" ws reference
+                                    / "dialogTemplate" ":" ws reference
+                                    / "templateOptions" ":" ws ( array_of_string_like_value / string_like_value )
+                                    / "cssClasses" ":" ws array_of_string_like_value
+                                    / "mediaType" ":" ws string_like_value
+
+page_navigation                     = indent "navigation" ws "{" line_end page_navigation_property_line* indent "}" line_end
+page_navigation_property_line       = indent page_navigation_property line_end
+page_navigation_property            = "cursorFocus" ":" ws ( "firstItemOnPage" / "doNotFocusCursor" )
+                                    / "warnOnUnsavedChanges" ":" ws boolean
+
+page_css                            = indent "css" ws "{" line_end page_css_property_line* indent "}" line_end
+page_css_property_line              = indent page_css_property line_end
+page_css_property                   = "fileUrls" ":" ws array_of_string_like_value
+                                    / "inline" ":" ws multiline_string
+                                    / "inline" ":" nl indent multiline_string
+
+page_security                       = indent "security" ws "{" line_end page_security_property_line* indent "}" line_end
+page_security_property_line         = indent page_security_property line_end
+page_security_property              = "authorizationScheme" ":" ws reference
+                                    / "authentication" ":" ws ( "required" / "public" ) 
+                                    / "deepLinking" ":" ws boolean
+                                    / "pageAccessProtection" ":" ws ( "unrestricted" / "argumentsMustHaveChecksum" / "noArgumentsSupported" / "noUrlAccess" )
+                                    / "formAutoComplete" ":" ws boolean
+                                    / "browserCache" ":" ws boolean
+
+page_advanced                       = indent "advanced" ws "{" line_end page_advanced_property_line* indent "}" line_end
+page_advanced_property_line         = indent page_advanced_property line_end
+page_advanced_property              = "enableMetaTags" ":" ws boolean
+                                    / "enableDuplicatePageSubmissions" ":" ws boolean
+                                    / "reloadOnSubmit" ":" ws ( "always" / "onlyForSuccess" )
+                                    / "duplicateSubmissionUrl" ":" ws string_like_value
+
+
+page_help                           = indent "help" ws "{" line_end page_help_property_line* indent "}" line_end
+page_help_property_line             = indent page_help_property line_end
+page_help_property                  = "helpText" ":" ws code_block
+
+
+
+page_child_component                = region
+                                    / page_item
+                                    / button
+                                    / dynamic_action
+                                    / process
+                                    / computation_a

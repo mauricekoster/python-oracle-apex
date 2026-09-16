@@ -1,0 +1,130 @@
+#####
+# REGION
+#####
+
+region                              = indent "region" (required_ws component_id)? ws "(" line_end region_body_line* indent ")" line_end
+region_body_line                    = region_direct_property_line
+                                    / region_group_block
+                                    / blank_lines
+
+region_direct_property_line         = indent region_direct_property line_end                               
+region_direct_property              = "name" ":" ws string_like_value
+                                    / "title" ":" ws string_like_value
+                                    / "type" ":" ws string_like_value
+
+region_group_block                  = region_layout
+                                    / region_appearance
+                                    / region_image
+                                    / region_advanced
+                                    / region_source
+                                    / region_component_appearance
+                                    / region_settings
+
+region_layout                       = indent "layout" ws "{" line_end region_layout_property_line* indent "}" line_end
+region_layout_property_line         = indent region_layout_property line_end
+region_layout_property              = "sequence" ":" ws number
+                                    / "parentRegion" ":" ws reference
+                                    / "slot" ":" ws string_like_value
+                                    / "startNewLayout" ":" ws boolean
+                                    / "startNewRow" ":" ws boolean
+                                    / "rowCssClasses" ":" ws array_of_string_like_value
+                                    / "column" ":" ws string_like_value
+                                    / "newColumn" ":" ws boolean
+                                    / "columnSpan" ":" ws string_like_value
+                                    / "columnCssClasses" ":" ws array_of_string_like_value
+                                    / "columnAttributes" ":" ws array_of_string_like_value
+
+region_appearance                   = indent "appearance" ws "{" line_end region_appearance_property_line* indent "}" line_end
+region_appearance_property_line     = indent region_appearance_property line_end
+region_appearance_property          = "template" ":" ws reference
+                                    / "templateOptions" ":" ws (array_of_string_like_value / string_like_value)
+                                    / "cssClasses" ":" ws array_of_string_like_value
+                                    / "icon" ":" ws string_like_value
+                                    / "renderComponents" ":" ws ( "aboveContent" / "belowContent" ) 
+
+region_image                        = indent "image" ws "{" line_end region_image_property_line* indent "}" line_end
+region_image_property_line          = indent region_image_property line_end
+region_image_property               = "fileUrl" ":" ws string_like_value
+                                    / "accessibleDescription" ":" ws string_like_value
+                                    / "customAttributes" ":" ws string_like_value
+
+region_advanced                     = indent "advanced" ws "{" line_end region_advanced_property_line* indent "}" line_end
+region_advanced_property_line       = indent region_advanced_property line_end
+region_advanced_property            = "savedReportMappingIdentifier" ":" ws string_like_value
+                                    / "htmlDomId" ":" ws string_like_value
+                                    / "customAttributes" ":" ws string_like_value
+                                    / "regionImage" ":" ws string_like_value
+                                    / "imageTagAttributes" ":" ws string_like_value
+                                    / "staticId" ":" ws string_like_value
+                                    / "regionDisplaySelector" ":" ws boolean
+                                    / "excludeTitleFromTranslation" ":" ws boolean
+                                    / "schemaOverrideItem" ":" ws string_like_value
+
+region_source                       = indent "source" ws "{" line_end region_source_property_line* indent "}" line_end
+region_source_property_line         = indent region_source_property line_end
+region_source_property              = "sqlQuery" ":" ws multiline_string
+                                    / "plsqlCode" ":" ws multiline_string
+                                    / "plsqlFunctionBody" ":" ws multiline_string
+                                    / "htmlCode" ":" ws multiline_string
+                                    / "text" ":" ws multiline_string
+                                    / "language" ":" ws ( "plsql" / "javaScript-mle" )
+                                    / "javaScriptFunctionBody" ":" ws multiline_string
+                                    / "location" ":" ws ( "localDatabase" / "restEnabledSql" / "restSource" / "jsonDualityView" / "jsonSource" / "sampleData" )
+                                    / "remoteServer" ":" ws reference
+                                    / "sampleData" ":" ws ( "employees" / "tasks" / "products" / "projects" )
+                                    / "type" ":" ws string_like_value
+                                    / "tableOwner" ":" ws string_like_value
+                                    / "tableName" ":" ws string_like_value
+                                    / "includeRowidColumn" ":" ws boolean
+                                    / "whereClause" ":" ws multiline_string
+                                    / "graphOwner" ":" ws string_like_value
+                                    / "graphName" ":" ws string_like_value
+                                    / "matchClause" ":" ws multiline_string
+                                    / "columnsClause" ":" ws multiline_string
+                                    / "orderByClause" ":" ws multiline_string
+                                    / "restSource" ":" ws reference
+                                    / "jsonDualityView" ":" ws reference
+                                    / "jsonSource" ":" ws reference
+                                    / "list" ":" ws reference
+                                    / "breadcrumb" ":" ws reference
+                                    / "filteredRegion" ":" ws reference
+                                    / "pageItemsToSubmit" ":" ws array_of_string_like_value
+                                    / "optimizerHint" ":" ws string_like_value
+                                    / "useGenericColumnNames" ":" ws boolean
+                                    / "genericColumnCount" ":" ws number
+
+
+region_component_appearance         = indent "componentAppearance" ws "{" line_end region_component_appearance_property_line* indent "}" line_end
+region_component_appearance_property_line = indent region_component_appearance_property line_end
+region_component_appearance_property = "display" ":" ws string_like_value
+                                    / "layout" ":" ws ( "grid" / "float" / "horizontal" )
+                                    / "gridColumns" ":" ws ( "2" / "3" / "4" / "5" )
+                                    / "listTemplate" ":" ws reference
+                                    / "breadcrumbTemplate" ":" ws reference
+                                    / "cssClasses" ":" ws array_of_string_like_value
+                                    / "templateOptions" ":" ws (array_of_string_like_value / string_like_value)
+                                    / "templateType" ":" ws ( "theme" / "predefined" )
+                                    / "template" ":" ws ( "html" / "verticalReport" / "csv" / "xml" / reference )
+                                    / "customAttributes" ":" ws string_like_value
+                                    / "showNullValuesAs" ":" ws string_like_value
+                                    / "selectFirstRow" ":" ws boolean
+                                    / "fixedRowHeight" ":" ws boolean
+
+region_settings                     = indent "settings" ws "{" line_end region_settings_property_line* indent "}" line_end
+region_settings_property_line       = indent region_settings_property line_end
+region_settings_property            = "timeAxisType" ":" ws ( "auto" / "disabled" / "enabled" / "mixedFrequency" / "skipGaps" ) 
+                                    / "zoomAndScroll" ":" ws ( "false" / "delayed" / "delayedScrollOnly" / "live" / "liveScrollOnly" )
+                                    / "zoomDirection" ":" ws ( "bothAxes" / "xAxis" / "yAxis" )
+                                    / "initialZooming" ":" ws ( "first" / "last" / "none" )
+                                    / "showHorizontalGrid" ":" ws ( "auto" / "true" / "false" )
+                                    / "showVerticalGrid" ":" ws ( "auto" / "true" / "false" )
+                                    / "showRowAxis" ":" ws boolean
+                                    / "axisPosition" ":" ws ( "top" / "bottom" )
+                                    / "pieSelectionEffect" ":" ws ( "explode" / "highlightAndExplode" / "highlight" )
+                                    / "renderAs" ":" ws ( "area" / "bar" / "candlestick" / "line" / "lineWithArea" )
+
+# UNDOCUMENTED! used in brookstrut page 2 (type: Faceted Search)
+                                    / "compactNosThreshold" ":" ws number
+                                    / "showCurrentFacets" ":" ws ( "selector" )
+                                    / "currentFacetsSelector" ":" ws string_like_value
+                                    / "displayChartForTopNValues" ":" ws number

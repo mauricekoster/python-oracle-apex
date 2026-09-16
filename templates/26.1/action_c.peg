@@ -1,0 +1,31 @@
+action_c                            = indent "action" (required_ws component_id)? ws "(" line_end action_c_body_line* indent ")" line_end
+action_c_body_line                  = action_c_direct_property_line
+                                    / action_c_group_block
+                                    / blank_lines
+
+action_c_direct_property_line       = indent action_c_direct_property line_end
+action_c_direct_property            = "name" ":" ws string_like_value
+                                    / "action" ":" ws string_like_value
+
+action_c_group_block                = action_c_affected_elements
+                                    / action_c_execution
+
+action_c_affected_elements          = indent "affectedElements" ws "{" line_end action_c_affected_elements_property_line* indent "}" line_end
+action_c_affected_elements_property_line = indent action_c_affected_elements_property line_end
+action_c_affected_elements_property = "selectionType" ":" ws string_like_value
+                                    / "region" ":" ws reference
+                                    / "columns" ":" ws array_of_string_like_value
+                                    / "button" ":" ws reference
+                                    / "items" ":" ws ( array_of_string_like_value / string_like_value )
+                                    / "domObject" ":" ws string_like_value
+                                    / "jquerySelector" ":" ws string_like_value
+                                    / "javaScriptExpression" ":" ws code_block
+
+action_c_execution                  = indent "execution" ws "{" line_end action_c_execution_property_line* indent "}" line_end
+action_c_execution_property_line    = indent action_c_execution_property line_end
+action_c_execution_property         = "sequence" ":" ws number
+                                    / "event" ":" ws reference
+                                    / "fireWhenEventResultIs" ":" ws string_like_value
+                                    / "fireOnInit" ":" ws boolean
+                                    / "stopExecutionOnError" ":" ws boolean
+                                    / "waitForResult" ":" ws boolean

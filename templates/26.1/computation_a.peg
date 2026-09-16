@@ -1,0 +1,28 @@
+computation_a                       = indent "computation" (required_ws component_id)? ws "(" line_end computation_a_body_line* indent ")" line_end
+computation_a_body_line             = computation_a_direct_property_line
+                                    / computation_a_group_block
+computation_a_direct_property_line  = indent computation_a_direct_property line_end
+computation_a_direct_property       = "itemName" ":" ws string_like_value
+
+computation_a_group_block           = computation_a_execution
+                                    / computation_a_computation
+
+computation_a_execution             = indent "execution" ws "{" line_end computation_a_execution_property_line* indent "}" line_end
+computation_a_execution_property_line = indent computation_a_execution_property line_end
+computation_a_execution_property    = "sequence" ":" ws number
+                                    / "point" ":" ws ( "newSession" / "beforeHeader" / "afterHeader" / "beforeRegions" / "afterRegions" / "beforeFooter" / "afterFooter" / "afterSubmit" )
+
+computation_a_computation           = indent "computation" ws "{" line_end computation_a_computation_property_line* indent "}" line_end
+computation_a_computation_property_line = indent computation_a_computation_property line_end
+computation_a_computation_property  = "type" ":" ws ( "staticValue" / "item" / "sqlQuerySingleValue" / "sqlQueryMultipleValues" / "expression" / "functionBody" / "preference" )
+                                    / "staticValue" ":" ws string_like_value
+                                    / "sqlQuery" ":" ws multiline_string
+                                    / "computationProcessed" ":" ws ( "newSession" / "replaceExisting" / "addToExisting" / "raiseErrorOnReplace" / "replaceNullValues" )
+                                    / "language" ":" ws ( "sql" / "plsql" / "javaScript-mle" )
+                                    / "sqlExpression" ":" ws multiline_string
+                                    / "plsqlExpression" ":" ws multiline_string
+                                    / "javaScriptExpression" ":" ws multiline_string
+                                    / "plsqlFunctionBody" ":" ws multiline_string
+                                    / "javaScriptFunctionBody" ":" ws multiline_string
+                                    / "itemName" ":" ws string_like_value
+                                    / "preference" ":" ws string_like_value

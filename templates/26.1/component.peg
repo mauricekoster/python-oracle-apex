@@ -1,0 +1,6 @@
+component                           = page_object blank_lines
+                                    / region blank_lines
+                                    / process blank_lines
+                                    / button blank_lines
+                                    / computation_a blank_lines
+                                    / facet blank_lines

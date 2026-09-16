@@ -1,0 +1,36 @@
+process                             = indent "process" (required_ws component_id)? ws "(" line_end process_body_line* indent ")" line_end
+process_body_line                   = process_direct_property_line
+                                    / process_group_block
+                                    / blank_lines
+
+process_direct_property_line        = indent process_direct_property line_end
+process_direct_property             = "name" ":" ws string_like_value
+                                    / "type" ":" ws string_like_value
+                                    / "executionChain" ":" ws string_like_value
+                                    / "formRegion" ":" ws reference
+                                    / "editableRegion" ":" ws reference
+
+process_group_block                 = process_execution
+                                    / process_source
+                                    / process_advanced
+
+process_source                      = indent "source" ws "{" line_end process_source_property_line* indent "}" line_end
+process_source_property_line        = indent process_source_property line_end
+process_source_property             = "location" ":" ws ( "localDatabase" / "restEnabledSql" )
+                                    / "language" ":" ws ( "plsql" / "javaScript-mle" )
+                                    / "plsqlCode" ":" ws code_block
+                                    / "javaScriptCode" ":" ws code_block
+                                    / "remoteServer" ":" ws reference
+
+
+process_execution                   = indent "execution" ws "{" line_end process_execution_property_line* indent "}" line_end
+process_execution_property_line     = indent process_execution_property line_end
+process_execution_property          = "sequence" ":" ws number
+                                    / "point" ":" ws string_like_value
+                                    / "runProcess" ":" ws ( "oncePerSessionOrWhenReset" / "oncePerPageVisitDefault" )
+
+
+process_advanced                    = indent "advanced" ws "{" line_end process_advanced_property_line* indent "}" line_end
+process_advanced_property_line      = indent process_advanced_property line_end
+process_advanced_property           = "staticId" ":" ws string_like_value
+                                    / "executionMappingIdentifier" ":" ws string_like_value

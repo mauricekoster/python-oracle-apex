@@ -171,7 +171,32 @@ class RegionVisitor:
     def visit_region_component_appearance_property(self, node, visited_children):
         v = visited_children[0]
         match v[0].text:
-            case 'listTemplate' | 'templateOptions':
+            case 'listTemplate' :
                 return (v[0].text, v[3])
+            case 'templateOptions':
+                return (v[0].text, v[3][0])
+            case _:
+                raise RuleNotImplemented()
+
+    def visit_region_settings(self, node, visited_children):
+        parts = visited_children[5]
+        d = {}
+        for item in parts:
+            if type(item) is tuple:
+                d[item[0]] = item[1]
+            else:
+                raise RuleNotImplemented()
+        return ('settings', RegionSettings(d))
+    
+    def visit_region_settings_property_line(self, node, visited_children):
+        return visited_children[1]
+
+    def visit_region_csettings_property(self, node, visited_children):
+        v = visited_children[0]
+        match v[0].text:
+            # case 'listTemplate' :
+            #     return (v[0].text, v[3])
+            # case 'templateOptions':
+            #     return (v[0].text, v[3][0])
             case _:
                 raise RuleNotImplemented()

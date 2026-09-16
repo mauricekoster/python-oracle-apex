@@ -32,6 +32,10 @@ class RegionComponentAppearance(ApexGroup):
 class RegionImage(ApexGroup):
     pass
 
+class RegionSettings(ApexGroup):
+    pass
+
+
 class Region(ApexObject):
     def __init__(self, component_id=None, initial_data={}):
         super().__init__(component_id, initial_data)
