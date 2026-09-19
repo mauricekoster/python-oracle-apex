@@ -248,7 +248,7 @@ wheels = [
 
 [[package]]
 name = "python-oracle-apex"
-version = "0.0.3"
+version = "0.0.4"
 source = { editable = "." }
 dependencies = [
     { name = "invoke" },
