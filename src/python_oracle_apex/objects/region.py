@@ -13,12 +13,12 @@ class RegionLayout(ApexGroup):
         return self.properties.get('parentRegion', None)
 
 class RegionAppearance(ApexGroup):
-    def __init__(self, initial_data={}):
-        super().__init__(initial_data)
-
+    pass
 
 class RegionSource(ApexGroup):
-    pass
+    @property
+    def list(self):
+        return self.properties.get('list', None)
 
 
 class RegionAdvanced(ApexGroup):
@@ -59,4 +59,13 @@ class Region(ApexObject):
     @property
     def appearance(self):
         return self.groups.get('appearance', RegionAppearance())
-  
+
+    @property
+    def settings(self):
+        return self.groups.get('settings', RegionSettings())
+
+    @property
+    def source(self):
+        return self.groups.get('source', RegionSource())
+      
+    

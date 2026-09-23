@@ -1,0 +1,58 @@
+facet                       = indent "facet" (required_ws component_id)? ws "(" line_end facet_body_line* indent ")" line_end
+facet_body_line             = facet_direct_property_line
+                            / facet_group_block
+
+facet_direct_property_line  = indent facet_direct_property line_end
+facet_direct_property       = "name" ":" ws string_like_value
+                            / "type" ":" ws string_like_value
+
+facet_group_block           = facet_label
+
+facet_group_block           = facet_label
+                            / facet_layout
+                            / facet_source
+                            / facet_lov
+                            / facet_list_entries
+
+facet_label                 = indent "label" ws "{" line_end facet_label_property_line* indent "}" line_end
+facet_label_property_line   = indent facet_label_property line_end
+facet_label_property        = "label" ":" ws string_like_value
+                            / "showLabelForCurrentFacet" ":" ws boolean
+
+facet_layout                = indent "layout" ws "{" line_end facet_layout_property_line* indent "}" line_end
+facet_layout_property_line  = indent facet_layout_property line_end
+facet_layout_property       = "sequence" ":" ws number
+                            / "maxHeight" ":" ws number
+
+facet_source                = indent "source" ws "{" line_end facet_source_property_line* indent "}" line_end
+facet_source_property_line  = indent facet_source_property line_end
+facet_source_property       = "databaseColumn" ":" ws string_like_value
+                            / "dbColumns" ":" ws string_like_value
+                            / "dataType" ":" ws ( "varchar2" / "number" / "date" / "timestamp" / 
+                                "timestampWithTimeZone" / "timestampWithLocalTimeZone" / 
+                                "intervalYearToMonth" / "intervalDayToSecond" / 
+                                "clob" / "blob" / "boolean" / "rowid" / "bfile" / "sdoGeometry" )
+
+facet_lov                   = indent "lov" ws "{" line_end* facet_lov_property_line* indent "}" line_end
+facet_lov_property_line     = indent facet_lov_property line_end
+facet_lov_property          = "type" ":" ws string_like_value
+                            / "lov" ":" ws reference
+                            / "sqlQuery" ":" ws code_block
+                            / "staticValues" ":" ws code_block
+                            / "language" ":" ws ( "plsql" / "javaScript-mle" )
+                            / "plsqlFunctionBody" ":" ws code_block
+                            / "javaScriptFunctionBody" ":" ws code_block
+                            / "sortDirection" ":" ws ( "asc" / "desc" )
+                            / "includeNullOption" ":" ws boolean
+                            / "nullDisplayValue" ":" ws string_like_value
+
+facet_list_entries          = indent "listEntries" ws "{" line_end facet_list_entries_property_line* indent "}" line_end
+facet_list_entries_property_line    = indent facet_list_entries_property line_end
+facet_list_entries_property = "computeCounts" ":" ws boolean
+                            / "showCounts" ":" ws boolean
+                            / "zeroCountEntries" ":" ws ( "hide" / "disable" / "showLast" )
+                            / "sortByTopCounts" ":" ws boolean
+                            / "showSelectedFirst" ":" ws boolean
+                            / "maxDisplayedEntries" ":" ws number
+                            / "allowToExclude" ":" ws boolean
+                            / "displayFilterInitially" ":" ws boolean

@@ -20,3 +20,5 @@ def test_region_source(apex_parser):
 """)
 
     assert isinstance(r, Region)
+
+    assert r.source.list == '@application-actions'

@@ -1,6 +1,6 @@
 [project]
 name = "python-oracle-apex"
-version = "0.0.4"
+version = "0.0.5"
 description = "Parsing files exported from Oracle APEX"
 readme = "README.md"
 authors = [

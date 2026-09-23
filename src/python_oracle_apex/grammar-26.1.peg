@@ -3,6 +3,7 @@ component                           = page_object blank_lines
                                     / process blank_lines
                                     / button blank_lines
                                     / computation_a blank_lines
+                                    / facet blank_lines
 page_object                         = indent "page" (required_ws component_id)? ws "(" page_body_line* indent ")" line_end
 page_body_line                      = page_direct_property_line
                                     / page_group_block
@@ -79,6 +80,7 @@ page_child_component                = region
 region                              = indent "region" (required_ws component_id)? ws "(" line_end region_body_line* indent ")" line_end
 region_body_line                    = region_direct_property_line
                                     / region_group_block
+                                    / region_child_component
                                     / blank_lines
 
 region_direct_property_line         = indent region_direct_property line_end                               
@@ -93,6 +95,10 @@ region_group_block                  = region_layout
                                     / region_source
                                     / region_component_appearance
                                     / region_settings
+                                    / region_accessibility
+                                    / region_plugin_avatar
+                                    / region_plugin_badge
+                                    / region_pagination
 
 region_layout                       = indent "layout" ws "{" line_end region_layout_property_line* indent "}" line_end
 region_layout_property_line         = indent region_layout_property line_end
@@ -136,13 +142,13 @@ region_advanced_property            = "savedReportMappingIdentifier" ":" ws stri
 
 region_source                       = indent "source" ws "{" line_end region_source_property_line* indent "}" line_end
 region_source_property_line         = indent region_source_property line_end
-region_source_property              = "sqlQuery" ":" ws multiline_string
-                                    / "plsqlCode" ":" ws multiline_string
-                                    / "plsqlFunctionBody" ":" ws multiline_string
-                                    / "htmlCode" ":" ws multiline_string
+region_source_property              = "sqlQuery" ":" ws code_block
+                                    / "plsqlCode" ":" ws code_block
+                                    / "plsqlFunctionBody" ":" ws code_block
+                                    / "htmlCode" ":" ws code_block
                                     / "text" ":" ws multiline_string
                                     / "language" ":" ws ( "plsql" / "javaScript-mle" )
-                                    / "javaScriptFunctionBody" ":" ws multiline_string
+                                    / "javaScriptFunctionBody" ":" ws code_block
                                     / "location" ":" ws ( "localDatabase" / "restEnabledSql" / "restSource" / "jsonDualityView" / "jsonSource" / "sampleData" )
                                     / "remoteServer" ":" ws reference
                                     / "sampleData" ":" ws ( "employees" / "tasks" / "products" / "projects" )
@@ -197,11 +203,53 @@ region_settings_property            = "timeAxisType" ":" ws ( "auto" / "disabled
                                     / "pieSelectionEffect" ":" ws ( "explode" / "highlightAndExplode" / "highlight" )
                                     / "renderAs" ":" ws ( "area" / "bar" / "candlestick" / "line" / "lineWithArea" )
 
-# UNDOCUMENTED! used in brookstrut page 2
+# UNDOCUMENTED! used in brookstrut page 2 (type: Faceted Search)
                                     / "compactNosThreshold" ":" ws number
                                     / "showCurrentFacets" ":" ws ( "selector" )
                                     / "currentFacetsSelector" ":" ws string_like_value
                                     / "displayChartForTopNValues" ":" ws number
+
+                                    / "title" ":" ws string_like_value
+                                    / "description" ":" ws code_block
+                                    / "miscellaneous" ":" ws code_block
+                                    / "displayAvatar" ":" ws boolean
+                                    / "displayBadge" ":" ws boolean
+
+region_plugin_avatar                = indent "plugin-avatar" ws "{" line_end region_plugin_avatar_property_line* indent "}" line_end
+region_plugin_avatar_property_line  = indent region_plugin_avatar_property line_end
+region_plugin_avatar_property       = "icon" ":" ws string_like_value
+
+region_plugin_badge                 = indent "plugin-badge" ws "{" line_end region_plugin_badge_property_line* indent "}" line_end
+region_plugin_badge_property_line   = indent region_plugin_badge_property line_end
+region_plugin_badge_property        = "label" ":" ws string_like_value
+                                    / "value" ":" ws string_like_value
+
+region_accessibility                = indent "accessibility" ws "{" line_end region_accessibility_property_line* indent "}" line_end
+region_accessibility_property_line  = indent region_accessibility_property line_end
+region_accessibility_property       = "useLandmark" ":" ws boolean
+                                    / "landmarkType" ":" ws ( "banner" / "complementary" / "contentInfo" / "form" / "main" / "navigation" / "region" / "search" )
+                                    / "landmarkLabel" ":" ws string_like_value
+
+region_pagination                   = indent "pagination" ws "{" line_end region_pagination_property_line* indent "}" line_end
+region_pagination_property_line     = indent region_pagination_property line_end
+region_pagination_property          = "type" ":" ws ( "rowRangesXToYNoPagination" / "rowRangesXToYOfZNoPagination" /
+                                         "rowRangesXToYOfZWithPagination" / "setPaginationLinks" /
+                                         "setPaginationSelectList" / "setPaginationSearchEngine" / 
+                                         "externalPaginationButtons" / "nextAndPreviousLinks" /
+                                         "page" / "scroll" 
+                                         )
+                                    / "type" ":" ws string_like_value
+                                    / "displayPosition" ":" ws ( "bottomLeft" / "bottomRight" / "topLeft" / "topRight" /
+                                             "topAndBottomLeft" / "topAndBottomRight" )
+                                    / "partialPageRefresh" ":" ws boolean
+                                    / "showTotalCount" ":" ws boolean
+                                    / "maxRowsToDisplay" ":" ws string_like_value
+                                    / "cardsPerPage" ":" ws number
+                                    / "entitiesPerPage" ":" ws number
+                                    / "initialEntitiesCount" ":" ws number
+
+
+region_child_component              = facet
 page_item                           = indent "pageItem" (required_ws component_id)? ws "(" line_end page_item_body_line* indent ")" line_end
 page_item_body_line                 = page_item_direct_property_line
                                     / page_item_group_block
@@ -481,6 +529,64 @@ action_c_execution_property         = "sequence" ":" ws number
                                     / "fireOnInit" ":" ws boolean
                                     / "stopExecutionOnError" ":" ws boolean
                                     / "waitForResult" ":" ws boolean
+facet                       = indent "facet" (required_ws component_id)? ws "(" line_end facet_body_line* indent ")" line_end
+facet_body_line             = facet_direct_property_line
+                            / facet_group_block
+
+facet_direct_property_line  = indent facet_direct_property line_end
+facet_direct_property       = "name" ":" ws string_like_value
+                            / "type" ":" ws string_like_value
+
+facet_group_block           = facet_label
+
+facet_group_block           = facet_label
+                            / facet_layout
+                            / facet_source
+                            / facet_lov
+                            / facet_list_entries
+
+facet_label                 = indent "label" ws "{" line_end facet_label_property_line* indent "}" line_end
+facet_label_property_line   = indent facet_label_property line_end
+facet_label_property        = "label" ":" ws string_like_value
+                            / "showLabelForCurrentFacet" ":" ws boolean
+
+facet_layout                = indent "layout" ws "{" line_end facet_layout_property_line* indent "}" line_end
+facet_layout_property_line  = indent facet_layout_property line_end
+facet_layout_property       = "sequence" ":" ws number
+                            / "maxHeight" ":" ws number
+
+facet_source                = indent "source" ws "{" line_end facet_source_property_line* indent "}" line_end
+facet_source_property_line  = indent facet_source_property line_end
+facet_source_property       = "databaseColumn" ":" ws string_like_value
+                            / "dbColumns" ":" ws string_like_value
+                            / "dataType" ":" ws ( "varchar2" / "number" / "date" / "timestamp" / 
+                                "timestampWithTimeZone" / "timestampWithLocalTimeZone" / 
+                                "intervalYearToMonth" / "intervalDayToSecond" / 
+                                "clob" / "blob" / "boolean" / "rowid" / "bfile" / "sdoGeometry" )
+
+facet_lov                   = indent "lov" ws "{" line_end* facet_lov_property_line* indent "}" line_end
+facet_lov_property_line     = indent facet_lov_property line_end
+facet_lov_property          = "type" ":" ws string_like_value
+                            / "lov" ":" ws reference
+                            / "sqlQuery" ":" ws code_block
+                            / "staticValues" ":" ws code_block
+                            / "language" ":" ws ( "plsql" / "javaScript-mle" )
+                            / "plsqlFunctionBody" ":" ws code_block
+                            / "javaScriptFunctionBody" ":" ws code_block
+                            / "sortDirection" ":" ws ( "asc" / "desc" )
+                            / "includeNullOption" ":" ws boolean
+                            / "nullDisplayValue" ":" ws string_like_value
+
+facet_list_entries          = indent "listEntries" ws "{" line_end facet_list_entries_property_line* indent "}" line_end
+facet_list_entries_property_line    = indent facet_list_entries_property line_end
+facet_list_entries_property = "computeCounts" ":" ws boolean
+                            / "showCounts" ":" ws boolean
+                            / "zeroCountEntries" ":" ws ( "hide" / "disable" / "showLast" )
+                            / "sortByTopCounts" ":" ws boolean
+                            / "showSelectedFirst" ":" ws boolean
+                            / "maxDisplayedEntries" ":" ws number
+                            / "allowToExclude" ":" ws boolean
+                            / "displayFilterInitially" ":" ws boolean
 
 reference                       = "@" reference_character*
 component_id                    = string / identifier / number

@@ -17,8 +17,12 @@ class RegionVisitor:
             if type(item) is tuple:
                 if type(item[1]) is dict:
                     region.add_group(item[0], item[1])
+                elif isinstance(item[1], ApexGroup):
+                    region.add_group(item[0], item[1])
                 else:
                     region.add_property(item[0], item[1])
+            elif isinstance(item, ApexObject):
+                region.add_child(item)
             elif item is None:
                 # blanklines
                 continue

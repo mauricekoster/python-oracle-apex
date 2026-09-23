@@ -46,7 +46,8 @@ from .region import (
     RegionAdvanced,
     RegionComponentAppearance,
     RegionImage,
-    RegionSource
+    RegionSource,
+    RegionSettings
 )
 from .page import (
     Page, 
