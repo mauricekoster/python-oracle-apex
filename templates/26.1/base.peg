@@ -1,5 +1,5 @@
 reference                       = "@" reference_character*
-component_id                    = string / identifier / number
+component_id                    = number / identifier / string
 code_block                      = nl? ws multiline_string
                                 / string_like_value
 multiline_string                = "```" ( any_character / nl )* "```"

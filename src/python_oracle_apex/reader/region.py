@@ -31,7 +31,7 @@ def make_region_appearance(data):
 
 
 def make_region(region) -> Region:
-    r = Region(region['id'])
+    r = Region(str(region['id']))
     make_properties({
                     'name': 'name',
                     'title': 'title',

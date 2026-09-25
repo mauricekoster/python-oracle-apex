@@ -80,7 +80,7 @@ class Page(ApexObject):
 
     def get_region(self, reference_or_name):
         regions = [x for x in self.regions 
-                   if x.component_id==reference_or_name[1:] 
+                   if str(x.component_id)==str(reference_or_name[1:])
                    or x.name==reference_or_name
                    ]
         if len(regions) == 1:
