@@ -175,3 +175,7 @@ region_pagination_property          = "type" ":" ws ( "rowRangesXToYNoPagination
 
 
 region_child_component              = facet
+                                    / action_d
+                                    / action_e
+                                    / column_b
+                                    / column_f

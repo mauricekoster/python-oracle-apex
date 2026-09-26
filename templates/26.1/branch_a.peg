@@ -1,0 +1,29 @@
+branch_a               = indent "branch" (required_ws component_id)? ws "(" line_end branch_a_body_line* indent ")" line_end
+branch_a_body_line     = branch_a_direct_property_line
+                       / branch_a_group_block
+                       / blank_lines
+
+branch_a_direct_property_line     = indent branch_a_direct_property line_end 
+branch_a_direct_property          = "name" ":" ws string_like_value
+
+branch_a_group_block              = branch_a_execution
+                                  / branch_a_behavior
+
+branch_a_execution                      = indent "execution" ws "{" line_end branch_a_execution_property_line* indent "}" line_end
+branch_a_execution_property_line        = indent branch_a_execution_property line_end
+branch_a_execution_property             = "sequence" ":" ws number
+                                        / "point" ":" ws ( "beforeHeader" / "afterSubmit" / "validating" / "processing" / "afterProcessing" )
+
+branch_a_behavior                      = indent "behavior" ws "{" line_end branch_a_behavior_property_line* indent "}" line_end
+branch_a_behavior_property_line        = indent branch_a_behavior_property line_end
+branch_a_behavior_property             = "type" ":" ws ( "pageOrUrl" / "urlIdentifiedByItem" / "functionReturningUrl" / "page" 
+                                       / "pageIdentifiedByItem" / "functionReturningPage" / "plsqlProcedure" / "pageProcessing" )
+                                       / "target" ":" ws value
+                                       / "saveStateBeforeBranching" ":" ws boolean
+                                       / "pageNumber" ":" ws number
+                                       / "request" ":" ws string_like_value
+                                       / "item" ":" ws string_like_value
+                                       / "language" ":" ws ( "plsql" / "javaScript-mle" )
+                                       / "plsqlFunctionBody" ":" ws code_block
+                                       / "javaScriptFunctionBody" ":" ws code_block
+                                       / "plsqlCode" ":" ws code_block

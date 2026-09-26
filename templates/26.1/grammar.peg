@@ -7,6 +7,11 @@
 {% include "computation_a.peg" %}
 {% include "dynamic_action.peg" %}
 {% include "action_c.peg" %}
+{% include "action_d.peg" %}
+{% include "action_e.peg" %}
 {% include "facet.peg" %}
+{% include "column_b.peg" %}
+{% include "column_f.peg" %}
+{% include "branch_a.peg" %}
 
 {% include "base.peg" %}

@@ -30,7 +30,7 @@ dynamic_action_when_property        = "event" ":" ws string_like_value
                                     / "interactiveGrid" ":" ws reference
                                     / "columns" ":" ws array_of_string_like_value
                                     / "button" ":" ws reference
-                                    / "items" ":" ws array_of_string_like_value
+                                    / "items" ":" ws one_or_more_string_like_values
                                     / "domObject" ":" ws string_like_value
                                     / "jquerySelector" ":" ws string_like_value
                                     / "javaScriptExpression" ":" ws multiline_string

@@ -1,0 +1,33 @@
+action_e                            = indent "action" (required_ws component_id)? ws "(" line_end action_e_body_line* indent ")" line_end
+action_e_body_line                  = action_e_direct_property_line
+                                    / action_e_group_block
+                                    / blank_lines
+
+action_e_direct_property_line       = indent action_e_direct_property line_end
+action_e_direct_property            = "position" ":" ws string_like_value
+                                    / "template" ":" ws string_like_value
+                                    / "label" ":" ws string_like_value
+
+action_e_group_block                = action_e_layout
+                                    / action_e_appearance
+                                    / action_e_behavior
+
+action_e_layout                     = indent "layout" ws "{" line_end action_e_layout_property_line* indent "}" line_end
+action_e_layout_property_line       = indent action_e_layout_property line_end
+action_e_layout_property            = "sequence" ":" ws number
+
+action_e_appearance                 = indent "appearance" ws "{" line_end action_e_appearance_property_line* indent "}" line_end
+action_e_appearance_property_line   = indent action_e_appearance_property line_end
+action_e_appearance_property        = "displayType" ":" ws ( "text" / "icon" / "textWithIcon" )
+                                    / "icon" ":" ws string_like_value
+                                    / "hot" ":" ws boolean
+                                    / "showAsDisabled" ":" ws boolean
+                                    / "cssClasses" ":" ws array_of_string_like_value
+
+action_e_behavior                   = indent "behavior" ws "{" line_end action_e_behavior_property_line* indent "}" line_end
+action_e_behavior_property_line     = indent action_e_behavior_property line_end
+action_e_behavior_property          = "type" ":" ws ( "redirectThisApp" / "redirectOtherApp" / "redirectUrl" / "triggerAction" )
+                                    / "target" ":" ws value
+                                    / "targetUrl" ":" ws string_like_value
+                                    / "linkAttributes" ":" ws string_like_value
+

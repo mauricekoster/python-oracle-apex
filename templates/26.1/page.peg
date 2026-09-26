@@ -67,3 +67,4 @@ page_child_component                = region
                                     / dynamic_action
                                     / process
                                     / computation_a
+                                    / branch_a

@@ -1,0 +1,40 @@
+column_b                        = indent "column" (required_ws component_id)? ws "(" line_end column_b_body_line* indent ")" line_end
+column_b_body_line              = column_b_direct_property_line
+                                / column_b_group_block
+                                #/ column_b_child_component
+
+column_b_direct_property_line   = indent column_b_direct_property line_end
+column_b_direct_property        = "columnName" ":" ws string_like_value
+                                / "type" ":" ws string_like_value
+
+column_b_group_block            = column_b_layout
+                                / column_b_appearance
+                                / column_b_source
+
+column_b_layout                 = indent "layout" ws "{" line_end column_b_layout_property_line* indent "}" line_end
+column_b_layout_property_line   = indent column_b_layout_property line_end
+column_b_layout_property        = "sequence" ":" ws number
+                                / "columnAlignment" ":" ws ( "start" / "center" / "end" )
+                                / "group" ":" ws reference
+
+column_b_appearance             = indent "appearance" ws "{" line_end column_b_appearance_property_line* indent "}" line_end
+column_b_appearance_property_line = indent column_b_appearance_property line_end
+column_b_appearance_property    = "cssClasses" ":" ws array_of_string_like_value
+                                / "formatMask" ":" ws string_like_value
+                                / "backgroundColor" ":" ws string_like_value
+                                / "foregroundColor" ":" ws string_like_value
+                                / "barWidth" ":" ws number
+                                / "viewFileAs" ":" ws ( "attachment" / "inline" )
+                                / "downloadText" ":" ws string_like_value
+
+column_b_source                 = indent "source" ws "{" line_end column_b_source_property_line* indent "}" line_end
+column_b_source_property_line   = indent column_b_source_property line_end
+column_b_source_property        = "primaryKey" ":" ws boolean
+                                / "dataType" ":" ws string_like_value
+                                / "availableOnClient" ":" ws boolean
+                                / "valueProtected" ":" ws boolean
+                                / "timezoneAware" ":" ws string_like_value
+
+
+# column_b_child_component        = action_f
+

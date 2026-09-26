@@ -1,0 +1,30 @@
+column_f                        = indent "column" (required_ws component_id)? ws "(" line_end column_f_body_line* indent ")" line_end
+column_f_body_line              = column_f_direct_property_line
+                                / column_f_group_block
+
+column_f_direct_property_line   = indent column_f_direct_property line_end
+column_f_direct_property        = "name" ":" ws string_like_value
+
+column_f_group_block            = column_f_layout
+                                / column_f_appearance
+                                / column_f_source
+
+column_f_layout                 = indent "layout" ws "{" line_end column_f_layout_property_line* indent "}" line_end
+column_f_layout_property_line   = indent column_f_layout_property line_end
+column_f_layout_property        = "sequence" ":" ws number
+
+column_f_appearance             = indent "appearance" ws "{" line_end column_f_appearance_property_line* indent "}" line_end
+column_f_appearance_property_line = indent column_f_appearance_property line_end
+column_f_appearance_property    = "formatMask" ":" ws string_like_value
+                                / "group" ":" ws boolean
+
+column_f_source                 = indent "source" ws "{" line_end column_f_source_property_line* indent "}" line_end
+column_f_source_property_line   = indent column_f_source_property line_end
+column_f_source_property        = "type" ":" ws ( "databaseColumn" / "sqlExpression" / "none" )
+                                / "databaseColumn" ":" ws string_like_value
+                                / "sqlExpression" ":" ws code_block
+                                / "dataType" ":" ws ( "timestampWithTimeZone" / "timestampWithLocalTimeZone" / "intervalYearToMonth" / "intervalDayToSecond" / "clob" / "blob" / "boolean" / "rowid" / "bfile" / "sdoGeometry" / "varchar2" / "number" / "date" / "timestamp" )
+                                / "primaryKey" ":" ws boolean
+                                / "availableOnClient" ":" ws boolean
+                                / "valueProtected" ":" ws boolean
+

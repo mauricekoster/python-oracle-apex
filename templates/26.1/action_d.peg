@@ -1,0 +1,23 @@
+action_d                            = indent "action" (required_ws component_id)? ws "(" line_end action_d_body_line* indent ")" line_end
+action_d_body_line                  = action_d_direct_property_line
+                                    / action_d_group_block
+                                    / blank_lines
+
+action_d_direct_property_line       = indent action_d_direct_property line_end
+action_d_direct_property            = "type" ":" ws ( "button" / "fullCard" / "title" / "subtitle" / "media" ) 
+                                    / "label" ":" ws string_like_value
+
+action_d_group_block                = action_d_layout
+                                    / action_d_appearance
+
+action_d_layout                     = indent "layout" ws "{" line_end action_d_layout_property_line* indent "}" line_end
+action_d_layout_property_line       = indent action_d_layout_property line_end
+action_d_layout_property            = "position" ":" ws ( "primary" / "secondary" ) 
+                                    / "sequence" ":" ws number
+
+action_d_appearance                  = indent "appearance" ws "{" line_end action_d_appearance_property_line* indent "}" line_end
+action_d_appearance_property_line    = indent action_d_appearance_property line_end
+action_d_appearance_property         = "displayType" ":" ws ( "text" / "icon" / "textWithIcon" )
+                                    / "icon" ":" ws string_like_value
+                                    / "hot" ":" ws boolean
+                                    / "cssClasses" ":" ws array_of_string_like_value

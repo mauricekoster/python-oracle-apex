@@ -1,4 +1,5 @@
 reference                       = "@" reference_character*
+variable                        = "&" reference_character "."
 component_id                    = number / identifier / string
 code_block                      = nl? ws multiline_string
                                 / string_like_value
@@ -9,11 +10,12 @@ required_ws                     = ~r"[ \t]+"
 line_end                        = nl
 nl                              = "\n" / "\r\n"
 indent                          = ~r"[ \t]*"
-value                           = multiline_string / array / complex / boolean / number / reference / string / identifier
+value                           = multiline_string / array / complex / boolean / number / reference / variable / string / identifier
 array                           = array_of_value
 array_separator                 = required_ws / line_end indent
 array_of_value                  = "[" ( ws value ( array_separator value )* ws / line_end ( indent value line_end )? indent )? "]"
 array_of_string_like_value      = "[" (line_end indent string_like_value)+ line_end indent "]"
+one_or_more_string_like_values  = array_of_string_like_value / string_like_value
 complex                         = "{" line_end key_value_line* indent "}"
 key_value_line                  = indent key_value line_end
 key_value                       = identifier ":" ws value

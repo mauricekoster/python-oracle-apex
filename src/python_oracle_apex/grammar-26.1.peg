@@ -1,9 +1,14 @@
 component                           = page_object blank_lines
+                                    / action_c  blank_lines
                                     / region blank_lines
+                                    / action_d blank_lines
+                                    / action_e blank_lines
                                     / process blank_lines
                                     / button blank_lines
                                     / computation_a blank_lines
                                     / facet blank_lines
+                                    / column_b blank_lines
+                                    / column_f blank_lines
 page_object                         = indent "page" (required_ws component_id)? ws "(" page_body_line* indent ")" line_end
 page_body_line                      = page_direct_property_line
                                     / page_group_block
@@ -73,6 +78,7 @@ page_child_component                = region
                                     / dynamic_action
                                     / process
                                     / computation_a
+                                    / branch_a
 #####
 # REGION
 #####
@@ -250,6 +256,10 @@ region_pagination_property          = "type" ":" ws ( "rowRangesXToYNoPagination
 
 
 region_child_component              = facet
+                                    / action_d
+                                    / action_e
+                                    / column_b
+                                    / column_f
 page_item                           = indent "pageItem" (required_ws component_id)? ws "(" line_end page_item_body_line* indent ")" line_end
 page_item_body_line                 = page_item_direct_property_line
                                     / page_item_group_block
@@ -267,6 +277,8 @@ page_item_group_block               = page_item_label
                                     / page_item_advanced
                                     / page_item_security
                                     / page_item_session_state
+                                    / page_item_lov
+                                    / page_item_default
 
 page_item_label                     = indent "label" ws "{" line_end page_item_label_property_line* indent "}" line_end
 page_item_label_property_line       = indent page_item_label_property line_end
@@ -335,6 +347,36 @@ page_item_security_property         = "authorizationScheme" ":" ws reference
                                     / "encryptSessionState" ":" ws boolean
                                     / "escapeSpecialChars" ":" ws boolean
                                     / "restrictedChars" ":" ws ( "alphanumWithSpace" / "webSafe" / "noSpecialChar" / "noSpecialCharNoNewline" / "workspaceSchema" / "workspaceUserSchema" / "workspaceUserSchemaId" )
+
+page_item_lov                       = indent "lov" ws "{" line_end page_item_lov_property_line* indent "}" line_end
+page_item_lov_property_line         = indent page_item_lov_property line_end
+page_item_lov_property              = "type" ":" ws ( "sharedComponent" / "sqlQuery" / "staticValues" / "functionBody" )
+                                    / "lov" ":" ws reference
+                                    / "sqlQuery" ":" ws code_block
+                                    / "staticValues" ":" ws multiline_string
+                                    / "language" ":" ws ( "plsql" / "javaScript-mle" )
+                                    / "plsqlFunctionBody" ":" ws code_block
+                                    / "javaScriptFunctionBody" ":" ws code_block
+                                    / "displayExtraValues" ":" ws boolean
+                                    / "displayNullValue" ":" ws boolean
+                                    / "nullDisplayValue" ":" ws string_like_value
+                                    / "nullReturnValue" ":" ws string_like_value
+
+page_item_default                   = indent "default" ws "{" line_end page_item_default_property_line* indent "}" line_end
+page_item_default_property_line     = indent page_item_default_property line_end
+page_item_default_property          = "type" ":" ws ( "static" / "item" / "sqlQuerySingleValue" 
+                                        / "sqlQueryMultipleValues" / "expression" / "functionBody" / "sequence" )
+                                    / "staticValue" ":" ws code_block
+                                    / "item" ":" ws string_like_value
+                                    / "sqlQuerySingleValue" ":" ws multiline_string
+                                    / "sqlQueryMultipleValues" ":" ws multiline_string
+                                    / "language" ":" ws ( "sql" / "plsql" / "javaScript-mle" )
+                                    / "sqlExpression" ":" ws multiline_string
+                                    / "plsqlExpression" ":" ws multiline_string
+                                    / "javaScriptExpression" ":" ws multiline_string
+                                    / "plsqlFunctionBody" ":" ws multiline_string
+                                    / "javaScriptFunctionBody" ":" ws multiline_string
+                                    / "sequence" ":" ws string_like_value
 button                              = indent "button" (required_ws component_id)? ws "(" line_end button_body_line* indent ")" line_end
 button_body_line                    = button_direct_property_line
                                     / button_group_block
@@ -481,7 +523,7 @@ dynamic_action_when_property        = "event" ":" ws string_like_value
                                     / "interactiveGrid" ":" ws reference
                                     / "columns" ":" ws array_of_string_like_value
                                     / "button" ":" ws reference
-                                    / "items" ":" ws array_of_string_like_value
+                                    / "items" ":" ws one_or_more_string_like_values
                                     / "domObject" ":" ws string_like_value
                                     / "jquerySelector" ":" ws string_like_value
                                     / "javaScriptExpression" ":" ws multiline_string
@@ -529,6 +571,62 @@ action_c_execution_property         = "sequence" ":" ws number
                                     / "fireOnInit" ":" ws boolean
                                     / "stopExecutionOnError" ":" ws boolean
                                     / "waitForResult" ":" ws boolean
+action_d                            = indent "action" (required_ws component_id)? ws "(" line_end action_d_body_line* indent ")" line_end
+action_d_body_line                  = action_d_direct_property_line
+                                    / action_d_group_block
+                                    / blank_lines
+
+action_d_direct_property_line       = indent action_d_direct_property line_end
+action_d_direct_property            = "type" ":" ws ( "button" / "fullCard" / "title" / "subtitle" / "media" ) 
+                                    / "label" ":" ws string_like_value
+
+action_d_group_block                = action_d_layout
+                                    / action_d_appearance
+
+action_d_layout                     = indent "layout" ws "{" line_end action_d_layout_property_line* indent "}" line_end
+action_d_layout_property_line       = indent action_d_layout_property line_end
+action_d_layout_property            = "position" ":" ws ( "primary" / "secondary" ) 
+                                    / "sequence" ":" ws number
+
+action_d_appearance                  = indent "appearance" ws "{" line_end action_d_appearance_property_line* indent "}" line_end
+action_d_appearance_property_line    = indent action_d_appearance_property line_end
+action_d_appearance_property         = "displayType" ":" ws ( "text" / "icon" / "textWithIcon" )
+                                    / "icon" ":" ws string_like_value
+                                    / "hot" ":" ws boolean
+                                    / "cssClasses" ":" ws array_of_string_like_value
+action_e                            = indent "action" (required_ws component_id)? ws "(" line_end action_e_body_line* indent ")" line_end
+action_e_body_line                  = action_e_direct_property_line
+                                    / action_e_group_block
+                                    / blank_lines
+
+action_e_direct_property_line       = indent action_e_direct_property line_end
+action_e_direct_property            = "position" ":" ws string_like_value
+                                    / "template" ":" ws string_like_value
+                                    / "label" ":" ws string_like_value
+
+action_e_group_block                = action_e_layout
+                                    / action_e_appearance
+                                    / action_e_behavior
+
+action_e_layout                     = indent "layout" ws "{" line_end action_e_layout_property_line* indent "}" line_end
+action_e_layout_property_line       = indent action_e_layout_property line_end
+action_e_layout_property            = "sequence" ":" ws number
+
+action_e_appearance                 = indent "appearance" ws "{" line_end action_e_appearance_property_line* indent "}" line_end
+action_e_appearance_property_line   = indent action_e_appearance_property line_end
+action_e_appearance_property        = "displayType" ":" ws ( "text" / "icon" / "textWithIcon" )
+                                    / "icon" ":" ws string_like_value
+                                    / "hot" ":" ws boolean
+                                    / "showAsDisabled" ":" ws boolean
+                                    / "cssClasses" ":" ws array_of_string_like_value
+
+action_e_behavior                   = indent "behavior" ws "{" line_end action_e_behavior_property_line* indent "}" line_end
+action_e_behavior_property_line     = indent action_e_behavior_property line_end
+action_e_behavior_property          = "type" ":" ws ( "redirectThisApp" / "redirectOtherApp" / "redirectUrl" / "triggerAction" )
+                                    / "target" ":" ws value
+                                    / "targetUrl" ":" ws string_like_value
+                                    / "linkAttributes" ":" ws string_like_value
+
 facet                       = indent "facet" (required_ws component_id)? ws "(" line_end facet_body_line* indent ")" line_end
 facet_body_line             = facet_direct_property_line
                             / facet_group_block
@@ -587,9 +685,109 @@ facet_list_entries_property = "computeCounts" ":" ws boolean
                             / "maxDisplayedEntries" ":" ws number
                             / "allowToExclude" ":" ws boolean
                             / "displayFilterInitially" ":" ws boolean
+column_b                        = indent "column" (required_ws component_id)? ws "(" line_end column_b_body_line* indent ")" line_end
+column_b_body_line              = column_b_direct_property_line
+                                / column_b_group_block
+                                #/ column_b_child_component
+
+column_b_direct_property_line   = indent column_b_direct_property line_end
+column_b_direct_property        = "columnName" ":" ws string_like_value
+                                / "type" ":" ws string_like_value
+
+column_b_group_block            = column_b_layout
+                                / column_b_appearance
+                                / column_b_source
+
+column_b_layout                 = indent "layout" ws "{" line_end column_b_layout_property_line* indent "}" line_end
+column_b_layout_property_line   = indent column_b_layout_property line_end
+column_b_layout_property        = "sequence" ":" ws number
+                                / "columnAlignment" ":" ws ( "start" / "center" / "end" )
+                                / "group" ":" ws reference
+
+column_b_appearance             = indent "appearance" ws "{" line_end column_b_appearance_property_line* indent "}" line_end
+column_b_appearance_property_line = indent column_b_appearance_property line_end
+column_b_appearance_property    = "cssClasses" ":" ws array_of_string_like_value
+                                / "formatMask" ":" ws string_like_value
+                                / "backgroundColor" ":" ws string_like_value
+                                / "foregroundColor" ":" ws string_like_value
+                                / "barWidth" ":" ws number
+                                / "viewFileAs" ":" ws ( "attachment" / "inline" )
+                                / "downloadText" ":" ws string_like_value
+
+column_b_source                 = indent "source" ws "{" line_end column_b_source_property_line* indent "}" line_end
+column_b_source_property_line   = indent column_b_source_property line_end
+column_b_source_property        = "primaryKey" ":" ws boolean
+                                / "dataType" ":" ws string_like_value
+                                / "availableOnClient" ":" ws boolean
+                                / "valueProtected" ":" ws boolean
+                                / "timezoneAware" ":" ws string_like_value
+
+
+# column_b_child_component        = action_f
+
+column_f                        = indent "column" (required_ws component_id)? ws "(" line_end column_f_body_line* indent ")" line_end
+column_f_body_line              = column_f_direct_property_line
+                                / column_f_group_block
+
+column_f_direct_property_line   = indent column_f_direct_property line_end
+column_f_direct_property        = "name" ":" ws string_like_value
+
+column_f_group_block            = column_f_layout
+                                / column_f_appearance
+                                / column_f_source
+
+column_f_layout                 = indent "layout" ws "{" line_end column_f_layout_property_line* indent "}" line_end
+column_f_layout_property_line   = indent column_f_layout_property line_end
+column_f_layout_property        = "sequence" ":" ws number
+
+column_f_appearance             = indent "appearance" ws "{" line_end column_f_appearance_property_line* indent "}" line_end
+column_f_appearance_property_line = indent column_f_appearance_property line_end
+column_f_appearance_property    = "formatMask" ":" ws string_like_value
+                                / "group" ":" ws boolean
+
+column_f_source                 = indent "source" ws "{" line_end column_f_source_property_line* indent "}" line_end
+column_f_source_property_line   = indent column_f_source_property line_end
+column_f_source_property        = "type" ":" ws ( "databaseColumn" / "sqlExpression" / "none" )
+                                / "databaseColumn" ":" ws string_like_value
+                                / "sqlExpression" ":" ws code_block
+                                / "dataType" ":" ws ( "timestampWithTimeZone" / "timestampWithLocalTimeZone" / "intervalYearToMonth" / "intervalDayToSecond" / "clob" / "blob" / "boolean" / "rowid" / "bfile" / "sdoGeometry" / "varchar2" / "number" / "date" / "timestamp" )
+                                / "primaryKey" ":" ws boolean
+                                / "availableOnClient" ":" ws boolean
+                                / "valueProtected" ":" ws boolean
+
+branch_a               = indent "branch" (required_ws component_id)? ws "(" line_end branch_a_body_line* indent ")" line_end
+branch_a_body_line     = branch_a_direct_property_line
+                       / branch_a_group_block
+                       / blank_lines
+
+branch_a_direct_property_line     = indent branch_a_direct_property line_end 
+branch_a_direct_property          = "name" ":" ws string_like_value
+
+branch_a_group_block              = branch_a_execution
+                                  / branch_a_behavior
+
+branch_a_execution                      = indent "execution" ws "{" line_end branch_a_execution_property_line* indent "}" line_end
+branch_a_execution_property_line        = indent branch_a_execution_property line_end
+branch_a_execution_property             = "sequence" ":" ws number
+                                        / "point" ":" ws ( "beforeHeader" / "afterSubmit" / "validating" / "processing" / "afterProcessing" )
+
+branch_a_behavior                      = indent "behavior" ws "{" line_end branch_a_behavior_property_line* indent "}" line_end
+branch_a_behavior_property_line        = indent branch_a_behavior_property line_end
+branch_a_behavior_property             = "type" ":" ws ( "pageOrUrl" / "urlIdentifiedByItem" / "functionReturningUrl" / "page" 
+                                       / "pageIdentifiedByItem" / "functionReturningPage" / "plsqlProcedure" / "pageProcessing" )
+                                       / "target" ":" ws value
+                                       / "saveStateBeforeBranching" ":" ws boolean
+                                       / "pageNumber" ":" ws number
+                                       / "request" ":" ws string_like_value
+                                       / "item" ":" ws string_like_value
+                                       / "language" ":" ws ( "plsql" / "javaScript-mle" )
+                                       / "plsqlFunctionBody" ":" ws code_block
+                                       / "javaScriptFunctionBody" ":" ws code_block
+                                       / "plsqlCode" ":" ws code_block
 
 reference                       = "@" reference_character*
-component_id                    = string / identifier / number
+variable                        = "&" reference_character "."
+component_id                    = number / identifier / string
 code_block                      = nl? ws multiline_string
                                 / string_like_value
 multiline_string                = "```" ( any_character / nl )* "```"
@@ -599,11 +797,12 @@ required_ws                     = ~r"[ \t]+"
 line_end                        = nl
 nl                              = "\n" / "\r\n"
 indent                          = ~r"[ \t]*"
-value                           = multiline_string / array / complex / boolean / number / reference / string / identifier
+value                           = multiline_string / array / complex / boolean / number / reference / variable / string / identifier
 array                           = array_of_value
 array_separator                 = required_ws / line_end indent
 array_of_value                  = "[" ( ws value ( array_separator value )* ws / line_end ( indent value line_end )? indent )? "]"
 array_of_string_like_value      = "[" (line_end indent string_like_value)+ line_end indent "]"
+one_or_more_string_like_values  = array_of_string_like_value / string_like_value
 complex                         = "{" line_end key_value_line* indent "}"
 key_value_line                  = indent key_value line_end
 key_value                       = identifier ":" ws value

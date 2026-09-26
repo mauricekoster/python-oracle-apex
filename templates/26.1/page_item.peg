@@ -15,6 +15,8 @@ page_item_group_block               = page_item_label
                                     / page_item_advanced
                                     / page_item_security
                                     / page_item_session_state
+                                    / page_item_lov
+                                    / page_item_default
 
 page_item_label                     = indent "label" ws "{" line_end page_item_label_property_line* indent "}" line_end
 page_item_label_property_line       = indent page_item_label_property line_end
@@ -83,3 +85,33 @@ page_item_security_property         = "authorizationScheme" ":" ws reference
                                     / "encryptSessionState" ":" ws boolean
                                     / "escapeSpecialChars" ":" ws boolean
                                     / "restrictedChars" ":" ws ( "alphanumWithSpace" / "webSafe" / "noSpecialChar" / "noSpecialCharNoNewline" / "workspaceSchema" / "workspaceUserSchema" / "workspaceUserSchemaId" )
+
+page_item_lov                       = indent "lov" ws "{" line_end page_item_lov_property_line* indent "}" line_end
+page_item_lov_property_line         = indent page_item_lov_property line_end
+page_item_lov_property              = "type" ":" ws ( "sharedComponent" / "sqlQuery" / "staticValues" / "functionBody" )
+                                    / "lov" ":" ws reference
+                                    / "sqlQuery" ":" ws code_block
+                                    / "staticValues" ":" ws multiline_string
+                                    / "language" ":" ws ( "plsql" / "javaScript-mle" )
+                                    / "plsqlFunctionBody" ":" ws code_block
+                                    / "javaScriptFunctionBody" ":" ws code_block
+                                    / "displayExtraValues" ":" ws boolean
+                                    / "displayNullValue" ":" ws boolean
+                                    / "nullDisplayValue" ":" ws string_like_value
+                                    / "nullReturnValue" ":" ws string_like_value
+
+page_item_default                   = indent "default" ws "{" line_end page_item_default_property_line* indent "}" line_end
+page_item_default_property_line     = indent page_item_default_property line_end
+page_item_default_property          = "type" ":" ws ( "static" / "item" / "sqlQuerySingleValue" 
+                                        / "sqlQueryMultipleValues" / "expression" / "functionBody" / "sequence" )
+                                    / "staticValue" ":" ws code_block
+                                    / "item" ":" ws string_like_value
+                                    / "sqlQuerySingleValue" ":" ws multiline_string
+                                    / "sqlQueryMultipleValues" ":" ws multiline_string
+                                    / "language" ":" ws ( "sql" / "plsql" / "javaScript-mle" )
+                                    / "sqlExpression" ":" ws multiline_string
+                                    / "plsqlExpression" ":" ws multiline_string
+                                    / "javaScriptExpression" ":" ws multiline_string
+                                    / "plsqlFunctionBody" ":" ws multiline_string
+                                    / "javaScriptFunctionBody" ":" ws multiline_string
+                                    / "sequence" ":" ws string_like_value
