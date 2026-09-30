@@ -3,7 +3,7 @@ import yaml
 
 from python_oracle_apex.objects import *
 
-from . import make_page
+from . import make_page, make_breadcrumb
 
 """
 Read YAML and transform to Page object.
@@ -20,5 +20,14 @@ def parse_page_file(fn: Path) -> Page:
 
 
     return make_page(data)
+
+
+def parse_breadcrumb_file(fn: Path) -> Page:
+
+    with fn.open('r') as f:
+        data = yaml.safe_load(f, comments=True)
+
+
+    return make_breadcrumb(data)
 
 
