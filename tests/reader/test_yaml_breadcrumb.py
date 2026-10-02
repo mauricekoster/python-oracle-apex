@@ -49,3 +49,15 @@ entries:
     assert isinstance(b, Breadcrumb)
 
     assert b.name == 'Breadcrumb'
+    assert len(b.entries) == 1
+    assert b.entries[0].name == "Overzicht"
+    assert b.entries[0].pageNumber == 1234
+
+    e = b.get_by('name', 'Overzicht')
+    assert e is not None
+    assert e.pageNumber == 1234
+
+    e = b.get_by('pageNumber', 1234)
+    assert e is not None
+    assert e.name == 'Overzicht'
+    

@@ -27,7 +27,6 @@ def parse_breadcrumb_file(fn: Path) -> Page:
     with fn.open('r') as f:
         data = yaml.safe_load(f, comments=True)
 
-
-    return make_breadcrumb(data)
+    return make_breadcrumb(data[-1])
 
 

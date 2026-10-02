@@ -5,6 +5,11 @@ from .action_c import (
     ActionCAffectedElements,
     ActionCExecution
 )
+from .entry_b import (
+    EntryBExecution,
+    EntryBLink,
+    EntryB
+)
 from .breadcrumb import (
     Breadcrumb
 )
@@ -14,11 +19,7 @@ from .button import (
     ButtonBehavior,
     ButtonLayout
 )
-from .entry_b import (
-    EntryBExecution,
-    EntryBLink,
-    EntryB
-)
+
 from .dynamic_action import (
     DynamicAction,
     DynamicActionExecution,

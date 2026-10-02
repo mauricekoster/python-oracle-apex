@@ -8,5 +8,11 @@ class EntryBLink(ApexGroup):
     pass
 
 class EntryB(ApexObject):
-    pass
+    @property
+    def name(self):
+        return self.properties.get('name', "<NONAME>")
+    
+    @property
+    def pageNumber(self):
+        return self.properties.get('pageNumber', None)
 
