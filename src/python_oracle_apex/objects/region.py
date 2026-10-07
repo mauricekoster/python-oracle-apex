@@ -1,4 +1,4 @@
-from . import ApexGroup, ApexObject
+from . import ApexGroup, ApexObject, Column
 
 class RegionLayout(ApexGroup):
     def __init__(self, initial_data={}):
@@ -68,4 +68,7 @@ class Region(ApexObject):
     def source(self):
         return self.groups.get('source', RegionSource())
       
+    @property
+    def columns(self) -> list[Column]:
+        return [x for x in self.children if isinstance(x, Column)]
     

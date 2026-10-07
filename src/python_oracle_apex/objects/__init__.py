@@ -10,6 +10,10 @@ from .entry_b import (
     EntryBLink,
     EntryB
 )
+from .column import (
+    Column,
+    ColumnHeading
+)
 from .breadcrumb import (
     Breadcrumb
 )

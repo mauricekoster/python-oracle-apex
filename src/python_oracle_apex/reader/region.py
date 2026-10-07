@@ -1,6 +1,6 @@
 from python_oracle_apex.objects import *
 from .utils import make_group, make_properties
-
+from . import make_column
 
 def make_region_layout(data):
     f = {
@@ -47,4 +47,9 @@ def make_region(region) -> Region:
     if 'appearance' in region:
         a = make_region_appearance(region['appearance'])
         r.add_group('appearance', a)
+
+    if 'columns' in region:
+        for col in region['columns']:
+            c = make_column(col)
+            r.add_child(c)
     return r

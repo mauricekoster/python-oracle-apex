@@ -1,4 +1,5 @@
 from .entry_b import make_entry_b
+from .column import make_column
 from .breadcrumb import make_breadcrumb
 from .button import make_button
 from .region import make_region
@@ -10,6 +11,7 @@ __all__ = [
     "make_breadcrumb",
     "make_entry_b",
     "make_button",
+    "make_column",
     "parse_breadcrumb_file",
     "parse_page_file",
     "make_region",
