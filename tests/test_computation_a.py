@@ -1,4 +1,4 @@
-from python_oracle_apex import *
+from apexparser import *
 
 
 def test_computation_c_0(apex_parser):

@@ -50,8 +50,8 @@ page_item_layout_property           = "sequence" ":" ws number
 page_item_appearance                = indent "appearance" ws "{" line_end page_item_appearance_property_line* indent "}" line_end
 page_item_appearance_property_line  = indent page_item_appearance_property line_end
 page_item_appearance_property       = "template" ":" ws reference
-                                    / "templateOptions" ":" ws ( array_of_string_like_value / string_like_value )
-                                    / "cssClasses" ":" ws ( array_of_string_like_value / string_like_value )
+                                    / "templateOptions" ":" ws one_or_more_string_like_values
+                                    / "cssClasses" ":" ws one_or_more_string_like_values
                                     / "icon" ":" ws string_like_value
                                     / "formatMask" ":" ws string_like_value
                                     / "valuePlaceholder" ":" ws string_like_value
@@ -68,10 +68,10 @@ page_item_advanced_property_line    = indent page_item_advanced_property line_en
 page_item_advanced_property         = "cssClasses" ":" ws array_of_string_like_value
                                     / "customAttributes" ":" ws string_like_value
                                     / "optionHtmlAttributes" ":" ws array_of_string_like_value
-                                    / "preText" ":" ws ( string_like_value / multiline_string )
-                                    / "postText" ":" ws ( string_like_value / multiline_string )
+                                    / "preText" ":" ws code_block
+                                    / "postText" ":" ws code_block
                                     / "warnOnUnsavedChanges" ":" ws ( "ignore" )
-                                    / "initJavaScriptFunction" ":" ws (string_like_value / multiline_string )
+                                    / "initJavaScriptFunction" ":" ws code_block
 
 page_item_session_state             = indent "sessionState" ws "{" line_end page_item_session_state_property_line* indent "}" line_end
 page_item_session_state_property_line  = indent page_item_session_state_property line_end

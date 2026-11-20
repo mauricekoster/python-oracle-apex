@@ -1,0 +1,36 @@
+from pathlib import Path
+import yaml
+
+from apexparser.objects import *
+
+from . import make_page, make_breadcrumb
+
+"""
+Read YAML and transform to Page object.
+
+Property names will be translated to the names used in de APEX Lang spec. (version 26.1)
+"""
+
+
+
+def parse_page_file(fn: Path) -> Page:
+
+    with fn.open('r') as f:
+        data = yaml.safe_load(f, comments=True)
+
+
+    return make_page(data)
+
+
+def parse_breadcrumb_file(fn: Path) -> Page:
+
+    with fn.open('r') as f:
+        data = yaml.safe_load(f, comments=True)
+
+    ret = []
+    for b in data:
+        crumb = make_breadcrumb(b)
+        ret.append(crumb)
+    return ret
+
+

@@ -1,6 +1,6 @@
 [project]
 name = "python-oracle-apex"
-version = "0.0.5"
+version = "0.0.6"
 description = "Parsing files exported from Oracle APEX"
 readme = "README.md"
 authors = [
@@ -14,8 +14,8 @@ dependencies = [
     "pyyaml-pure>=0.1.0",
 ]
 
-[project.scripts]
-python-oracle-apex = "python_oracle_apex:main"
+[tool.uv.build-backend]
+module-name = "apexparser"
 
 [build-system]
 requires = ["uv_build>=0.12.7,<0.13.0"]

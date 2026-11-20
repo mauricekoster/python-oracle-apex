@@ -22,7 +22,7 @@ action_e_appearance_property        = "displayType" ":" ws ( "text" / "icon" / "
                                     / "icon" ":" ws string_like_value
                                     / "hot" ":" ws boolean
                                     / "showAsDisabled" ":" ws boolean
-                                    / "cssClasses" ":" ws array_of_string_like_value
+                                    / "cssClasses" ":" ws one_or_more_string_like_values
 
 action_e_behavior                   = indent "behavior" ws "{" line_end action_e_behavior_property_line* indent "}" line_end
 action_e_behavior_property_line     = indent action_e_behavior_property line_end

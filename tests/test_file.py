@@ -1,4 +1,4 @@
-from python_oracle_apex import *
+from apexparser import *
 from pathlib import Path
 
 def test_file_str(apex_parser):

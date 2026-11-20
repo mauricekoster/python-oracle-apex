@@ -1,6 +1,6 @@
-from python_oracle_apex import *
+from apexparser import *
 import yaml
-from python_oracle_apex.reader import make_page
+from apexparser.reader import make_page
 
 
 def load_data(input):

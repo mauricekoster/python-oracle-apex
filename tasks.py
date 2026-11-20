@@ -25,7 +25,7 @@ def get_template(template_name, folder, template_path: Path):
 def build(c, version="26.1"):
     main = get_template("grammar", version, Path.cwd())
 
-    target_peg = Path.cwd() / "src" / "python_oracle_apex" / f"grammar-{version}.peg"
+    target_peg = Path.cwd() / "src" / "apexparser" / f"grammar-{version}.peg"
     with target_peg.open("w") as f:
         f.write(main.render())
 

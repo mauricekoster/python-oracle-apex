@@ -1,0 +1,118 @@
+from . import ApexGroup, ApexObject
+
+
+class PageItemLabel(ApexGroup):
+    def __init__(self, initial_data={}):
+        super().__init__(initial_data)
+
+    @property
+    def label(self):
+        return self.properties.get('label', None) 
+    
+    @property
+    def alignment(self):
+        return self.properties.get('alignment', None) 
+
+class PageItemSettings(ApexGroup):
+    def __init__(self, initial_data={}):
+        super().__init__(initial_data)
+
+
+class PageItemLayout(ApexGroup):
+    def __init__(self, initial_data={}):
+        super().__init__(initial_data)
+
+    @property
+    def sequence(self):
+        return self.properties.get('sequence', None)
+
+    @property
+    def region(self):
+        return self.properties.get('region', None)
+
+
+class PageItemAppearance(ApexGroup):
+    @property
+    def template(self):
+        return self.properties.get('template', None)
+
+    @property
+    def templateOptions(self):
+        return self.properties.get('templateOptions', None)
+
+    @property
+    def height(self):
+        return self.properties.get('height', None)
+
+
+class PageItemValidation(ApexGroup):
+    def __init__(self, initial_data={}):
+            super().__init__(initial_data)
+
+class PageItemAdvanced(ApexGroup):
+    def __init__(self, initial_data={}):
+            super().__init__(initial_data)
+
+class PageItemSessionState(ApexGroup):
+    def __init__(self, initial_data={}):
+            super().__init__(initial_data)
+
+class PageItemSecurity(ApexGroup):
+    def __init__(self, initial_data={}):
+            super().__init__(initial_data)
+
+class PageItemLov(ApexGroup):
+    @property
+    def type(self):
+        return self.properties.get('type', None)
+
+    @property
+    def lov(self):
+        return self.properties.get('lov', None)
+
+    @property
+    def displayNullValue(self):
+        return self.properties.get('displayNullValue', None)
+
+
+class PageItemDefault(ApexGroup):
+    @property
+    def type(self):
+        return self.properties.get('type', None)
+
+    @property
+    def staticValue(self):
+        return self.properties.get('staticValue', None)
+
+
+
+class PageItem(ApexObject):
+
+    @property
+    def name(self):
+        return self.properties.get('name', self.component_id)
+
+    @property
+    def type(self):
+        return self.properties.get('type', None)
+
+
+    @property
+    def layout(self) -> PageItemLayout:
+        return self.groups.get('layout', PageItemLayout())
+
+    @property
+    def label(self) -> PageItemLabel:
+        return self.groups.get('label', PageItemLabel())
+
+    @property
+    def lov(self) -> PageItemLov:
+        return self.groups.get('lov', PageItemLov())
+
+    @property
+    def appearance(self) -> PageItemAppearance:
+        return self.groups.get('appearance', PageItemAppearance())
+    
+    @property
+    def default(self) -> PageItemDefault:
+        return self.groups.get('default', PageItemDefault())

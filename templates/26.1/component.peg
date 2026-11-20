@@ -1,6 +1,7 @@
-component                           = page_object blank_lines
+component                           = page_item blank_lines
+                                    / dynamic_action blank_lines
+                                    / branch_a  blank_lines
                                     / action_c  blank_lines
-                                    / region blank_lines
                                     / action_d blank_lines
                                     / action_e blank_lines
                                     / process blank_lines
@@ -9,3 +10,5 @@ component                           = page_object blank_lines
                                     / facet blank_lines
                                     / column_b blank_lines
                                     / column_f blank_lines
+                                    / region blank_lines
+                                    / page_object blank_lines

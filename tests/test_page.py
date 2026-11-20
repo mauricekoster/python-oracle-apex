@@ -1,4 +1,4 @@
-from python_oracle_apex import *
+from apexparser import *
 
 
 def test_page_0(apex_parser):

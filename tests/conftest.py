@@ -1,5 +1,5 @@
 import pytest
-from python_oracle_apex.parser import ApexParser
+from apexparser.parser import ApexParser
 
 
 @pytest.fixture(scope='package')

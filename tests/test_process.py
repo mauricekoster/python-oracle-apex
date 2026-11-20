@@ -1,5 +1,5 @@
 from parsimonious import ParseError
-from python_oracle_apex import *
+from apexparser import *
 import pytest
 
 def test_process_0(apex_parser):

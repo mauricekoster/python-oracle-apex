@@ -1,4 +1,4 @@
-from python_oracle_apex import *
+from apexparser import *
 
 
 def test_button_0(apex_parser):
@@ -21,3 +21,4 @@ def test_button_behavior(apex_parser):
 """)
 
     assert isinstance(b, Button)
+    assert b.behavior.target['page'] == 1

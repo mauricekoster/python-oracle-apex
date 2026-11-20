@@ -1,23 +1,22 @@
-from python_oracle_apex import *
+from apexparser import *
 
 
-def test_page_1():
-    p = parse_apex_file("examples/brookstrut_page_1.apx")
+def test_page():
+    p = parse_apex_file("examples/brookstrut.apx")
+    assert p.name == "Sales History Content Row"
 
-    assert p.name == "Home"
 
-def test_page_2():
-    p = parse_apex_file("examples/brookstrut_page_2.apx")
-
-    assert p.name == "Home"
-
-def test_page_3():
-    p = parse_apex_file("examples/brookstrut_page_3.apx")
-
+def test_page_p00001():
+    p = parse_apex_file("examples/brookstrut/pages/p00001-home.apx")
     assert p.name == "Home"
 
 
-def test_page_101():
-    p = parse_apex_file("examples/brookstrut_page_101.apx")
+def test_page_p00002():
+    p = parse_apex_file("examples/brookstrut/pages/p00002-sales-history-content-row.apx")
+    assert p.name == "Sales History Content Row"
+
+
+def test_page_p00101():
+    p = parse_apex_file("examples/brookstrut/pages/p00101-login.apx")
 
     assert p.name == "Login"
