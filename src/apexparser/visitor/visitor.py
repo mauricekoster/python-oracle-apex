@@ -12,6 +12,7 @@ from .process import ProcessVisitor
 from .computation_a import ComputationAVisitor
 from .facet import FacetVisitor
 from .column_b import ColumnBVisitor
+from .column_c import ColumnCVisitor
 from .column_f import ColumnFVisitor
 from .branch_a import BranchAVisitor
 
@@ -31,6 +32,7 @@ class ApxNodeVisitor(NodeVisitor,
                      FacetVisitor,
                      BranchAVisitor,
                      ColumnBVisitor,
+                     ColumnCVisitor,
                      ColumnFVisitor
                      ):
 
@@ -61,6 +63,13 @@ class ApxNodeVisitor(NodeVisitor,
 
     def visit_multiline_string(self, node, visited_children):
         return node.text
+
+    def visit_one_or_more_string_like_values(self, node, visited_children):
+        v = visited_children[0]
+        if type(v) is list:
+            return v
+        else:
+            return [v]
 
     def visit_array_of_string_like_value(self, node, visited_children):
         values = visited_children[1]

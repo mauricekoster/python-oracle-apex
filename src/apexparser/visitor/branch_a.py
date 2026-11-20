@@ -23,7 +23,7 @@ class BranchAVisitor:
                     act.add_property(item[0], item[1])
             elif item is None:
                 continue
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented(f"unprocessed: {item}")
         return act
 
@@ -49,7 +49,7 @@ class BranchAVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('behavior', BranchBehavior(d) )
     
@@ -65,7 +65,7 @@ class BranchAVisitor:
             #     return (v[0].text, v[3][0])
             # case 'warnOnUnsavedChanges':
             #     return (v[0].text, v[3].text)
-            case _:
+            case _: # pragma: no cover
                 raise RuleNotImplemented()
 
     def visit_branch_a_execution(self, node, visited_children):
@@ -74,7 +74,7 @@ class BranchAVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('execution', BranchExecution(d) )
     
@@ -90,5 +90,5 @@ class BranchAVisitor:
             #     return (v[0].text, v[3][0])
             # case 'warnOnUnsavedChanges':
             #     return (v[0].text, v[3].text)
-            case _:
+            case _: # pragma: no cover
                 raise RuleNotImplemented()

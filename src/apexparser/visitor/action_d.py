@@ -12,7 +12,7 @@ class ActionDVisitor:
         else:
             component_id = None
 
-        act = Action(component_id)
+        act = Action(component_id, variant='action_d')
         for item in body_parts:
             if type(item) is tuple:
                 if type(item[1]) is dict:
@@ -23,7 +23,7 @@ class ActionDVisitor:
                     act.add_property(item[0], item[1])
             elif item is None:
                 continue
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented(f"unprocessed: {item}")
         return act
 
@@ -50,7 +50,7 @@ class ActionDVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('layout', ActionLayout(d) )
     
@@ -64,7 +64,7 @@ class ActionDVisitor:
                 return (v[0].text, v[3])
             case 'position':
                 return (v[0].text, v[3][0].text)
-            case _:
+            case _: # pragma: no cover
                 raise RuleNotImplemented()
 
     def visit_action_d_appearance(self, node, visited_children):
@@ -73,7 +73,7 @@ class ActionDVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('appearance', ActionAppearance(d) )
     
@@ -87,5 +87,5 @@ class ActionDVisitor:
                 return (v[0].text, v[3])
             case 'displayType':
                 return (v[0].text, v[3][0].text)
-            case _:
+            case _: # pragma: no cover
                 raise RuleNotImplemented()

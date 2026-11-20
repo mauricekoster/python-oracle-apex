@@ -11,6 +11,7 @@
 {% include "action_e.peg" %}
 {% include "facet.peg" %}
 {% include "column_b.peg" %}
+{% include "column_c.peg" %}
 {% include "column_f.peg" %}
 {% include "branch_a.peg" %}
 

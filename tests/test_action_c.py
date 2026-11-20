@@ -19,6 +19,7 @@ def test_action_c_properties(apex_parser):
 """)
     
     assert isinstance(a, Action)
+    assert a.variant == 'action_c'
     
     assert a.name == 'title'
     assert a.action == 'panic'

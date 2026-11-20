@@ -9,6 +9,7 @@ component                           = page_item blank_lines
                                     / computation_a blank_lines
                                     / facet blank_lines
                                     / column_b blank_lines
+                                    / column_c blank_lines
                                     / column_f blank_lines
                                     / region blank_lines
                                     / page_object blank_lines

@@ -4,64 +4,64 @@ from . import ApexGroup, ApexObject
 class ProcessExecution(ApexGroup):
     @property
     def sequence(self):
-        return self['sequence']
+        return self.properties.get('sequence', None)
 
     @property
     def point(self):
-        return self['point']
+        return self.properties.get('point', None)
 
     @property
     def runProcess(self):
-        return self['runProcess']
+        return self.properties.get('runProcess', None)
 
 
 class ProcessAdvanced(ApexGroup):
     @property
     def staticId(self):
-        return self['staticId']
+        return self.properties.get('staticId', None)
 
     @property
     def executionMappingIdentifier(self):
-        return self['executionMappingIdentifier']
+        return self.properties.get('executionMappingIdentifier', None)
+
 
 class ProcessSource(ApexGroup):
     @property
     def location(self):
-        return self['location']
+        return self.properties.get('location', None)
 
     @property
     def language(self):
-        return self['language']
+        return self.properties.get('language', None)
 
     @property
     def remoteServer(self):
-        return self['remoteServer']
+        return self.properties.get('remoteServer', None)
     
     @property
     def plsqlCode(self):
-        return self['plsqlCode']
+        return self.properties.get('plsqlCode', None)
+
 
 class Process(ApexObject):
-    def __init__(self, component_id=None, initial_data={}):
-        super().__init__(component_id, initial_data)
-
+    # Properties
     @property
     def name(self):
-        return self['name']
+        return self.properties.get('name', None)
 
     @property
     def type(self):
-        return self['type']
+        return self.properties.get('type', None)
 
+    # Groups
     @property
     def source(self) -> ProcessSource:
-        return self['source']
-
-
-    @property
-    def execution(self):
-        return self['execution']
+        return self.groups.get('source', None)
 
     @property
-    def advanced(self):
-        return self['advanced']
+    def execution(self) -> ProcessExecution:
+        return self.groups.get('execution', None)
+
+    @property
+    def advanced(self) -> ProcessAdvanced:
+        return self.groups.get('advanced', None)

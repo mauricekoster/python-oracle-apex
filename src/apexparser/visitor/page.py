@@ -24,7 +24,7 @@ class PageVisitor:
                 page.add_child(item)
             elif item is None:
                 continue
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented(f"unprocessed: {item}")
         return page
 
@@ -54,7 +54,7 @@ class PageVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('appearance', PageAppearance(d))
 
@@ -63,7 +63,14 @@ class PageVisitor:
 
     def visit_page_appearance_property(self, node, visited_children):
         v = visited_children[0]
-        return (v[0].text, v[3])
+        
+        match v[0].text:
+            case 'pageTemplate' | 'dialogTemplate' | 'templateOptions' | 'cssClasses' | 'mediaType':
+                return (v[0].text, v[3])
+            case 'pageMode':
+                return (v[0].text, v[3][0].text)
+            case _: # pragma: no cover
+                raise RuleNotImplemented()
 
 
     def visit_page_navigation(self, node, visited_children):
@@ -72,7 +79,7 @@ class PageVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('navigation', PageNavigation(d))
     
@@ -87,6 +94,26 @@ class PageVisitor:
             case 'warnOnUnsavedChanges':
                 return (v[0].text, v[3])
 
+    def visit_page_html_header(self, node, visited_children):
+        parts = visited_children[5]
+        d = {}
+        for item in parts:
+            if type(item) is tuple:
+                d[item[0]] = item[1]
+            else: # pragma: no cover
+                raise RuleNotImplemented()
+        return ('htmlHeader', PageHtmlHeader(d))
+    
+    def visit_page_html_header_property_line(self, node, visited_children):
+        return visited_children[1]
+
+    def visit_page_html_header_property(self, node, visited_children):
+        v = visited_children[0]
+        match v[0].text:
+            case 'htmlHeader' | 'pageHtmlBodyAttribute':
+                return (v[0].text, v[3])
+            case _:
+                raise RuleNotImplemented()
 
     def visit_page_css(self, node, visited_children):
         parts = visited_children[5]
@@ -94,7 +121,7 @@ class PageVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('css', PageCss(d))
 
@@ -116,7 +143,7 @@ class PageVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('security', PageSecurity(d))
 
@@ -129,9 +156,9 @@ class PageVisitor:
         match v[0].text:
             case 'authentication' | 'pageAccessProtection':
                 return (v[0].text, v[3][0].text)
-            case 'formAutoComplete':
+            case 'formAutoComplete' | 'authorizationScheme' | 'deepLinking' | 'browserCache':
                 return (v[0].text, v[3])
-            case _:
+            case _: # pragma: no cover
                 raise RuleNotImplemented()
 
     def visit_page_advanced(self, node, visited_children):
@@ -151,9 +178,9 @@ class PageVisitor:
     def visit_page_advanced_property(self, node, visited_children):
         v = visited_children[0]
         match v[0].text:
-            case 'reloadOnSubmit' | 'duplicateSubmissionUrl':
+            case 'reloadOnSubmit' :
                 return (v[0].text, v[3][0].text)
-            case 'enableMetaTags' | 'enableDuplicatePageSubmissions':
+            case 'enableMetaTags' | 'enableDuplicatePageSubmissions' | 'duplicateSubmissionUrl':
                 return (v[0].text, v[3])
             case _:
                 raise RuleNotImplemented()

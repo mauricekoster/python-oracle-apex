@@ -87,6 +87,9 @@ class ColumnSource(ApexGroup):
 
 
 class Column(ApexObject):
+    
+    # Properties
+
     @property
     def columnName(self):
         return self.properties.get('columnName', None)
@@ -100,17 +103,27 @@ class Column(ApexObject):
         return self.properties.get('type', None)
 
     @property
+    def reportColumnQueryId(self):
+        return self.properties.get('reportColumnQueryId', None)
+
+    @property
+    def derivedColumn(self):
+        return self.properties.get('derivedColumn', None)
+    
+    # Groups
+
+    @property
     def heading(self) -> ColumnHeading:
-        return self.groups.get('heading', ColumnHeading())
+        return self.groups.get('heading', None)
 
     @property
     def layout(self) -> ColumnLayout:
-        return self.groups.get('layout', ColumnLayout())
+        return self.groups.get('layout', None)
 
     @property
     def appearance(self) -> ColumnAppearance:
-        return self.groups.get('appearance', ColumnAppearance())
+        return self.groups.get('appearance', None)
 
     @property
     def source(self) -> ColumnSource:
-        return self.groups.get('source', ColumnSource())
+        return self.groups.get('source', None)

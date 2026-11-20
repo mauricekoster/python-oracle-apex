@@ -89,6 +89,42 @@ class RegionAccessibility(ApexGroup):
         return self.properties.get('landmarkLabel', None)
 
 
+class RegionReportLayout(ApexGroup):
+    @property
+    def numberOfRowsType(self):
+        return self.properties.get('numberOfRowsType', None)
+    @property
+    def numberOfRows(self):
+        return self.properties.get('numberOfRows', None)
+    @property
+    def item(self):
+        return self.properties.get('item', None)
+
+
+class RegionPerformance(ApexGroup):
+    @property
+    def maxRowsToProcess(self):
+        return self.properties.get('maxRowsToProcess', None)
+    
+    @property
+    def lazyLoading(self):
+        return self.properties.get('lazyLoading', None)
+
+
+class RegionMessages(ApexGroup):
+    @property
+    def whenNoDataFound(self):
+        return self.properties.get('whenNoDataFound', None)
+    
+    @property
+    def whenMoreDataFound(self):
+        return self.properties.get('whenMoreDataFound', None)
+    
+    @property
+    def noDataFoundIcon(self):
+        return self.properties.get('noDataFoundIcon', None)
+
+
 class Region(ApexObject):
     # direct
 
@@ -108,35 +144,47 @@ class Region(ApexObject):
 
     @property
     def layout(self) -> RegionLayout:
-        return self.groups.get('layout', RegionLayout())
+        return self.groups.get('layout', None)
 
     @property
     def appearance(self) -> RegionAppearance:
-        return self.groups.get('appearance', RegionAppearance())
+        return self.groups.get('appearance', None)
 
     @property
     def settings(self) -> RegionSettings:
-        return self.groups.get('settings', RegionSettings())
+        return self.groups.get('settings', None)
 
     @property
     def plugin_avatar(self) -> RegionPluginAvatar:
-        return self.groups.get('plugin-avatar', RegionPluginAvatar())
+        return self.groups.get('plugin-avatar', None)
 
     @property
     def plugin_badge(self) -> RegionPluginBadge:
-        return self.groups.get('plugin-badge', RegionPluginBadge())
+        return self.groups.get('plugin-badge', None)
 
     @property
     def source(self) -> RegionSource:
-        return self.groups.get('source', RegionSource())
+        return self.groups.get('source', None)
 
     @property
     def pagination(self) -> RegionPagination:
-        return self.groups.get('pagination', RegionPagination())
+        return self.groups.get('pagination', None)
 
     @property
     def accessibility(self) -> RegionAccessibility:
-        return self.groups.get('accessibility', RegionAccessibility())
+        return self.groups.get('accessibility', None)
+
+    @property
+    def reportLayout(self) -> RegionReportLayout:
+        return self.groups.get('reportLayout', None)
+
+    @property
+    def performance(self) -> RegionPerformance:
+        return self.groups.get('performance', None)
+
+    @property
+    def messages(self) -> RegionMessages:
+        return self.groups.get('messages', None)
 
     # child
 

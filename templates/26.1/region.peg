@@ -24,6 +24,9 @@ region_group_block                  = region_layout
                                     / region_plugin_avatar
                                     / region_plugin_badge
                                     / region_pagination
+                                    / region_report_layout
+                                    / region_performance
+                                    / region_messages
 
 region_layout                       = indent "layout" ws "{" line_end region_layout_property_line* indent "}" line_end
 region_layout_property_line         = indent region_layout_property line_end
@@ -173,9 +176,27 @@ region_pagination_property          = "type" ":" ws ( "rowRangesXToYNoPagination
                                     / "entitiesPerPage" ":" ws number
                                     / "initialEntitiesCount" ":" ws number
 
+region_report_layout                      = indent "reportLayout" ws "{" line_end region_report_layout_property_line* indent "}" line_end
+region_report_layout_property_line        = indent region_report_layout_property line_end
+region_report_layout_property             = "numberOfRowsType" ":" ws ( "staticValue" / "itemValue" ) 
+                                          / "numberOfRows" ":" ws number
+                                          / "item" ":" ws string_like_value
+
+
+region_performance                      = indent "performance" ws "{" line_end region_performance_property_line* indent "}" line_end
+region_performance_property_line        = indent region_performance_property line_end
+region_performance_property             = "lazyLoading" ":" ws boolean
+                                        / "maxRowsToProcess" ":" ws number
+
+region_messages                      = indent "messages" ws "{" line_end region_messages_property_line* indent "}" line_end
+region_messages_property_line        = indent region_messages_property line_end
+region_messages_property             = "whenNoDataFound" ":" ws code_block
+                                     / "whenMoreDataFound" ":" ws code_block
+                                     / "noDataFoundIcon" ":" ws string_like_value
 
 region_child_component              = facet
                                     / action_d
                                     / action_e
                                     / column_b
+                                    / column_c
                                     / column_f

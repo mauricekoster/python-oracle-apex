@@ -12,20 +12,26 @@ page_direct_property                = "page" ":" ws number
                                     / "pageGroup" ":" ws reference
 
 page_group_block                    = page_appearance
-                                    / page_navigation
-                                    / page_css
-                                    / page_security
                                     / page_advanced
+                                    / page_css
                                     / page_help
+                                    / page_html_header
+                                    / page_navigation
+                                    / page_security
 
 page_appearance                     = indent "appearance" ws "{" line_end page_appearance_property_line* indent "}" line_end
 page_appearance_property_line       = indent page_appearance_property line_end
 page_appearance_property            = "pageMode" ":" ws ( "normal" / "modalDialog" / "nonModalDialog" )
                                     / "pageTemplate" ":" ws reference
                                     / "dialogTemplate" ":" ws reference
-                                    / "templateOptions" ":" ws ( array_of_string_like_value / string_like_value )
-                                    / "cssClasses" ":" ws array_of_string_like_value
+                                    / "templateOptions" ":" ws one_or_more_string_like_values
+                                    / "cssClasses" ":" ws one_or_more_string_like_values
                                     / "mediaType" ":" ws string_like_value
+
+page_html_header                    = indent "htmlHeader" ws "{" line_end page_html_header_property_line* indent "}" line_end
+page_html_header_property_line      = indent page_html_header_property line_end
+page_html_header_property           = "htmlHeader" ":" ws code_block
+                                    / "pageHtmlBodyAttribute" ":" ws code_block
 
 page_navigation                     = indent "navigation" ws "{" line_end page_navigation_property_line* indent "}" line_end
 page_navigation_property_line       = indent page_navigation_property line_end

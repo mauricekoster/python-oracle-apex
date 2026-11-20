@@ -75,24 +75,28 @@ from .facet import (
 )
 from .region import (
     Region, 
-    RegionAppearance, 
-    RegionLayout,
+    RegionAccessibility,
     RegionAdvanced,
+    RegionAppearance, 
     RegionComponentAppearance,
     RegionImage,
-    RegionSource,
-    RegionSettings,
+    RegionLayout,
+    RegionMessages,
+    RegionPagination,
+    RegionPerformance,
     RegionPluginAvatar,
     RegionPluginBadge,
-    RegionPagination,
-    RegionAccessibility
+    RegionReportLayout,
+    RegionSettings,
+    RegionSource,
 )
 from .page import (
     Page, 
-    PageHelp, 
-    PageAppearance, 
     PageAdvanced, 
+    PageAppearance, 
     PageCss, 
+    PageHelp, 
+    PageHtmlHeader,
     PageNavigation, 
     PageSecurity
 )

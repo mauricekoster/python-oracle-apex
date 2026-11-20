@@ -119,3 +119,54 @@ def test_region_accessibility(apex_parser):
     assert isinstance(r, Region)
 
     assert r.accessibility.useLandmark == True
+
+def test_region_report_layout(apex_parser):
+    r = apex_parser.parse(
+"""region A (
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 1000
+            item: something
+        }
+    )
+""")
+
+    assert isinstance(r, Region)
+
+    assert r.reportLayout.numberOfRowsType == "staticValue"
+    assert r.reportLayout.numberOfRows == 1000
+    assert r.reportLayout.item == "something"
+
+
+def test_region_performance(apex_parser):
+    r = apex_parser.parse(
+"""region A (
+        performance {
+            lazyLoading: false
+            maxRowsToProcess: 1000
+        }
+    )
+""")
+
+    assert isinstance(r, Region)
+
+    assert r.performance.maxRowsToProcess == 1000
+    assert r.performance.lazyLoading == False
+
+
+def test_region_messages(apex_parser):
+    r = apex_parser.parse(
+"""region A (
+        messages {
+            whenNoDataFound: no data found
+            whenMoreDataFound: more data found
+            noDataFoundIcon: icon-name
+        }
+    )
+""")
+
+    assert isinstance(r, Region)
+
+    assert r.messages.whenNoDataFound == 'no data found'
+    assert r.messages.whenMoreDataFound == 'more data found'
+    assert r.messages.noDataFoundIcon == 'icon-name'

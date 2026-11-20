@@ -12,7 +12,7 @@ class ActionEVisitor:
         else:
             component_id = None
 
-        act = Action(component_id)
+        act = Action(component_id, variant='action_e')
         for item in body_parts:
             if type(item) is tuple:
                 if type(item[1]) is dict:
@@ -23,7 +23,7 @@ class ActionEVisitor:
                     act.add_property(item[0], item[1])
             elif item is None:
                 continue
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented(f"unprocessed: {item}")
         return act
 
@@ -50,7 +50,7 @@ class ActionEVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('layout', ActionLayout(d) )
     
@@ -62,7 +62,7 @@ class ActionEVisitor:
         match v[0].text:
             case 'sequence':
                 return (v[0].text, v[3])
-            case _:
+            case _: # pragma: no cover
                 raise RuleNotImplemented()
 
     def visit_action_e_appearance(self, node, visited_children):
@@ -71,7 +71,7 @@ class ActionEVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('appearance', ActionAppearance(d) )
     
@@ -85,7 +85,7 @@ class ActionEVisitor:
                 return (v[0].text, v[3])
             case 'displayType':
                 return (v[0].text, v[3][0].text)
-            case _:
+            case _: # pragma: no cover
                 raise RuleNotImplemented()
 
     def visit_action_e_behavior(self, node, visited_children):
@@ -94,7 +94,7 @@ class ActionEVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('behavior', ActionBehavior(d) )
     
@@ -108,5 +108,5 @@ class ActionEVisitor:
                 return (v[0].text, v[3])
             case 'type':
                 return (v[0].text, v[3][0].text)
-            case _:
+            case _: # pragma: no cover
                 raise RuleNotImplemented()

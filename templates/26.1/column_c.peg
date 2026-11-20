@@ -1,0 +1,39 @@
+column_c                        = indent "column" (required_ws component_id)? ws "(" line_end column_c_body_line* indent ")" line_end
+column_c_body_line              = column_c_direct_property_line
+                                / column_c_group_block
+                                #/ column_c_child_component
+
+column_c_direct_property_line   = indent column_c_direct_property line_end
+column_c_direct_property        = "columnName" ":" ws string_like_value
+                                / "reportColumnQueryId" ":" ws string_like_value
+                                / "derivedColumn" ":" ws string_like_value
+                                / "type" ":" ws ( "plainText" / "plainTextBasedOnLov" / "richText" / "link" / "displayImage" / "downloadBlob" / "percentGraph" / "hidden" / "displayAsTextSavesState" / "datePickerClassic" / "datePicker" / "textField" / "textArea" / "selectList" / "radioGroup" / "hiddenField" / "popupLov" / "popupKeyLov" / "simpleCheckbox" / "rowSelector" )
+
+column_c_group_block            = column_c_layout
+                                / column_c_appearance
+                                / column_c_heading
+
+column_c_layout                 = indent "layout" ws "{" line_end column_c_layout_property_line* indent "}" line_end
+column_c_layout_property_line   = indent column_c_layout_property line_end
+column_c_layout_property        = "sequence" ":" ws number
+                                / "columnAlignment" ":" ws ( "start" / "center" / "end" )
+
+column_c_appearance             = indent "appearance" ws "{" line_end column_c_appearance_property_line* indent "}" line_end
+column_c_appearance_property_line = indent column_c_appearance_property line_end
+column_c_appearance_property    = "formatMask" ":" ws string_like_value
+                                / "backgroundColor" ":" ws string_like_value
+                                / "foregroundColor" ":" ws string_like_value
+                                / "barWidth" ":" ws number
+                                / "width" ":" ws number
+                                / "height" ":" ws number
+                                / "viewFileAs" ":" ws ( "attachment" / "inline" )
+                                / "downloadText" ":" ws string_like_value
+                                / "template" ":" ws reference
+
+column_c_heading                = indent "heading" ws "{" line_end column_c_heading_property_line* indent "}" line_end
+column_c_heading_property_line  = indent column_c_heading_property line_end
+column_c_heading_property       = "heading" ":" ws string_like_value
+                                / "alignment" ":" ws ( "start" / "center" / "end" ) 
+
+
+
