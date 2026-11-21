@@ -14,19 +14,20 @@ region_direct_property              = "name" ":" ws string_like_value
                                     / "type" ":" ws string_like_value
 
 region_group_block                  = region_layout
-                                    / region_appearance
-                                    / region_image
-                                    / region_advanced
-                                    / region_source
-                                    / region_component_appearance
-                                    / region_settings
                                     / region_accessibility
+                                    / region_advanced
+                                    / region_appearance
+                                    / region_component_appearance
+                                    / region_component_advanced
+                                    / region_image
+                                    / region_messages
+                                    / region_pagination
+                                    / region_performance
                                     / region_plugin_avatar
                                     / region_plugin_badge
-                                    / region_pagination
                                     / region_report_layout
-                                    / region_performance
-                                    / region_messages
+                                    / region_settings
+                                    / region_source
 
 region_layout                       = indent "layout" ws "{" line_end region_layout_property_line* indent "}" line_end
 region_layout_property_line         = indent region_layout_property line_end
@@ -109,8 +110,8 @@ region_component_appearance_property = "display" ":" ws string_like_value
                                     / "gridColumns" ":" ws ( "2" / "3" / "4" / "5" )
                                     / "listTemplate" ":" ws reference
                                     / "breadcrumbTemplate" ":" ws reference
-                                    / "cssClasses" ":" ws array_of_string_like_value
-                                    / "templateOptions" ":" ws (array_of_string_like_value / string_like_value)
+                                    / "cssClasses" ":" ws one_or_more_string_like_values
+                                    / "templateOptions" ":" ws one_or_more_string_like_values
                                     / "templateType" ":" ws ( "theme" / "predefined" )
                                     / "template" ":" ws ( "html" / "verticalReport" / "csv" / "xml" / reference )
                                     / "customAttributes" ":" ws string_like_value
@@ -193,6 +194,18 @@ region_messages_property_line        = indent region_messages_property line_end
 region_messages_property             = "whenNoDataFound" ":" ws code_block
                                      / "whenMoreDataFound" ":" ws code_block
                                      / "noDataFoundIcon" ":" ws string_like_value
+
+region_component_advanced                      = indent "componentAdvanced" ws "{" line_end region_component_advanced_property_line* indent "}" line_end
+region_component_advanced_property_line        = indent region_component_advanced_property line_end
+region_component_advanced_property             = "stripHtml" ":" ws boolean
+                                               / "sortNulls" ":" ws ( "first" / "last" ) 
+                                               / "customSvgStyles" ":" ws code_block
+                                               / "oracleTextIndexColumn" ":" ws string_like_value
+                                               / "emailFromAddress" ":" ws string_like_value
+                                               / "initJavaScriptFunction" ":" ws code_block
+                                               / "regionAlias" ":" ws string_like_value 
+                                               / "reportIdItem" ":" ws string_like_value
+                                               / "maxRowsPerPageInSelector" ":" ws string_like_value
 
 region_child_component              = facet
                                     / action_d

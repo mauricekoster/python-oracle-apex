@@ -1,6 +1,7 @@
 column_f                        = indent "column" (required_ws component_id)? ws "(" line_end column_f_body_line* indent ")" line_end
 column_f_body_line              = column_f_direct_property_line
                                 / column_f_group_block
+                                / blank_lines
 
 column_f_direct_property_line   = indent column_f_direct_property line_end
 column_f_direct_property        = "name" ":" ws string_like_value

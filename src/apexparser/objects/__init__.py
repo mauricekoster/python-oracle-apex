@@ -3,10 +3,11 @@ from .base import ApexObject, ApexGroup
 from .action import (
     Action,
     ActionAffectedElements,
+    ActionAppearance,
+    ActionBehavior,
     ActionExecution,
     ActionLayout,
-    ActionAppearance,
-    ActionBehavior
+    ActionSettings,
 )
 from .branch import (
     Branch,
@@ -20,10 +21,12 @@ from .entry_b import (
 )
 from .column import (
     Column,
+    ColumnAppearance,
     ColumnHeading,
     ColumnLayout,
-    ColumnAppearance,
-    ColumnSource
+    ColumnLink,
+    ColumnSorting,
+    ColumnSource,
 )
 from .breadcrumb import (
     Breadcrumb
@@ -41,10 +44,10 @@ from .dynamic_action import (
     DynamicActionClientSideCondition,
     DynamicActionWhen
 )
-from .computation_a import (
-    ComputationA,
-    ComputationAExecution,
-    ComputationAComputation
+from .computation import (
+    Computation,
+    ComputationExecution,
+    ComputationComputation
 )
 from .page_item import (
     PageItem, 
@@ -79,6 +82,7 @@ from .region import (
     RegionAdvanced,
     RegionAppearance, 
     RegionComponentAppearance,
+    RegionComponentAdvanced,
     RegionImage,
     RegionLayout,
     RegionMessages,

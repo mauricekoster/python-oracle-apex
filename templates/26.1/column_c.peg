@@ -1,6 +1,7 @@
 column_c                        = indent "column" (required_ws component_id)? ws "(" line_end column_c_body_line* indent ")" line_end
 column_c_body_line              = column_c_direct_property_line
                                 / column_c_group_block
+                                / blank_lines
                                 #/ column_c_child_component
 
 column_c_direct_property_line   = indent column_c_direct_property line_end
@@ -12,6 +13,8 @@ column_c_direct_property        = "columnName" ":" ws string_like_value
 column_c_group_block            = column_c_layout
                                 / column_c_appearance
                                 / column_c_heading
+                                / column_c_link
+                                / column_c_sorting
 
 column_c_layout                 = indent "layout" ws "{" line_end column_c_layout_property_line* indent "}" line_end
 column_c_layout_property_line   = indent column_c_layout_property line_end
@@ -35,5 +38,14 @@ column_c_heading_property_line  = indent column_c_heading_property line_end
 column_c_heading_property       = "heading" ":" ws string_like_value
                                 / "alignment" ":" ws ( "start" / "center" / "end" ) 
 
+column_c_sorting                      = indent "sorting" ws "{" line_end column_c_sorting_property_line* indent "}" line_end
+column_c_sorting_property_line        = indent column_c_sorting_property line_end
+column_c_sorting_property             = "defaultSequence" ":" ws ( "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" )
+                                      / "direction" ":" ws ( "desc" ) 
+                                      / "sortable" ":" ws boolean
 
-
+column_c_link                      = indent "link" ws "{" line_end column_c_link_property_line* indent "}" line_end
+column_c_link_property_line        = indent column_c_link_property line_end
+column_c_link_property             = "target" ":" ws value
+                                   / "linkText" ":" ws string_like_value
+                                   / "linkAttributes" ":" ws string_like_value

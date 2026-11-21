@@ -10,6 +10,15 @@ def test_region_0(apex_parser):
     assert isinstance(r, Region)
 
 
+def test_region_1(apex_parser):
+    r = apex_parser.parse(
+"""region (
+    )
+""")
+
+    assert isinstance(r, Region)
+
+
 def test_region_source(apex_parser):
     r = apex_parser.parse(
 """region A (
@@ -170,3 +179,77 @@ def test_region_messages(apex_parser):
     assert r.messages.whenNoDataFound == 'no data found'
     assert r.messages.whenMoreDataFound == 'more data found'
     assert r.messages.noDataFoundIcon == 'icon-name'
+
+
+
+def test_region_component_appearance(apex_parser):
+    r = apex_parser.parse(
+"""region A (
+        componentAppearance {
+            display: text
+            layout: float
+            gridColumns: 5
+            listTemplate: @/test
+            breadcrumbTemplate: @/breadcrumb
+            cssClasses: warning
+            templateOptions: #DEFAULT#
+            templateType: theme
+            template: @/test
+            customAttributes: mummy
+            showNullValuesAs: NIX
+            selectFirstRow: true
+            fixedRowHeight: false
+        }
+    )
+""")
+
+    assert isinstance(r, Region)
+
+    assert r.componentAppearance.display == 'text'
+    assert r.componentAppearance.layout == 'float'
+    assert r.componentAppearance.gridColumns == '5'
+    assert r.componentAppearance.listTemplate == '@/test'
+    assert r.componentAppearance.breadcrumbTemplate == '@/breadcrumb'
+    assert r.componentAppearance.cssClasses == ['warning']
+    assert r.componentAppearance.templateOptions == ['#DEFAULT#']
+    assert r.componentAppearance.templateType == 'theme'
+    assert r.componentAppearance.template == '@/test'
+    assert r.componentAppearance.customAttributes == 'mummy'
+    assert r.componentAppearance.showNullValuesAs == 'NIX'
+    assert r.componentAppearance.selectFirstRow == True
+    assert r.componentAppearance.fixedRowHeight == False
+
+
+def test_region_component_advanced(apex_parser):
+    r = apex_parser.parse(
+"""region A (
+        componentAdvanced {
+            stripHtml: true
+            sortNulls: first
+            customSvgStyles:
+                ```css
+                .a { text-color: red; }
+                ```
+            oracleTextIndexColumn: something
+            emailFromAddress: admin@example.com
+            initJavaScriptFunction:
+                ```javascript
+                ```
+            regionAlias: alias
+            reportIdItem: id
+            maxRowsPerPageInSelector: yes
+        }
+    )
+""")
+
+    assert isinstance(r, Region)
+
+    assert r.componentAdvanced.stripHtml == True
+    assert r.componentAdvanced.sortNulls == 'first'
+    assert r.componentAdvanced.customSvgStyles == "```css\n.a { text-color: red; }\n```"
+    assert r.componentAdvanced.oracleTextIndexColumn == 'something'
+    assert r.componentAdvanced.emailFromAddress == 'admin@example.com'
+    assert r.componentAdvanced.initJavaScriptFunction == '```javascript\n```'
+    assert r.componentAdvanced.regionAlias == 'alias'
+    assert r.componentAdvanced.reportIdItem == 'id'
+    assert r.componentAdvanced.maxRowsPerPageInSelector == 'yes'

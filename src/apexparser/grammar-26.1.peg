@@ -105,19 +105,20 @@ region_direct_property              = "name" ":" ws string_like_value
                                     / "type" ":" ws string_like_value
 
 region_group_block                  = region_layout
-                                    / region_appearance
-                                    / region_image
-                                    / region_advanced
-                                    / region_source
-                                    / region_component_appearance
-                                    / region_settings
                                     / region_accessibility
+                                    / region_advanced
+                                    / region_appearance
+                                    / region_component_appearance
+                                    / region_component_advanced
+                                    / region_image
+                                    / region_messages
+                                    / region_pagination
+                                    / region_performance
                                     / region_plugin_avatar
                                     / region_plugin_badge
-                                    / region_pagination
                                     / region_report_layout
-                                    / region_performance
-                                    / region_messages
+                                    / region_settings
+                                    / region_source
 
 region_layout                       = indent "layout" ws "{" line_end region_layout_property_line* indent "}" line_end
 region_layout_property_line         = indent region_layout_property line_end
@@ -200,8 +201,8 @@ region_component_appearance_property = "display" ":" ws string_like_value
                                     / "gridColumns" ":" ws ( "2" / "3" / "4" / "5" )
                                     / "listTemplate" ":" ws reference
                                     / "breadcrumbTemplate" ":" ws reference
-                                    / "cssClasses" ":" ws array_of_string_like_value
-                                    / "templateOptions" ":" ws (array_of_string_like_value / string_like_value)
+                                    / "cssClasses" ":" ws one_or_more_string_like_values
+                                    / "templateOptions" ":" ws one_or_more_string_like_values
                                     / "templateType" ":" ws ( "theme" / "predefined" )
                                     / "template" ":" ws ( "html" / "verticalReport" / "csv" / "xml" / reference )
                                     / "customAttributes" ":" ws string_like_value
@@ -284,6 +285,18 @@ region_messages_property_line        = indent region_messages_property line_end
 region_messages_property             = "whenNoDataFound" ":" ws code_block
                                      / "whenMoreDataFound" ":" ws code_block
                                      / "noDataFoundIcon" ":" ws string_like_value
+
+region_component_advanced                      = indent "componentAdvanced" ws "{" line_end region_component_advanced_property_line* indent "}" line_end
+region_component_advanced_property_line        = indent region_component_advanced_property line_end
+region_component_advanced_property             = "stripHtml" ":" ws boolean
+                                               / "sortNulls" ":" ws ( "first" / "last" ) 
+                                               / "customSvgStyles" ":" ws code_block
+                                               / "oracleTextIndexColumn" ":" ws string_like_value
+                                               / "emailFromAddress" ":" ws string_like_value
+                                               / "initJavaScriptFunction" ":" ws code_block
+                                               / "regionAlias" ":" ws string_like_value 
+                                               / "reportIdItem" ":" ws string_like_value
+                                               / "maxRowsPerPageInSelector" ":" ws string_like_value
 
 region_child_component              = facet
                                     / action_d
@@ -497,6 +510,8 @@ process_advanced_property           = "staticId" ":" ws string_like_value
 computation_a                       = indent "computation" (required_ws component_id)? ws "(" line_end computation_a_body_line* indent ")" line_end
 computation_a_body_line             = computation_a_direct_property_line
                                     / computation_a_group_block
+                                    / blank_lines
+                                    
 computation_a_direct_property_line  = indent computation_a_direct_property line_end
 computation_a_direct_property       = "itemName" ":" ws string_like_value
 
@@ -512,14 +527,14 @@ computation_a_computation           = indent "computation" ws "{" line_end compu
 computation_a_computation_property_line = indent computation_a_computation_property line_end
 computation_a_computation_property  = "type" ":" ws ( "staticValue" / "item" / "sqlQuerySingleValue" / "sqlQueryMultipleValues" / "expression" / "functionBody" / "preference" )
                                     / "staticValue" ":" ws string_like_value
-                                    / "sqlQuery" ":" ws multiline_string
+                                    / "sqlQuery" ":" ws code_block
                                     / "computationProcessed" ":" ws ( "newSession" / "replaceExisting" / "addToExisting" / "raiseErrorOnReplace" / "replaceNullValues" )
                                     / "language" ":" ws ( "sql" / "plsql" / "javaScript-mle" )
-                                    / "sqlExpression" ":" ws multiline_string
-                                    / "plsqlExpression" ":" ws multiline_string
-                                    / "javaScriptExpression" ":" ws multiline_string
-                                    / "plsqlFunctionBody" ":" ws multiline_string
-                                    / "javaScriptFunctionBody" ":" ws multiline_string
+                                    / "sqlExpression" ":" ws code_block
+                                    / "plsqlExpression" ":" ws code_block
+                                    / "javaScriptExpression" ":" ws code_block
+                                    / "plsqlFunctionBody" ":" ws code_block
+                                    / "javaScriptFunctionBody" ":" ws code_block
                                     / "itemName" ":" ws string_like_value
                                     / "preference" ":" ws string_like_value
 dynamic_action                      = indent "dynamicAction" (required_ws component_id)? ws "(" line_end dynamic_action_body_line* indent ")" line_end
@@ -582,14 +597,15 @@ action_c_direct_property            = "name" ":" ws string_like_value
 
 action_c_group_block                = action_c_affected_elements
                                     / action_c_execution
+                                    / action_c_settings
 
 action_c_affected_elements          = indent "affectedElements" ws "{" line_end action_c_affected_elements_property_line* indent "}" line_end
 action_c_affected_elements_property_line = indent action_c_affected_elements_property line_end
 action_c_affected_elements_property = "selectionType" ":" ws string_like_value
                                     / "region" ":" ws reference
-                                    / "columns" ":" ws array_of_string_like_value
+                                    / "columns" ":" ws one_or_more_string_like_values
                                     / "button" ":" ws reference
-                                    / "items" ":" ws ( array_of_string_like_value / string_like_value )
+                                    / "items" ":" ws one_or_more_string_like_values
                                     / "domObject" ":" ws string_like_value
                                     / "jquerySelector" ":" ws string_like_value
                                     / "javaScriptExpression" ":" ws code_block
@@ -602,6 +618,13 @@ action_c_execution_property         = "sequence" ":" ws number
                                     / "fireOnInit" ":" ws boolean
                                     / "stopExecutionOnError" ":" ws boolean
                                     / "waitForResult" ":" ws boolean
+
+# This group is undocumented
+action_c_settings                      = indent "settings" ws "{" line_end action_c_settings_property_line* indent "}" line_end
+action_c_settings_property_line        = indent action_c_settings_property line_end
+action_c_settings_property             = "type" ":" ws ( "sqlQuery" / "something-else" )
+                                       / "sqlQuery" ":" ws code_block
+                                       / "itemsToSubmit" ":" ws one_or_more_string_like_values
 action_d                            = indent "action" (required_ws component_id)? ws "(" line_end action_d_body_line* indent ")" line_end
 action_d_body_line                  = action_d_direct_property_line
                                     / action_d_group_block
@@ -719,6 +742,7 @@ facet_list_entries_property = "computeCounts" ":" ws boolean
 column_b                        = indent "column" (required_ws component_id)? ws "(" line_end column_b_body_line* indent ")" line_end
 column_b_body_line              = column_b_direct_property_line
                                 / column_b_group_block
+                                / blank_lines
                                 #/ column_b_child_component
 
 column_b_direct_property_line   = indent column_b_direct_property line_end
@@ -759,6 +783,7 @@ column_b_source_property        = "primaryKey" ":" ws boolean
 column_c                        = indent "column" (required_ws component_id)? ws "(" line_end column_c_body_line* indent ")" line_end
 column_c_body_line              = column_c_direct_property_line
                                 / column_c_group_block
+                                / blank_lines
                                 #/ column_c_child_component
 
 column_c_direct_property_line   = indent column_c_direct_property line_end
@@ -770,6 +795,8 @@ column_c_direct_property        = "columnName" ":" ws string_like_value
 column_c_group_block            = column_c_layout
                                 / column_c_appearance
                                 / column_c_heading
+                                / column_c_link
+                                / column_c_sorting
 
 column_c_layout                 = indent "layout" ws "{" line_end column_c_layout_property_line* indent "}" line_end
 column_c_layout_property_line   = indent column_c_layout_property line_end
@@ -793,11 +820,21 @@ column_c_heading_property_line  = indent column_c_heading_property line_end
 column_c_heading_property       = "heading" ":" ws string_like_value
                                 / "alignment" ":" ws ( "start" / "center" / "end" ) 
 
+column_c_sorting                      = indent "sorting" ws "{" line_end column_c_sorting_property_line* indent "}" line_end
+column_c_sorting_property_line        = indent column_c_sorting_property line_end
+column_c_sorting_property             = "defaultSequence" ":" ws ( "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" )
+                                      / "direction" ":" ws ( "desc" ) 
+                                      / "sortable" ":" ws boolean
 
-
+column_c_link                      = indent "link" ws "{" line_end column_c_link_property_line* indent "}" line_end
+column_c_link_property_line        = indent column_c_link_property line_end
+column_c_link_property             = "target" ":" ws value
+                                   / "linkText" ":" ws string_like_value
+                                   / "linkAttributes" ":" ws string_like_value
 column_f                        = indent "column" (required_ws component_id)? ws "(" line_end column_f_body_line* indent ")" line_end
 column_f_body_line              = column_f_direct_property_line
                                 / column_f_group_block
+                                / blank_lines
 
 column_f_direct_property_line   = indent column_f_direct_property line_end
 column_f_direct_property        = "name" ":" ws string_like_value
@@ -857,6 +894,7 @@ branch_a_behavior_property             = "type" ":" ws ( "pageOrUrl" / "urlIdent
 
 reference                       = "@" reference_character*
 variable                        = "&" reference_character "."
+special_variable                = ~r"#[^#\n\t\r]+#"
 component_id                    = number / identifier / string
 code_block                      = nl? ws multiline_string
                                 / string_like_value
@@ -867,7 +905,7 @@ required_ws                     = ~r"[ \t]+"
 line_end                        = nl
 nl                              = "\n" / "\r\n"
 indent                          = ~r"[ \t]*"
-value                           = multiline_string / array / complex / boolean / number / reference / variable / string / identifier
+value                           = multiline_string / array / complex / boolean / number / reference / variable / special_variable / string / identifier
 array                           = array_of_value
 array_separator                 = required_ws / line_end indent
 array_of_value                  = "[" ( ws value ( array_separator value )* ws / line_end ( indent value line_end )? indent )? "]"

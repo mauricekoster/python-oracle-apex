@@ -5,6 +5,11 @@ class ColumnHeading(ApexGroup):
     @property
     def heading(self):
         return self.properties.get('heading', None)
+    
+    @property
+    def alignment(self):
+        return self.properties.get('alignment', None)
+
 
 class ColumnLayout(ApexGroup):
     @property
@@ -38,6 +43,18 @@ class ColumnAppearance(ApexGroup):
     @property
     def barWidth(self):
         return self.properties.get('barWidth', None)
+
+    @property
+    def width(self):
+        return self.properties.get('width', None)
+
+    @property
+    def height(self):
+        return self.properties.get('height', None)
+
+    @property
+    def template(self):
+        return self.properties.get('template', None)
 
     @property
     def viewFileAs(self):
@@ -86,6 +103,30 @@ class ColumnSource(ApexGroup):
         return self.properties.get('timezoneAware', None)
 
 
+class ColumnSorting(ApexGroup):
+    @property
+    def defaultSequence(self):
+        return self.properties.get('defaultSequence', None)
+    @property
+    def direction(self):
+        return self.properties.get('direction', None)
+    @property
+    def sortable(self):
+        return self.properties.get('sortable', None)
+
+
+class ColumnLink(ApexGroup):
+    @property
+    def target(self):
+        return self.properties.get('target', None)
+    @property
+    def linkText(self):
+        return self.properties.get('linkText', None)
+    @property
+    def linkAttributes(self):
+        return self.properties.get('linkAttributes', None)
+
+
 class Column(ApexObject):
     
     # Properties
@@ -127,3 +168,11 @@ class Column(ApexObject):
     @property
     def source(self) -> ColumnSource:
         return self.groups.get('source', None)
+
+    @property
+    def sorting(self) -> ColumnSorting:
+        return self.groups.get('sorting', None)
+
+    @property
+    def link(self) -> ColumnLink:
+        return self.groups.get('link', None)

@@ -1,6 +1,8 @@
 computation_a                       = indent "computation" (required_ws component_id)? ws "(" line_end computation_a_body_line* indent ")" line_end
 computation_a_body_line             = computation_a_direct_property_line
                                     / computation_a_group_block
+                                    / blank_lines
+                                    
 computation_a_direct_property_line  = indent computation_a_direct_property line_end
 computation_a_direct_property       = "itemName" ":" ws string_like_value
 
@@ -16,13 +18,13 @@ computation_a_computation           = indent "computation" ws "{" line_end compu
 computation_a_computation_property_line = indent computation_a_computation_property line_end
 computation_a_computation_property  = "type" ":" ws ( "staticValue" / "item" / "sqlQuerySingleValue" / "sqlQueryMultipleValues" / "expression" / "functionBody" / "preference" )
                                     / "staticValue" ":" ws string_like_value
-                                    / "sqlQuery" ":" ws multiline_string
+                                    / "sqlQuery" ":" ws code_block
                                     / "computationProcessed" ":" ws ( "newSession" / "replaceExisting" / "addToExisting" / "raiseErrorOnReplace" / "replaceNullValues" )
                                     / "language" ":" ws ( "sql" / "plsql" / "javaScript-mle" )
-                                    / "sqlExpression" ":" ws multiline_string
-                                    / "plsqlExpression" ":" ws multiline_string
-                                    / "javaScriptExpression" ":" ws multiline_string
-                                    / "plsqlFunctionBody" ":" ws multiline_string
-                                    / "javaScriptFunctionBody" ":" ws multiline_string
+                                    / "sqlExpression" ":" ws code_block
+                                    / "plsqlExpression" ":" ws code_block
+                                    / "javaScriptExpression" ":" ws code_block
+                                    / "plsqlFunctionBody" ":" ws code_block
+                                    / "javaScriptFunctionBody" ":" ws code_block
                                     / "itemName" ":" ws string_like_value
                                     / "preference" ":" ws string_like_value

@@ -15,9 +15,7 @@ class RegionVisitor:
         region = Region(component_id)
         for item in body_parts:
             if type(item) is tuple:
-                if type(item[1]) is dict:
-                    region.add_group(item[0], item[1])
-                elif isinstance(item[1], ApexGroup):
+                if isinstance(item[1], ApexGroup):
                     region.add_group(item[0], item[1])
                 else:
                     region.add_property(item[0], item[1])
@@ -26,7 +24,7 @@ class RegionVisitor:
             elif item is None:
                 # blanklines
                 continue
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented(f"unprocessed: {item}")
         return region
 
@@ -53,7 +51,7 @@ class RegionVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('layout', RegionLayout(d) )
     
@@ -69,7 +67,7 @@ class RegionVisitor:
                 return (v[0].text, v[3][0].text)
             case 'enableMetaTags' | 'enableDuplicatePageSubmissions':
                 return (v[0].text, v[3])
-            case _:
+            case _: # pragma: no cover
                 raise RuleNotImplemented()
 
     def visit_region_appearance(self, node, visited_children):
@@ -78,7 +76,7 @@ class RegionVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('appearance', RegionAppearance(d))
     
@@ -96,7 +94,7 @@ class RegionVisitor:
                 return (v[0].text, v[3][0].text)
             case 'enableMetaTags' | 'enableDuplicatePageSubmissions':
                 return (v[0].text, v[3])
-            case _:
+            case _: # pragma: no cover
                 raise RuleNotImplemented()
 
     def visit_region_image(self, node, visited_children):
@@ -105,7 +103,7 @@ class RegionVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('image', RegionImage(d))
     
@@ -117,7 +115,7 @@ class RegionVisitor:
         match v[0].text:
             case 'fileUrl' | 'accessibleDescription' | 'customAttributes':
                 return (v[0].text, v[3])
-            case _:
+            case _: # pragma: no cover
                 raise RuleNotImplemented()
 
     def visit_region_advanced(self, node, visited_children):
@@ -126,7 +124,7 @@ class RegionVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('advanced', RegionAdvanced(d))
     
@@ -138,7 +136,7 @@ class RegionVisitor:
         match v[0].text:
             case 'htmlDomId' | 'regionDisplaySelector':
                 return (v[0].text, v[3])
-            case _:
+            case _: # pragma: no cover
                 raise RuleNotImplemented()
 
     def visit_region_source(self, node, visited_children):
@@ -147,7 +145,7 @@ class RegionVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('source', RegionSource(d))
     
@@ -161,7 +159,7 @@ class RegionVisitor:
                 return (v[0].text, v[3])
             case 'location':
                 return (v[0].text, v[3][0].text)
-            case _:
+            case _: # pragma: no cover
                 raise RuleNotImplemented()
 
     def visit_region_component_appearance(self, node, visited_children):
@@ -170,7 +168,7 @@ class RegionVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('componentAppearance', RegionComponentAppearance(d))
     
@@ -180,11 +178,16 @@ class RegionVisitor:
     def visit_region_component_appearance_property(self, node, visited_children):
         v = visited_children[0]
         match v[0].text:
-            case 'listTemplate' | 'breadcrumbTemplate' | 'display':
+            case 'listTemplate' | 'breadcrumbTemplate' | 'display' | 'templateOptions' | 'cssClasses' | 'customAttributes' | 'showNullValuesAs' | 'selectFirstRow' | 'fixedRowHeight':
                 return (v[0].text, v[3])
-            case 'templateOptions':
-                return (v[0].text, v[3][0])
-            case _:
+            case 'layout' | 'gridColumns' | 'templateType':
+                return (v[0].text, v[3][0].text)
+            case 'template':
+                if type(v[3][0]) is str:
+                    return (v[0].text, v[3][0])
+                else:
+                    return (v[0].text, v[3][0].text)
+            case _: # pragma: no cover
                 raise RuleNotImplemented()
 
     def visit_region_settings(self, node, visited_children):
@@ -193,7 +196,7 @@ class RegionVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('settings', RegionSettings(d))
     
@@ -211,7 +214,7 @@ class RegionVisitor:
             #     return (v[0].text, v[3][0])
             case 'showCurrentFacets':
                 return (v[0].text, v[3].text)
-            case _:
+            case _: # pragma: no cover
                 raise RuleNotImplemented() 
 
     def visit_region_plugin_avatar(self, node, visited_children):
@@ -220,7 +223,7 @@ class RegionVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('plugin-avatar', RegionPluginAvatar(d))
     
@@ -236,7 +239,7 @@ class RegionVisitor:
             #     return (v[0].text, v[3][0])
             # case 'showCurrentFacets':
             #     return (v[0].text, v[3].text)
-            case _:
+            case _: # pragma: no cover
                 raise RuleNotImplemented() 
 
     def visit_region_plugin_badge(self, node, visited_children):
@@ -245,7 +248,7 @@ class RegionVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('plugin-badge', RegionPluginBadge(d))
     
@@ -261,7 +264,7 @@ class RegionVisitor:
             #     return (v[0].text, v[3][0])
             # case 'showCurrentFacets':
             #     return (v[0].text, v[3].text)
-            case _:
+            case _: # pragma: no cover
                 raise RuleNotImplemented() 
 
     def visit_region_pagination(self, node, visited_children):
@@ -270,7 +273,7 @@ class RegionVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('pagination', RegionPagination(d))
     
@@ -286,7 +289,7 @@ class RegionVisitor:
             #     return (v[0].text, v[3][0])
             # case 'showCurrentFacets':
             #     return (v[0].text, v[3].text)
-            case _:
+            case _: # pragma: no cover
                 raise RuleNotImplemented()             
 
     def visit_region_accessibility(self, node, visited_children):
@@ -295,7 +298,7 @@ class RegionVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('accessibility', RegionAccessibility(d))
     
@@ -309,7 +312,7 @@ class RegionVisitor:
                 return (v[0].text, v[3])
             case 'landmarkType':
                 return (v[0].text, v[3][0].text)
-            case _:
+            case _: # pragma: no cover
                 raise RuleNotImplemented()             
 
     def visit_region_report_layout(self, node, visited_children):
@@ -318,7 +321,7 @@ class RegionVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('reportLayout', RegionReportLayout(d))
     
@@ -332,7 +335,7 @@ class RegionVisitor:
                 return (v[0].text, v[3])
             case 'numberOfRowsType':
                 return (v[0].text, v[3][0].text)
-            case _:
+            case _: # pragma: no cover
                 raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")
 
     def visit_region_performance(self, node, visited_children):
@@ -341,7 +344,7 @@ class RegionVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('performance', RegionPerformance(d))
     
@@ -353,7 +356,7 @@ class RegionVisitor:
         match v[0].text:
             case 'lazyLoading' | 'maxRowsToProcess':
                 return (v[0].text, v[3])
-            case _:
+            case _: # pragma: no cover
                 raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")            
 
     def visit_region_messages(self, node, visited_children):
@@ -362,7 +365,7 @@ class RegionVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('messages', RegionMessages(d))
     
@@ -374,5 +377,28 @@ class RegionVisitor:
         match v[0].text:
             case 'whenNoDataFound' | 'whenMoreDataFound' | 'noDataFoundIcon':
                 return (v[0].text, v[3])
-            case _:
-                raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")               
+            case _: # pragma: no cover
+                raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")
+
+    def visit_region_component_advanced(self, node, visited_children):
+        parts = visited_children[5]
+        d = {}
+        for item in parts:
+            if type(item) is tuple:
+                d[item[0]] = item[1]
+            else: # pragma: no cover
+                raise RuleNotImplemented()
+        return ('componentAdvanced', RegionComponentAdvanced(d))
+    
+    def visit_region_component_advanced_property_line(self, node, visited_children):
+        return visited_children[1]
+
+    def visit_region_component_advanced_property(self, node, visited_children):
+        v = visited_children[0]
+        match v[0].text:
+            case 'stripHtml' | 'customSvgStyles' | 'oracleTextIndexColumn' | 'emailFromAddress' | 'initJavaScriptFunction' | 'regionAlias' | 'reportIdItem' | 'maxRowsPerPageInSelector':
+                return (v[0].text, v[3])
+            case 'sortNulls':
+                return (v[0].text, v[3][0].text)
+            case _: # pragma: no cover
+                raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")            

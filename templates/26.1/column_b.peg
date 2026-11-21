@@ -1,6 +1,7 @@
 column_b                        = indent "column" (required_ws component_id)? ws "(" line_end column_b_body_line* indent ")" line_end
 column_b_body_line              = column_b_direct_property_line
                                 / column_b_group_block
+                                / blank_lines
                                 #/ column_b_child_component
 
 column_b_direct_property_line   = indent column_b_direct_property line_end

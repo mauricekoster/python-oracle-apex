@@ -45,7 +45,45 @@ class RegionAdvanced(ApexGroup):
 
 
 class RegionComponentAppearance(ApexGroup):
-    pass
+    @property
+    def display(self):
+        return self.properties.get('display', None)
+    @property
+    def layout(self):
+        return self.properties.get('layout', None)
+    @property
+    def gridColumns(self):
+        return self.properties.get('gridColumns', None)
+    @property
+    def listTemplate(self):
+        return self.properties.get('listTemplate', None)
+    @property
+    def breadcrumbTemplate(self):
+        return self.properties.get('breadcrumbTemplate', None)
+    @property
+    def cssClasses(self):
+        return self.properties.get('cssClasses', None)
+    @property
+    def templateOptions(self):
+        return self.properties.get('templateOptions', None)
+    @property
+    def templateType(self):
+        return self.properties.get('templateType', None)
+    @property
+    def template(self):
+        return self.properties.get('template', None)
+    @property
+    def customAttributes(self):
+        return self.properties.get('customAttributes', None)
+    @property
+    def showNullValuesAs(self):
+        return self.properties.get('showNullValuesAs', None)
+    @property
+    def selectFirstRow(self):
+        return self.properties.get('selectFirstRow', None)
+    @property
+    def fixedRowHeight(self):
+        return self.properties.get('fixedRowHeight', None)
 
 
 class RegionImage(ApexGroup):
@@ -125,6 +163,36 @@ class RegionMessages(ApexGroup):
         return self.properties.get('noDataFoundIcon', None)
 
 
+class RegionComponentAdvanced(ApexGroup):
+    @property
+    def stripHtml(self):
+        return self.properties.get('stripHtml', None)
+    @property
+    def sortNulls(self):
+        return self.properties.get('sortNulls', None)
+    @property
+    def customSvgStyles(self):
+        return self.properties.get('customSvgStyles', None)
+    @property
+    def oracleTextIndexColumn(self):
+        return self.properties.get('oracleTextIndexColumn', None)
+    @property
+    def emailFromAddress(self):
+        return self.properties.get('emailFromAddress', None)
+    @property
+    def initJavaScriptFunction(self):
+        return self.properties.get('initJavaScriptFunction', None)
+    @property
+    def regionAlias(self):
+        return self.properties.get('regionAlias', None)
+    @property
+    def reportIdItem(self):
+        return self.properties.get('reportIdItem', None)
+    @property
+    def maxRowsPerPageInSelector(self):
+        return self.properties.get('maxRowsPerPageInSelector', None)
+
+
 class Region(ApexObject):
     # direct
 
@@ -185,6 +253,14 @@ class Region(ApexObject):
     @property
     def messages(self) -> RegionMessages:
         return self.groups.get('messages', None)
+
+    @property
+    def componentAppearance(self) -> RegionComponentAppearance:
+        return self.groups.get('componentAppearance', None)
+
+    @property
+    def componentAdvanced(self) -> RegionComponentAdvanced:
+        return self.groups.get('componentAdvanced', None)
 
     # child
 

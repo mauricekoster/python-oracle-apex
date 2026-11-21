@@ -11,7 +11,7 @@ class ComputationAVisitor:
         else:
             component_id = None
 
-        computation_a = ComputationA(component_id)
+        computation_a = Computation(component_id, variant='computation_a')
         for item in body_parts:
             if type(item) is tuple:
                 if type(item[1]) is dict:
@@ -22,7 +22,7 @@ class ComputationAVisitor:
                     computation_a.add_property(item[0], item[1])
             elif item is None:
                 continue
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented(f"unprocessed: {item}")
         return computation_a
 
@@ -46,9 +46,9 @@ class ComputationAVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
-        return ('execution', ComputationAExecution(d) )
+        return ('execution', ComputationExecution(d) )
     
     def visit_computation_a_execution_property_line(self, node, visited_children):
         return visited_children[1]
@@ -60,10 +60,8 @@ class ComputationAVisitor:
                 return (v[0].text, v[3])
             case 'point':
                 return (v[0].text, v[3][0].text)
-            # case 'enableMetaTags' | 'enableDuplicatePageSubmissions':
-            #     return (v[0].text, v[3])
-            case _:
-                raise RuleNotImplemented()
+            case _: # pragma: no cover
+                raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")
 
     def visit_computation_a_computation(self, node, visited_children):
         parts = visited_children[5]
@@ -71,9 +69,9 @@ class ComputationAVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
-        return ('execution', ComputationAComputation(d) )
+        return ('computation', ComputationComputation(d) )
     
     def visit_computation_a_computation_property_line(self, node, visited_children):
         return visited_children[1]
@@ -81,12 +79,10 @@ class ComputationAVisitor:
     def visit_computation_a_computation_property(self, node, visited_children):
         v = visited_children[0]
         match v[0].text:
-            case 'staticValue':
+            case 'staticValue' | 'sqlQuery':
                 return (v[0].text, v[3])
             case 'type':
                 return (v[0].text, v[3][0].text)
-            # case 'enableMetaTags' | 'enableDuplicatePageSubmissions':
-            #     return (v[0].text, v[3])
-            case _:
-                raise RuleNotImplemented()
+            case _: # pragma: no cover
+                raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")  
 

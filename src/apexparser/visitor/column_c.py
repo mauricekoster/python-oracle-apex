@@ -12,7 +12,7 @@ class ColumnCVisitor:
         else:
             component_id = None
 
-        act = Column(component_id)
+        act = Column(component_id, variant='column_c')
         for item in body_parts:
             if type(item) is tuple:
                 if type(item[1]) is dict:
@@ -23,7 +23,7 @@ class ColumnCVisitor:
                     act.add_property(item[0], item[1])
             elif item is None:
                 continue
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented(f"unprocessed: {item}")
         return act
 
@@ -50,7 +50,7 @@ class ColumnCVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('layout', ColumnLayout(d) )
     
@@ -60,14 +60,12 @@ class ColumnCVisitor:
     def visit_column_c_layout_property(self, node, visited_children):
         v = visited_children[0]
         match v[0].text:
-            # case 'sequence' | 'group':
-            #     return (v[0].text, v[3])
-            # case 'columnAlignment':
-            #     return (v[0].text, v[3][0].text)
-            # case 'enableMetaTags' | 'enableDuplicatePageSubmissions':
-            #     return (v[0].text, v[3])
-            case _:
-                raise RuleNotImplemented()
+            case 'sequence':
+                return (v[0].text, v[3])
+            case 'columnAlignment':
+                return (v[0].text, v[3][0].text)
+            case _: # pragma: no cover
+                raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")  
 
     def visit_column_c_appearance(self, node, visited_children):
         parts = visited_children[5]
@@ -75,7 +73,7 @@ class ColumnCVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('appearance', ColumnAppearance(d) )
     
@@ -85,14 +83,12 @@ class ColumnCVisitor:
     def visit_column_c_appearance_property(self, node, visited_children):
         v = visited_children[0]
         match v[0].text:
-            # case 'cssClasses' | 'formatMask' | 'backgroundColor' | 'foregroundColor' | 'barWidth' | 'downloadText':
-            #     return (v[0].text, v[3])
-            # case 'viewFileAs':
-            #     return (v[0].text, v[3][0].text)
-            # case 'enableMetaTags' | 'enableDuplicatePageSubmissions':
-            #     return (v[0].text, v[3])
-            case _:
-                raise RuleNotImplemented()
+            case 'formatMask' | 'backgroundColor' | 'foregroundColor' | 'barWidth' | 'downloadText' | 'width' | 'height' | 'template':
+                return (v[0].text, v[3])
+            case 'viewFileAs':
+                return (v[0].text, v[3][0].text)
+            case _: # pragma: no cover
+                raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")  
 
     def visit_column_c_heading(self, node, visited_children):
         parts = visited_children[5]
@@ -100,7 +96,7 @@ class ColumnCVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('heading', ColumnHeading(d) )
     
@@ -110,13 +106,55 @@ class ColumnCVisitor:
     def visit_column_c_heading_property(self, node, visited_children):
         v = visited_children[0]
         match v[0].text:
-            # case 'primaryKey' | 'dataType' | 'availableOnClient' | 'valueProtected' | 'timezoneAware':
-            #     return (v[0].text, v[3])
-            # case 'viewFileAs':
-            #     return (v[0].text, v[3][0].text)
-            # case 'enableMetaTags' | 'enableDuplicatePageSubmissions':
-            #     return (v[0].text, v[3])
-            case _:
-                raise RuleNotImplemented()
+            case 'heading':
+                return (v[0].text, v[3])
+            case 'alignment':
+                return (v[0].text, v[3][0].text)
+            case _: # pragma: no cover
+                raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")  
 
+    def visit_column_c_sorting(self, node, visited_children):
+        parts = visited_children[5]
+        d = {}
+        for item in parts:
+            if type(item) is tuple:
+                d[item[0]] = item[1]
+            else: # pragma: no cover
+                raise RuleNotImplemented()
+        return ('sorting', ColumnSorting(d) )
     
+    def visit_column_c_sorting_property_line(self, node, visited_children):
+        return visited_children[1]
+
+    def visit_column_c_sorting_property(self, node, visited_children):
+        v = visited_children[0]
+        match v[0].text:
+            case 'sortable':
+                return (v[0].text, v[3])
+            case 'direction':
+                return (v[0].text, v[3].text)
+            case 'defaultSequence':
+                return (v[0].text, v[3][0].text)
+            case _: # pragma: no cover
+                raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")    
+
+    def visit_column_c_link(self, node, visited_children):
+        parts = visited_children[5]
+        d = {}
+        for item in parts:
+            if type(item) is tuple:
+                d[item[0]] = item[1]
+            else: # pragma: no cover
+                raise RuleNotImplemented()
+        return ('link', ColumnLink(d) )
+    
+    def visit_column_c_link_property_line(self, node, visited_children):
+        return visited_children[1]
+
+    def visit_column_c_link_property(self, node, visited_children):
+        v = visited_children[0]
+        match v[0].text:
+            case 'target' | 'linkText' | 'linkAttributes':
+                return (v[0].text, v[3])
+            case _: # pragma: no cover
+                raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")             

@@ -88,6 +88,9 @@ class ApxNodeVisitor(NodeVisitor,
     def visit_variable(self, node, visited_children):
         return node.text
 
+    def visit_special_variable(self, node, visited_children):
+        return node.text
+
     def visit_key_value_line(self, node, visited_children):
         return visited_children[1]
 
