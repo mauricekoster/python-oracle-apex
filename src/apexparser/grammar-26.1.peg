@@ -12,6 +12,7 @@ component                           = page_item blank_lines
                                     / column_c blank_lines
                                     / column_f blank_lines
                                     / series blank_lines
+                                    / axis blank_lines
                                     / region blank_lines
                                     / page_object blank_lines
 page_object                         = indent "page" (required_ws component_id)? ws "(" page_body_line* indent ")" line_end
@@ -1012,6 +1013,37 @@ series_line_property             = "style" ":" ws ( "dotted" / "dashed" / "solid
                                  / "type" ":" ws ( "centeredStepped" / "curved" / "centeredSegmented" / "stepped" / "segmented" / "straight" / "auto" / "none" ) 
 
 # series_child_component          = parameter_k
+axis               = indent "axis" (required_ws component_id)? ws "(" line_end axis_body_line* indent ")" line_end
+axis_body_line     = axis_direct_property_line
+                       / axis_group_block
+                       / blank_lines
+
+axis_direct_property_line     = indent axis_direct_property line_end 
+axis_direct_property          = "name" ":" ws string_like_value
+                              / "showAxis" ":" ws boolean
+                              / "title" ":" ws string_like_value
+
+axis_group_block              = axis_value
+                              / axis_minor_ticks
+
+axis_value                      = indent "value" ws "{" line_end axis_value_property_line* indent "}" line_end
+axis_value_property_line        = indent axis_value_property line_end
+axis_value_property             = "min" ":" ws number
+                                / "max" ":" ws number
+                                / "format" ":" ws ( "dateShort" / "dateMedium" / "dateLong" / "dateFull" / "timeShort" / "timeMedium" / "timeLong" / "timeFull" 
+                                  / "datetimeShort" / "datetimeMedium" / "datetimeLong" / "datetimeFull" / "decimal" / "currency" / "percent" )
+                                / "decimalPlaces" ":" ws number
+                                / "currency" ":" ws string_like_value
+                                / "pattern" ":" ws string_like_value
+                                / "formatScaling" ":" ws ( "none" / "auto" / "thousand" / "million" / "billion" / "trillion" / "quadrillion" )
+                                / "baselineScaling" ":" ws ( "min" / "zero" )
+                                / "scale" ":" ws ( "linear" / "log" )
+                                / "step" ":" ws number                               
+
+axis_minor_ticks                      = indent "minorTicks" ws "{" line_end axis_minor_ticks_property_line* indent "}" line_end
+axis_minor_ticks_property_line        = indent axis_minor_ticks_property line_end
+axis_minor_ticks_property             = "show" ":" ws ( "auto" / "true" / "false" )
+                                      / "step" ":" ws number
 
 reference                       = "@" reference_character*
 variable                        = "&" reference_character "."

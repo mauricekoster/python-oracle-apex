@@ -12,5 +12,6 @@ component                           = page_item blank_lines
                                     / column_c blank_lines
                                     / column_f blank_lines
                                     / series blank_lines
+                                    / axis blank_lines
                                     / region blank_lines
                                     / page_object blank_lines

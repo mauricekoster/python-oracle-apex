@@ -83,6 +83,9 @@ from .series import (
     SeriesSource,
     SeriesExecution,
 )
+from .axis import (
+    Axis
+)
 from .region import (
     Region, 
     RegionAccessibility,

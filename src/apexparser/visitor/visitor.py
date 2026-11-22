@@ -16,6 +16,7 @@ from .column_c import ColumnCVisitor
 from .column_f import ColumnFVisitor
 from .branch_a import BranchAVisitor
 from .series import SeriesVisitor
+from .axis import AxisVisitor
 
 from . import RuleNotImplemented
 
@@ -35,7 +36,8 @@ class ApxNodeVisitor(NodeVisitor,
                      ColumnBVisitor,
                      ColumnCVisitor,
                      ColumnFVisitor,
-                     SeriesVisitor
+                     SeriesVisitor,
+                     AxisVisitor
                      ):
 
     def visit_component(self, node, visited_children):
