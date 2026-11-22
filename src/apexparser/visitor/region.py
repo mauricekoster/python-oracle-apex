@@ -402,3 +402,95 @@ class RegionVisitor:
                 return (v[0].text, v[3][0].text)
             case _: # pragma: no cover
                 raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")            
+
+    def visit_region_chart(self, node, visited_children):
+        parts = visited_children[5]
+        d = {}
+        for item in parts:
+            if type(item) is tuple:
+                d[item[0]] = item[1]
+            else: # pragma: no cover
+                raise RuleNotImplemented()
+        return ('chart', RegionChart(d))
+    
+    def visit_region_chart_property_line(self, node, visited_children):
+        return visited_children[1]
+    
+    def visit_region_chart_property(self, node, visited_children):
+        v = visited_children
+        match v[0].text:
+            #case '':
+            #    return (v[0].text, v[3])
+            case 'type':
+                return (v[0].text, v[3][0].text)
+            case _: # pragma: no cover
+                raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")
+
+    def visit_region_title(self, node, visited_children):
+        parts = visited_children[5]
+        d = {}
+        for item in parts:
+            if type(item) is tuple:
+                d[item[0]] = item[1]
+            else: # pragma: no cover
+                raise RuleNotImplemented()
+        return ('title', RegionTitle(d))
+    
+    def visit_region_title_property_line(self, node, visited_children):
+        return visited_children[1]
+    
+    def visit_region_title_property(self, node, visited_children):
+        v = visited_children[0]
+        match v[0].text:
+            case 'title' | 'advancedFormatting' | 'column' | 'htmlExpression' | 'cssClasses':
+                return (v[0].text, v[3])
+            #case '':
+            #    return (v[0].text, v[3][0].text)
+            case _: # pragma: no cover
+                raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")
+
+    def visit_region_chart_layout(self, node, visited_children):
+        parts = visited_children[5]
+        d = {}
+        for item in parts:
+            if type(item) is tuple:
+                d[item[0]] = item[1]
+            else: # pragma: no cover
+                raise RuleNotImplemented()
+        return ('chartLayout', RegionChartLayout(d))
+    
+    def visit_region_chart_layout_property_line(self, node, visited_children):
+        return visited_children[1]
+    
+    def visit_region_chart_layout_property(self, node, visited_children):
+        v = visited_children[0]
+        match v[0].text:
+            case 'maxWidth' | 'height':
+                return (v[0].text, v[3])
+            #case '':
+            #    return (v[0].text, v[3][0].text)
+            case _: # pragma: no cover
+                raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")            
+
+    def visit_region_legend(self, node, visited_children):
+        parts = visited_children[5]
+        d = {}
+        for item in parts:
+            if type(item) is tuple:
+                d[item[0]] = item[1]
+            else: # pragma: no cover
+                raise RuleNotImplemented()
+        return ('legend', RegionLegend(d))
+    
+    def visit_region_legend_property_line(self, node, visited_children):
+        return visited_children[1]
+    
+    def visit_region_legend_property(self, node, visited_children):
+        v = visited_children[0]
+        match v[0].text:
+            case 'show' | 'title' | 'selector' | 'cssClasses' | 'fontColor':
+                return (v[0].text, v[3])
+            case 'position' | 'hideAndShowBehavior' | 'fontFamily' | 'fontStyle' | 'fontSize':
+                return (v[0].text, v[3][0].text)
+            case _: # pragma: no cover
+                raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")

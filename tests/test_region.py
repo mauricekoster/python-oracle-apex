@@ -253,3 +253,95 @@ def test_region_component_advanced(apex_parser):
     assert r.componentAdvanced.regionAlias == 'alias'
     assert r.componentAdvanced.reportIdItem == 'id'
     assert r.componentAdvanced.maxRowsPerPageInSelector == 'yes'
+
+
+def test_region_chart(apex_parser):
+    r = apex_parser.parse(
+"""region A (
+        chart {
+            type: lineWithArea
+        }
+    )
+""")
+
+    assert isinstance(r, Region)
+
+    assert r.chart.type == 'lineWithArea'
+
+
+def test_region_chart_layout(apex_parser):
+    r = apex_parser.parse(
+"""region A (
+        chartLayout {
+            maxWidth: 800
+            height: 480
+        }
+    )
+""")
+
+    assert isinstance(r, Region)
+
+    assert r.chartLayout.maxWidth == 800
+    assert r.chartLayout.height == 480
+
+
+def test_region_title(apex_parser):
+    r = apex_parser.parse(
+"""region A (
+        title {
+            title: Test
+            advancedFormatting: true
+            column: AAA
+            htmlExpression:
+                ```html
+                ```
+            cssClasses: [
+                red
+                green
+                blue
+            ]
+        }
+    )
+""")
+
+    assert isinstance(r, Region)
+
+    assert r.title.title == 'Test'
+    assert r.title.advancedFormatting == True
+    assert r.title.column == 'AAA'
+    assert r.title.htmlExpression == '```html\n```'
+    assert r.title.cssClasses == ['red', 'green', 'blue']
+
+
+def test_region_title(apex_parser):
+    r = apex_parser.parse(
+"""region A (
+        legend {
+            show: false
+            title: Title
+            position: start
+            selector: sel
+            cssClasses: elegant
+            hideAndShowBehavior: none
+            fontFamily: times
+            fontStyle: normal
+            fontSize: 22
+            fontColor: blue
+        }
+    )
+""")
+
+    assert isinstance(r, Region)
+
+    assert r.legend.show == False
+    assert r.legend.title == 'Title'
+    assert r.legend.position == 'start'
+    assert r.legend.selector == 'sel'
+    assert r.legend.cssClasses == ['elegant']
+    assert r.legend.hideAndShowBehavior == 'none'
+    assert r.legend.fontFamily == 'times'
+    assert r.legend.fontStyle == 'normal'
+    assert r.legend.fontSize == '22'
+    assert r.legend.fontColor == 'blue'
+
+

@@ -17,9 +17,12 @@ region_group_block                  = region_layout
                                     / region_accessibility
                                     / region_advanced
                                     / region_appearance
+                                    / region_chart
+                                    / region_chart_layout
                                     / region_component_appearance
                                     / region_component_advanced
                                     / region_image
+                                    / region_legend
                                     / region_messages
                                     / region_pagination
                                     / region_performance
@@ -28,6 +31,7 @@ region_group_block                  = region_layout
                                     / region_report_layout
                                     / region_settings
                                     / region_source
+                                    / region_title
 
 region_layout                       = indent "layout" ws "{" line_end region_layout_property_line* indent "}" line_end
 region_layout_property_line         = indent region_layout_property line_end
@@ -122,7 +126,7 @@ region_component_appearance_property = "display" ":" ws string_like_value
 region_settings                     = indent "settings" ws "{" line_end region_settings_property_line* indent "}" line_end
 region_settings_property_line       = indent region_settings_property line_end
 region_settings_property            = "timeAxisType" ":" ws ( "auto" / "disabled" / "enabled" / "mixedFrequency" / "skipGaps" ) 
-                                    / "zoomAndScroll" ":" ws ( "false" / "delayed" / "delayedScrollOnly" / "live" / "liveScrollOnly" )
+                                    / "zoomAndScroll" ":" ws ( "false" / "delayedScrollOnly" / "delayed" / "liveScrollOnly" / "live" )
                                     / "zoomDirection" ":" ws ( "bothAxes" / "xAxis" / "yAxis" )
                                     / "initialZooming" ":" ws ( "first" / "last" / "none" )
                                     / "showHorizontalGrid" ":" ws ( "auto" / "true" / "false" )
@@ -130,7 +134,7 @@ region_settings_property            = "timeAxisType" ":" ws ( "auto" / "disabled
                                     / "showRowAxis" ":" ws boolean
                                     / "axisPosition" ":" ws ( "top" / "bottom" )
                                     / "pieSelectionEffect" ":" ws ( "explode" / "highlightAndExplode" / "highlight" )
-                                    / "renderAs" ":" ws ( "area" / "bar" / "candlestick" / "line" / "lineWithArea" )
+                                    / "renderAs" ":" ws ( "area" / "bar" / "candlestick" / "lineWithArea" / "line" )
 
 # UNDOCUMENTED! used in brookstrut page 2 (type: Faceted Search)
                                     / "compactNosThreshold" ":" ws number
@@ -207,9 +211,43 @@ region_component_advanced_property             = "stripHtml" ":" ws boolean
                                                / "reportIdItem" ":" ws string_like_value
                                                / "maxRowsPerPageInSelector" ":" ws string_like_value
 
+region_chart                      = indent "chart" ws "{" line_end region_chart_property_line* indent "}" line_end
+region_chart_property_line        = indent region_chart_property line_end
+region_chart_property             = "type" ":" ws ( "area" / "bar" / "boxPlot" / "bubble" / "combination" / "statusMeterGauge" / "donut" 
+                                             / "funnel" / "gantt"  / "lineWithArea" / "line" / "pie" / "polar" / "pyramid" / "radar" 
+                                             / "range" / "scatter" / "stock" )
+
+region_title                      = indent "title" ws "{" line_end region_title_property_line* indent "}" line_end
+region_title_property_line        = indent region_title_property line_end
+region_title_property             = "title" ":" ws string_like_value
+                                  / "advancedFormatting" ":" ws boolean
+                                  / "column" ":" ws string_like_value
+                                  / "htmlExpression" ":" ws code_block
+                                  / "cssClasses" ":" ws one_or_more_string_like_values
+
+region_chart_layout                      = indent "chartLayout" ws "{" line_end region_chart_layout_property_line* indent "}" line_end
+region_chart_layout_property_line        = indent region_chart_layout_property line_end
+region_chart_layout_property             = "maxWidth" ":" ws number
+                                         / "height" ":" ws number
+
+region_legend                      = indent "legend" ws "{" line_end region_legend_property_line* indent "}" line_end
+region_legend_property_line        = indent region_legend_property line_end
+region_legend_property             = "show" ":" ws boolean
+                                   / "title" ":" ws string_like_value
+                                   / "position" ":" ws ( "start" / "end" / "selector" ) 
+                                   / "selector" ":" ws string_like_value
+                                   / "cssClasses" ":" ws one_or_more_string_like_values
+                                   / "hideAndShowBehavior" ":" ws ( "none" / "rescale" / "noRescaling" )
+                                   / "fontFamily" ":" ws ( "arialBlack" / "arial"  / "bookman" / "comicSansMs"  / "courierNew" / "courier"
+                                        / "garamond" / "georgia" / "helvetica" / "impact" / "palatino" / "timesNewRoman" / "times" / "trebuchetMs" / "verdana" )
+                                   / "fontStyle" ":" ws ( "normal" / "italic" / "oblique" ) 
+                                   / "fontSize" ":" ws ( "8" / "10" / "12" / "14" / "16" / "18" / "20" / "22" )
+                                   / "fontColor" ":" ws string_like_value
+
 region_child_component              = facet
                                     / action_d
                                     / action_e
                                     / column_b
                                     / column_c
                                     / column_f
+                                    / series

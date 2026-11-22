@@ -11,6 +11,7 @@ component                           = page_item blank_lines
                                     / column_b blank_lines
                                     / column_c blank_lines
                                     / column_f blank_lines
+                                    / series blank_lines
                                     / region blank_lines
                                     / page_object blank_lines
 page_object                         = indent "page" (required_ws component_id)? ws "(" page_body_line* indent ")" line_end
@@ -108,9 +109,12 @@ region_group_block                  = region_layout
                                     / region_accessibility
                                     / region_advanced
                                     / region_appearance
+                                    / region_chart
+                                    / region_chart_layout
                                     / region_component_appearance
                                     / region_component_advanced
                                     / region_image
+                                    / region_legend
                                     / region_messages
                                     / region_pagination
                                     / region_performance
@@ -119,6 +123,7 @@ region_group_block                  = region_layout
                                     / region_report_layout
                                     / region_settings
                                     / region_source
+                                    / region_title
 
 region_layout                       = indent "layout" ws "{" line_end region_layout_property_line* indent "}" line_end
 region_layout_property_line         = indent region_layout_property line_end
@@ -213,7 +218,7 @@ region_component_appearance_property = "display" ":" ws string_like_value
 region_settings                     = indent "settings" ws "{" line_end region_settings_property_line* indent "}" line_end
 region_settings_property_line       = indent region_settings_property line_end
 region_settings_property            = "timeAxisType" ":" ws ( "auto" / "disabled" / "enabled" / "mixedFrequency" / "skipGaps" ) 
-                                    / "zoomAndScroll" ":" ws ( "false" / "delayed" / "delayedScrollOnly" / "live" / "liveScrollOnly" )
+                                    / "zoomAndScroll" ":" ws ( "false" / "delayedScrollOnly" / "delayed" / "liveScrollOnly" / "live" )
                                     / "zoomDirection" ":" ws ( "bothAxes" / "xAxis" / "yAxis" )
                                     / "initialZooming" ":" ws ( "first" / "last" / "none" )
                                     / "showHorizontalGrid" ":" ws ( "auto" / "true" / "false" )
@@ -221,7 +226,7 @@ region_settings_property            = "timeAxisType" ":" ws ( "auto" / "disabled
                                     / "showRowAxis" ":" ws boolean
                                     / "axisPosition" ":" ws ( "top" / "bottom" )
                                     / "pieSelectionEffect" ":" ws ( "explode" / "highlightAndExplode" / "highlight" )
-                                    / "renderAs" ":" ws ( "area" / "bar" / "candlestick" / "line" / "lineWithArea" )
+                                    / "renderAs" ":" ws ( "area" / "bar" / "candlestick" / "lineWithArea" / "line" )
 
 # UNDOCUMENTED! used in brookstrut page 2 (type: Faceted Search)
                                     / "compactNosThreshold" ":" ws number
@@ -298,12 +303,46 @@ region_component_advanced_property             = "stripHtml" ":" ws boolean
                                                / "reportIdItem" ":" ws string_like_value
                                                / "maxRowsPerPageInSelector" ":" ws string_like_value
 
+region_chart                      = indent "chart" ws "{" line_end region_chart_property_line* indent "}" line_end
+region_chart_property_line        = indent region_chart_property line_end
+region_chart_property             = "type" ":" ws ( "area" / "bar" / "boxPlot" / "bubble" / "combination" / "statusMeterGauge" / "donut" 
+                                             / "funnel" / "gantt"  / "lineWithArea" / "line" / "pie" / "polar" / "pyramid" / "radar" 
+                                             / "range" / "scatter" / "stock" )
+
+region_title                      = indent "title" ws "{" line_end region_title_property_line* indent "}" line_end
+region_title_property_line        = indent region_title_property line_end
+region_title_property             = "title" ":" ws string_like_value
+                                  / "advancedFormatting" ":" ws boolean
+                                  / "column" ":" ws string_like_value
+                                  / "htmlExpression" ":" ws code_block
+                                  / "cssClasses" ":" ws one_or_more_string_like_values
+
+region_chart_layout                      = indent "chartLayout" ws "{" line_end region_chart_layout_property_line* indent "}" line_end
+region_chart_layout_property_line        = indent region_chart_layout_property line_end
+region_chart_layout_property             = "maxWidth" ":" ws number
+                                         / "height" ":" ws number
+
+region_legend                      = indent "legend" ws "{" line_end region_legend_property_line* indent "}" line_end
+region_legend_property_line        = indent region_legend_property line_end
+region_legend_property             = "show" ":" ws boolean
+                                   / "title" ":" ws string_like_value
+                                   / "position" ":" ws ( "start" / "end" / "selector" ) 
+                                   / "selector" ":" ws string_like_value
+                                   / "cssClasses" ":" ws one_or_more_string_like_values
+                                   / "hideAndShowBehavior" ":" ws ( "none" / "rescale" / "noRescaling" )
+                                   / "fontFamily" ":" ws ( "arialBlack" / "arial"  / "bookman" / "comicSansMs"  / "courierNew" / "courier"
+                                        / "garamond" / "georgia" / "helvetica" / "impact" / "palatino" / "timesNewRoman" / "times" / "trebuchetMs" / "verdana" )
+                                   / "fontStyle" ":" ws ( "normal" / "italic" / "oblique" ) 
+                                   / "fontSize" ":" ws ( "8" / "10" / "12" / "14" / "16" / "18" / "20" / "22" )
+                                   / "fontColor" ":" ws string_like_value
+
 region_child_component              = facet
                                     / action_d
                                     / action_e
                                     / column_b
                                     / column_c
                                     / column_f
+                                    / series
 page_item                           = indent "pageItem" (required_ws component_id)? ws "(" line_end page_item_body_line* indent ")" line_end
 page_item_body_line                 = page_item_direct_property_line
                                     / page_item_group_block
@@ -891,6 +930,88 @@ branch_a_behavior_property             = "type" ":" ws ( "pageOrUrl" / "urlIdent
                                        / "plsqlFunctionBody" ":" ws code_block
                                        / "javaScriptFunctionBody" ":" ws code_block
                                        / "plsqlCode" ":" ws code_block
+series               = indent "series" (required_ws component_id)? ws "(" line_end series_body_line* indent ")" line_end
+series_body_line     = series_direct_property_line
+                       / series_group_block
+                       #/ series_child_component
+                       / blank_lines
+
+series_direct_property_line     = indent series_direct_property line_end 
+series_direct_property          = "name" ":" ws string_like_value
+                                / "type" ":" ws ( "lineWithArea" / "scatter" / "bubble" / "barRange" / "areaRange" / "boxPlot" / "area" / "bar" / "line" )
+
+series_group_block              = series_execution
+                                / series_source
+                                / series_column_mapping
+                                / series_line
+
+series_execution                      = indent "execution" ws "{" line_end series_execution_property_line* indent "}" line_end
+series_execution_property_line        = indent series_execution_property line_end
+series_execution_property             = "sequence" ":" ws number
+
+series_source                      = indent "source" ws "{" line_end series_source_property_line* indent "}" line_end
+series_source_property_line        = indent series_source_property line_end
+series_source_property             = "location" ":" ws ( "localDatabase" / "restEnabledSql" / "restSource" / "jsonDualityView" / "jsonSource" / "regionSource" / "sampleData" )
+                                   / "remoteServer" ":" ws reference
+                                   / "sampleData" ":" ws ( "employees" / "tasks" / "products" / "projects" )
+                                   / "type" ":" ws string_like_value
+                                   / "tableOwner" ":" ws string_like_value
+                                   / "tableName" ":" ws string_like_value
+                                   / "includeRowidColumn" ":" ws boolean 
+                                   / "whereClause" ":" ws code_block
+                                   / "graphOwner" ":" ws string_like_value
+                                   / "graphName" ":" ws string_like_value
+                                   / "matchClause" ":" ws code_block
+                                   / "columnsClause" ":" ws code_block
+                                   / "sqlQuery" ":" ws code_block
+                                   / "language" ":" ws ( "plsql" / "javaScript-mle" )
+                                   / "plsqlFunctionBody" ":" ws code_block
+                                   / "javaScriptFunctionBody" ":" ws code_block
+                                   / "restSource" ":" ws reference
+                                   / "jsonDualityView" ":" ws reference
+                                   / "jsonSource" ":" ws reference
+                                   / "pageItemsToSubmit" ":" ws one_or_more_string_like_values
+                                   / "optimizerHint" ":" ws string_like_value
+
+series_column_mapping                      = indent "columnMapping" ws "{" line_end series_column_mapping_property_line* indent "}" line_end
+series_column_mapping_property_line        = indent series_column_mapping_property line_end
+series_column_mapping_property             = "seriesName" ":" ws string_like_value
+                                           / "label" ":" ws string_like_value
+                                           / "valueAggregation" ":" ws ( "countDistinct" / "count" / "sum" / "average" / "median" / "min" / "max" / "approxCountDistinct" )
+                                           / "value" ":" ws string_like_value
+                                           / "open" ":" ws string_like_value
+                                           / "low" ":" ws string_like_value
+                                           / "high" ":" ws string_like_value
+                                           / "close" ":" ws string_like_value
+                                           / "volume" ":" ws string_like_value
+                                           / "x" ":" ws string_like_value
+                                           / "y" ":" ws string_like_value
+                                           / "z" ":" ws string_like_value
+                                           / "targetValue" ":" ws string_like_value
+                                           / "minValue" ":" ws string_like_value
+                                           / "maxValue" ":" ws string_like_value
+                                           / "rowId" ":" ws string_like_value
+                                           / "rowName" ":" ws string_like_value
+                                           / "taskId" ":" ws string_like_value
+                                           / "taskName" ":" ws string_like_value
+                                           / "taskStartDate" ":" ws string_like_value
+                                           / "taskEndDate" ":" ws string_like_value
+                                           / "progress" ":" ws string_like_value
+                                           / "baselineStartDate" ":" ws string_like_value
+                                           / "baselineEndDate" ":" ws string_like_value
+                                           / "customTooltip" ":" ws string_like_value
+                                           / "legendTooltip" ":" ws string_like_value
+                                           / "labelTooltip" ":" ws string_like_value
+                                           / "customColumn" ":" ws string_like_value
+
+
+series_line                      = indent "line" ws "{" line_end series_line_property_line* indent "}" line_end
+series_line_property_line        = indent series_line_property line_end
+series_line_property             = "style" ":" ws ( "dotted" / "dashed" / "solid" ) 
+                                 / "width" ":" ws number
+                                 / "type" ":" ws ( "centeredStepped" / "curved" / "centeredSegmented" / "stepped" / "segmented" / "straight" / "auto" / "none" ) 
+
+# series_child_component          = parameter_k
 
 reference                       = "@" reference_character*
 variable                        = "&" reference_character "."

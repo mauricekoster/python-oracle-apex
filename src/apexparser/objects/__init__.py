@@ -76,15 +76,25 @@ from .facet import (
     FacetListEntries,
     FacetSource
 )
+from .series import (
+    Series,
+    SeriesColumnMapping,
+    SeriesLine,
+    SeriesSource,
+    SeriesExecution,
+)
 from .region import (
     Region, 
     RegionAccessibility,
     RegionAdvanced,
     RegionAppearance, 
+    RegionChart,
+    RegionChartLayout,
     RegionComponentAppearance,
     RegionComponentAdvanced,
     RegionImage,
     RegionLayout,
+    RegionLegend,
     RegionMessages,
     RegionPagination,
     RegionPerformance,
@@ -93,6 +103,7 @@ from .region import (
     RegionReportLayout,
     RegionSettings,
     RegionSource,
+    RegionTitle,
 )
 from .page import (
     Page, 

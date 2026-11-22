@@ -13,7 +13,29 @@ class RegionLayout(ApexGroup):
 class RegionAppearance(ApexGroup):
     pass
 
+class RegionTitle(ApexGroup):
+    @property
+    def title(self):
+        return self.properties.get('title', None)
 
+    @property
+    def advancedFormatting(self):
+        return self.properties.get('advancedFormatting', None)
+
+    @property
+    def column(self):
+        return self.properties.get('column', None)
+
+    @property
+    def htmlExpression(self):
+        return self.properties.get('htmlExpression', None)
+    
+    @property
+    def cssClasses(self):
+        return self.properties.get('cssClasses', None)
+    
+    
+    
 class RegionSource(ApexGroup):
     @property
     def list(self):
@@ -89,6 +111,63 @@ class RegionComponentAppearance(ApexGroup):
 class RegionImage(ApexGroup):
     pass
 
+class RegionChart(ApexGroup):
+    @property
+    def type(self):
+        return self.properties.get('type', None)
+
+
+class RegionChartLayout(ApexGroup):
+    @property
+    def maxWidth(self):
+        return self.properties.get('maxWidth', None)
+    
+    @property
+    def height(self):
+        return self.properties.get('height', None)
+
+
+class RegionLegend(ApexGroup):
+    @property
+    def show(self):
+        return self.properties.get('show', None)
+    
+    @property
+    def title(self):
+        return self.properties.get('title', None)
+    
+    @property
+    def selector(self):
+        return self.properties.get('selector', None)
+    
+    @property
+    def cssClasses(self):
+        return self.properties.get('cssClasses', None)
+    
+    @property
+    def fontColor(self):
+        return self.properties.get('fontColor', None)
+    
+    @property
+    def position(self):
+        return self.properties.get('position', None)
+    
+    @property
+    def hideAndShowBehavior(self):
+        return self.properties.get('hideAndShowBehavior', None)
+    
+    @property
+    def fontFamily(self):
+        return self.properties.get('fontFamily', None)
+    
+    @property
+    def fontStyle(self):
+        return self.properties.get('fontStyle', None)
+    
+    @property
+    def fontSize(self):
+        return self.properties.get('fontSize', None)
+        
 
 class RegionSettings(ApexGroup):
     pass
@@ -262,6 +341,23 @@ class Region(ApexObject):
     def componentAdvanced(self) -> RegionComponentAdvanced:
         return self.groups.get('componentAdvanced', None)
 
+    @property
+    def chart(self) -> RegionChart:
+        return self.groups.get('chart', None)
+
+    @property
+    def chartLayout(self) -> RegionChartLayout:
+        return self.groups.get('chartLayout', None)
+
+    @property
+    def title(self) -> RegionTitle:
+        return self.groups.get('title', None)
+
+    @property
+    def legend(self) -> RegionLegend:
+        return self.groups.get('legend', None)
+    
+    
     # child
 
     @property

@@ -14,5 +14,6 @@
 {% include "column_c.peg" %}
 {% include "column_f.peg" %}
 {% include "branch_a.peg" %}
+{% include "series.peg" %}
 
 {% include "base.peg" %}
