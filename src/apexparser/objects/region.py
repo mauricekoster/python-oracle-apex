@@ -177,7 +177,11 @@ class RegionSettings(ApexGroup):
     @property
     def zoomAndScroll(self):
         return self.properties.get('zoomAndScroll', None)
-    
+
+    @property
+    def overline(self):
+        return self.properties.get('overline', None)
+        
 
 class RegionPluginAvatar(ApexGroup):
     @property

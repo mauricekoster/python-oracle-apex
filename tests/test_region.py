@@ -25,6 +25,7 @@ def test_region_settings(apex_parser):
         settings {
             timeAxisType: mixedFrequency
             zoomAndScroll: liveScrollOnly
+            overline: &REGION.
         }
     )
 """)
@@ -51,7 +52,7 @@ def test_region_settings(apex_parser):
     assert isinstance(r, Region)
     r.settings.timeAxisType == 'mixedFrequency'
     r.settings.zoomAndScroll == 'liveScrollOnly'
-
+    r.settings.overline == '&REGION.'
 
 def test_region_source(apex_parser):
     r = apex_parser.parse(

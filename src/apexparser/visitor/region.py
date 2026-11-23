@@ -207,7 +207,7 @@ class RegionVisitor:
         v = visited_children[0]
         match v[0].text:
             case 'title' | 'description' | 'miscellaneous' | \
-                    'displayAvatar' | 'displayBadge' | \
+                    'displayAvatar' | 'displayBadge' | 'overline' |\
                     'compactNosThreshold' | 'currentFacetsSelector' | 'displayChartForTopNValues':
                 return (v[0].text, v[3])
             case 'timeAxisType' | 'zoomAndScroll':

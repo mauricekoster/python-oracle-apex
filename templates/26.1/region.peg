@@ -148,6 +148,7 @@ region_settings_property            = "timeAxisType" ":" ws ( "auto" / "disabled
                                     / "miscellaneous" ":" ws code_block
                                     / "displayAvatar" ":" ws boolean
                                     / "displayBadge" ":" ws boolean
+                                    / "overline" ":" ws string_like_value
 
 region_plugin_avatar                = indent "plugin-avatar" ws "{" line_end region_plugin_avatar_property_line* indent "}" line_end
 region_plugin_avatar_property_line  = indent region_plugin_avatar_property line_end
