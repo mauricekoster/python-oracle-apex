@@ -29,6 +29,7 @@ region_group_block                  = region_layout
                                     / region_plugin_avatar
                                     / region_plugin_badge
                                     / region_report_layout
+                                    / region_server_side_condition
                                     / region_settings
                                     / region_source
                                     / region_title
@@ -243,6 +244,25 @@ region_legend_property             = "show" ":" ws boolean
                                    / "fontStyle" ":" ws ( "normal" / "italic" / "oblique" ) 
                                    / "fontSize" ":" ws ( "8" / "10" / "12" / "14" / "16" / "18" / "20" / "22" )
                                    / "fontColor" ":" ws string_like_value
+
+region_server_side_condition                      = indent "serverSideCondition" ws "{" line_end region_server_side_condition_property_line* indent "}" line_end
+region_server_side_condition_property_line        = indent region_server_side_condition_property line_end
+region_server_side_condition_property             = "type" ":" ws string_like_value
+                                                  / "sqlQuery" ":" ws code_block
+                                                  / "language" ":" ws ( "sql" / "plsql" / "javaScript-mle" )
+                                                  / "sqlExpression" ":" ws code_block
+                                                  / "plsqlExpression" ":" ws code_block
+                                                  / "javaScriptExpression" ":" ws code_block
+                                                  / "plsqlFunctionBody" ":" ws code_block
+                                                  / "javaScriptFunctionBody" ":" ws code_block
+                                                  / "value" ":" ws string_like_value
+                                                  / "item" ":" ws string_like_value
+                                                  / "preference" ":" ws string_like_value
+                                                  / "page" ":" ws number
+                                                  / "pages" ":" ws array_of_number
+                                                  / "text" ":" ws string_like_value
+                                                  / "list" ":" ws one_or_more_string_like_values
+
 
 region_child_component              = facet
                                     / action_d

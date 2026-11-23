@@ -379,3 +379,21 @@ def test_region_title(apex_parser):
     assert r.legend.fontColor == 'blue'
 
 
+def test_region_server_side_condition(apex_parser):
+    r = apex_parser.parse(
+"""region A (
+        serverSideCondition {
+            type: expression
+            language: sql
+            sqlExpression: 1=1
+        }
+    )
+""")
+
+# TODO: serverSideCondition
+# missing
+
+    assert isinstance(r, Region)
+    assert r.serverSideCondition.type == 'expression'
+    assert r.serverSideCondition.language == 'sql'
+    assert r.serverSideCondition.sqlExpression == '1=1'

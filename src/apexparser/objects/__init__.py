@@ -106,6 +106,7 @@ from .region import (
     RegionPluginAvatar,
     RegionPluginBadge,
     RegionReportLayout,
+    RegionServerSideCondition,
     RegionSettings,
     RegionSource,
     RegionTitle,

@@ -33,6 +33,30 @@ def test_page_p00008():
     p = parse_apex_file("examples/brookstrut/pages/p00008-store-regions.apx")
     assert p.name == "Administration"
 
+def test_page_p00009():
+    p = parse_apex_file("examples/brookstrut/pages/p00009-region.apx")
+    assert p.name == "Administration"
+
+def test_page_p00011():
+    p = parse_apex_file("examples/brookstrut/pages/p00011-products.apx")
+    assert p.name == "Administration"
+
+def test_page_p00012():
+    p = parse_apex_file("examples/brookstrut/pages/p00012-product.apx")
+    assert p.name == "Administration"
+
+def test_page_p00013():
+    p = parse_apex_file("examples/brookstrut/pages/p00013-sales-history-classic.apx")
+    assert p.name == "Administration"
+
+def test_page_p00014():
+    p = parse_apex_file("examples/brookstrut/pages/p00014-about.apx")
+    assert p.name == "Administration"
+
+def test_page_p00015():
+    p = parse_apex_file("examples/brookstrut/pages/p00015-region-stores.apx")
+    assert p.name == "Administration"
+
 def test_page_p00101():
     p = parse_apex_file("examples/brookstrut/pages/p00101-login.apx")
     assert p.name == "Login"

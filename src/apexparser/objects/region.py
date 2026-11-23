@@ -277,6 +277,19 @@ class RegionComponentAdvanced(ApexGroup):
     def maxRowsPerPageInSelector(self):
         return self.properties.get('maxRowsPerPageInSelector', None)
 
+class RegionServerSideCondition(ApexGroup):
+    @property
+    def type(self):
+        return self.properties.get('type', None)
+    
+    @property
+    def language(self):
+        return self.properties.get('language', None)
+    
+    @property
+    def sqlExpression(self):
+        return self.properties.get('sqlExpression', None)
+
 
 class Region(ApexObject):
     # direct
@@ -362,6 +375,10 @@ class Region(ApexObject):
     @property
     def legend(self) -> RegionLegend:
         return self.groups.get('legend', None)
+    
+    @property
+    def serverSideCondition(self) -> RegionServerSideCondition:
+        return self.groups.get('serverSideCondition', None)
     
     
     # child
