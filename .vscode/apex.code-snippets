@@ -1,0 +1,164 @@
+{
+	// Place your python-oracle-apex workspace snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and 
+	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope 
+	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is 
+	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are: 
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. 
+	// Placeholders with the same ids are connected.
+	// Example:
+	// "Print to console": {
+	// 	"scope": "javascript,typescript",
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// }
+	//
+	// You can also restrict snippets to specific files using include/exclude patterns:
+	// "Test snippet": {
+	// 	"scope": "javascript,typescript",
+	// 	"prefix": "test",
+	// 	"body": "test('$1', () => {\n\t$0\n});",
+	// 	"include": ["**/*.test.ts", "*.spec.ts"],
+	// 	"exclude": ["**/temp/*.ts"],
+	// 	"description": "Insert test block"
+	// }
+	"Grammar Apex Object": {
+		"prefix": "apexobj",
+		"body": [
+			"${1:name}               = indent \"${2:keyword}\" (required_ws component_id)? ws \"(\" line_end $1_body_line* indent \")\" line_end",
+			"$1_body_line     = $1_direct_property_line",
+            "                       / $1_group_block",
+            "                       / $1_child_component",
+            "                       / blank_lines",
+			"",
+			"$1_direct_property_line     = indent $1_direct_property line_end ",
+			"$1_direct_property          = $0",
+			"",
+			"$1_group_block              = ",
+			"",
+			"$1_child_component          = ",
+			""
+
+		],
+		"include": ["**/*.peg"]
+
+	},
+	"Grammar Apex Group": {
+		"prefix": "apexgrp",
+		"body": [
+			"${1:name}                      = indent \"${2:keyword}\" ws \"{\" line_end $1_property_line* indent \"}\" line_end",
+			"$1_property_line        = indent $1_property line_end",
+			"$1_property             = $0"
+		],
+		"include": ["**/*.peg"]
+
+	},
+	"Visit Apex Object":{
+		"scope": "python",
+		"prefix": "apexobj",
+		"body": [
+			"from ..objects import *",
+			"from . import RuleNotImplemented",
+			"",
+			"",
+			"class $1Visitor:",
+			"    def visit_$2(self, node, visited_children):",
+			"        component_id = visited_children[2]",
+			"        body_parts = visited_children[6]",
+			"        if type(component_id) is list:",
+			"            component_id = component_id[0][1]",
+			"        else:",
+			"            component_id = None",
+			"",
+			"        proc = $1(component_id)",
+			"        for item in body_parts:",
+			"            if type(item) is tuple:",
+			"                if type(item[1]) is dict:",
+			"                    proc.add_group(item[0], item[1])",
+			"                elif isinstance(item[1], ApexGroup):",
+			"                    proc.add_group(item[0], item[1])",
+			"                else:",
+			"                    proc.add_property(item[0], item[1])",
+			"            elif item is None:",
+			"                continue",
+			"            else:",
+			"                raise RuleNotImplemented(f\"unprocessed: {item}\")",
+			"        return proc",
+			"",
+			"    def visit_$2_body_line(self, node, visited_children):",
+			"        return visited_children[0]",
+			"",
+			"    def visit_$2_direct_property_line(self, node, visited_children):",
+			"        return visited_children[1]",
+			"",
+			"    def visit_$2_direct_property(self, node, visited_children):",
+			"        v = visited_children[0]",
+			"        title, _, _, value = v",
+			"        if type(value) is list:",
+            "            return (title.text, value[0].text)",
+            "        else:",
+            "            return (title.text, value)",
+			"",
+			"    def visit_$2_group_block(self, node, visited_children):",
+			"        return visited_children[0]",
+			"",
+		],
+		"include": ["**/visitor/*.py"]
+	},
+	"Visit Apex Group":{
+		"scope": "python",
+		"prefix": "apexgrp",
+		"body": [
+			"def visit_$1(self, node, visited_children):",
+			"    parts = visited_children[5]",
+			"    d = {}",
+			"    for item in parts:",
+            "        if type(item) is tuple:",
+            "            d[item[0]] = item[1]",
+            "        else: # pragma: no cover",
+            "            raise RuleNotImplemented()",
+            "    return ('$2', $3(d))",
+			"",
+			"def visit_$1_property_line(self, node, visited_children):",
+            "    return visited_children[1]",
+			"",
+			"def visit_$1_property(self, node, visited_children):",
+        	"    v = visited_children[0]",
+        	"    match v[0].text:",
+            "        #case '':",
+            "        #    return (v[0].text, v[3])",
+            "        #case '':",
+            "        #    return (v[0].text, v[3][0].text)",
+            "        case _: # pragma: no cover",
+            "            raise RuleNotImplemented(f\"rule: {node.expr_name}   text: '{node.text}'\")"
+		],
+		"include": ["**/visitor/*.py"]
+	},
+	"Apex Direct Property": {
+		"scope": "python",
+		"prefix": "prop",
+		"body": [
+			"@property",
+    		"def $1(self):",
+        	"    return self.properties.get('$1', None)",
+			"",
+			"$0"
+		],
+		"include": ["**/objects/*.py"]
+	},
+	"Apex Group Property": {
+		"scope": "python",
+		"prefix": "grp",
+		"body": [
+			"@property",
+			"def $1(self) -> $2:",
+			"    return self.groups.get('$1', None)",
+			"",
+			"$0"
+		],
+		"include": ["**/objects/*.py"]
+	}
+}
