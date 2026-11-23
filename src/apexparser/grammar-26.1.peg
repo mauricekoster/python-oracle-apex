@@ -608,12 +608,12 @@ dynamic_action_when_property        = "event" ":" ws string_like_value
                                     / "selectionType" ":" ws ( "items" / "button" / "region" / "columns" / "domObject" / "jQuerySelector" / "jsExpression" )
                                     / "region" ":" ws reference
                                     / "interactiveGrid" ":" ws reference
-                                    / "columns" ":" ws array_of_string_like_value
+                                    / "columns" ":" ws one_or_more_string_like_values
                                     / "button" ":" ws reference
                                     / "items" ":" ws one_or_more_string_like_values
                                     / "domObject" ":" ws string_like_value
                                     / "jquerySelector" ":" ws string_like_value
-                                    / "javaScriptExpression" ":" ws multiline_string
+                                    / "javaScriptExpression" ":" ws code_block
 
 dynamic_action_client_side_condition = indent "clientSideCondition" ws "{" line_end dynamic_action_client_side_condition_property_line* indent "}" line_end
 dynamic_action_client_side_condition_property_line = indent dynamic_action_client_side_condition_property line_end
@@ -665,6 +665,7 @@ action_c_settings                      = indent "settings" ws "{" line_end actio
 action_c_settings_property_line        = indent action_c_settings_property line_end
 action_c_settings_property             = "type" ":" ws ( "sqlQuery" / "something-else" )
                                        / "sqlQuery" ":" ws code_block
+                                       / "plsqlCode" ":" ws code_block
                                        / "itemsToSubmit" ":" ws one_or_more_string_like_values
 action_d                            = indent "action" (required_ws component_id)? ws "(" line_end action_d_body_line* indent ")" line_end
 action_d_body_line                  = action_d_direct_property_line

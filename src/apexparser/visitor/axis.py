@@ -42,3 +42,50 @@ class AxisVisitor:
 
     def visit_axis_group_block(self, node, visited_children):
         return visited_children[0]
+
+
+    def visit_axis_value(self, node, visited_children):
+        parts = visited_children[5]
+        d = {}
+        for item in parts:
+            if type(item) is tuple:
+                d[item[0]] = item[1]
+            else: # pragma: no cover
+                raise RuleNotImplemented()
+        return ('value', AxisValue(d))
+    
+    def visit_axis_value_property_line(self, node, visited_children):
+        return visited_children[1]
+    
+    def visit_axis_value_property(self, node, visited_children):
+        v = visited_children[0]
+        match v[0].text:
+            case 'min' | 'max' | 'decimalPlaces' | 'currency' | 'pattern' | 'step':
+                return (v[0].text, v[3])
+            case 'format' | 'formatScaling' | 'baselineScaling' | 'scale':
+                return (v[0].text, v[3][0].text)
+            case _: # pragma: no cover
+                raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")
+
+    def visit_axis_minor_ticks(self, node, visited_children):
+        parts = visited_children[5]
+        d = {}
+        for item in parts:
+            if type(item) is tuple:
+                d[item[0]] = item[1]
+            else: # pragma: no cover
+                raise RuleNotImplemented()
+        return ('minorTicks', AxisMinorTicks(d))
+    
+    def visit_axis_minor_ticks_property_line(self, node, visited_children):
+        return visited_children[1]
+    
+    def visit_axis_minor_ticks_property(self, node, visited_children):
+        v = visited_children[0]
+        match v[0].text:
+            case 'step':
+                return (v[0].text, v[3])
+            case 'show':
+                return (v[0].text, v[3][0].text)
+            case _: # pragma: no cover
+                raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")

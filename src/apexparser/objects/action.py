@@ -106,7 +106,11 @@ class ActionSettings(ApexGroup):
     @property
     def itemsToSubmit(self):
         return self.properties.get('itemsToSubmit', None)
-
+    @property
+    def plsqlCode(self):
+        return self.properties.get('plsqlCode', None)
+    
+    
 
 class Action(ApexObject):
 

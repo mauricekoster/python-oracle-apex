@@ -28,12 +28,12 @@ dynamic_action_when_property        = "event" ":" ws string_like_value
                                     / "selectionType" ":" ws ( "items" / "button" / "region" / "columns" / "domObject" / "jQuerySelector" / "jsExpression" )
                                     / "region" ":" ws reference
                                     / "interactiveGrid" ":" ws reference
-                                    / "columns" ":" ws array_of_string_like_value
+                                    / "columns" ":" ws one_or_more_string_like_values
                                     / "button" ":" ws reference
                                     / "items" ":" ws one_or_more_string_like_values
                                     / "domObject" ":" ws string_like_value
                                     / "jquerySelector" ":" ws string_like_value
-                                    / "javaScriptExpression" ":" ws multiline_string
+                                    / "javaScriptExpression" ":" ws code_block
 
 dynamic_action_client_side_condition = indent "clientSideCondition" ws "{" line_end dynamic_action_client_side_condition_property_line* indent "}" line_end
 dynamic_action_client_side_condition_property_line = indent dynamic_action_client_side_condition_property line_end

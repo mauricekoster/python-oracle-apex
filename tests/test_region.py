@@ -19,6 +19,40 @@ def test_region_1(apex_parser):
     assert isinstance(r, Region)
 
 
+def test_region_settings(apex_parser):
+    r = apex_parser.parse(
+"""region A (
+        settings {
+            timeAxisType: mixedFrequency
+            zoomAndScroll: liveScrollOnly
+        }
+    )
+""")
+
+# TODO: settings
+# zoomDirection
+# initialZooming
+# showHorizontalGrid
+# showVerticalGrid
+# showRowAxis
+# axisPosition
+# pieSelectionEffect
+# renderAs
+# compactNosThreshold
+# showCurrentFacets
+# currentFacetsSelector
+# displayChartForTopNValues
+# title
+# description
+# miscellaneous
+# displayAvatar
+# displayBadge
+
+    assert isinstance(r, Region)
+    r.settings.timeAxisType == 'mixedFrequency'
+    r.settings.zoomAndScroll == 'liveScrollOnly'
+
+
 def test_region_source(apex_parser):
     r = apex_parser.parse(
 """region A (

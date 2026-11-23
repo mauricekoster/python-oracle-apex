@@ -24,7 +24,18 @@ class SeriesColumnMapping(ApexGroup):
     
 
 class SeriesLine(ApexGroup):
-    pass
+    @property
+    def type(self):
+        return self.properties.get('type', None)
+
+    @property
+    def width(self):
+        return self.properties.get('width', None)
+    
+    @property
+    def style(self):
+        return self.properties.get('style', None)
+    
 
 class Series(ApexObject):
 

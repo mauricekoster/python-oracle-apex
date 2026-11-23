@@ -25,7 +25,7 @@ class DynamicActionVisitor:
                 dynact.add_child(item)
             elif item is None:
                 continue
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented(f"unprocessed: {item}")
         return dynact
 
@@ -49,7 +49,7 @@ class DynamicActionVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('execution', DynamicActionExecution(d) )
     
@@ -65,8 +65,8 @@ class DynamicActionVisitor:
             #     return (v[0].text, v[3][0].text)
             # case 'enableMetaTags' | 'enableDuplicatePageSubmissions':
             #     return (v[0].text, v[3])
-            case _:
-                raise RuleNotImplemented()
+            case _: # pragma: no cover
+                raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")
             
     def visit_dynamic_action_when(self, node, visited_children):
         parts = visited_children[5]
@@ -74,7 +74,7 @@ class DynamicActionVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('when', DynamicActionWhen(d) )
     
@@ -84,14 +84,14 @@ class DynamicActionVisitor:
     def visit_dynamic_action_when_property(self, node, visited_children):
         v = visited_children[0]
         match v[0].text:
-            case 'event' | 'items':
+            case 'event' | 'items' | 'customEvent' | 'region' | 'interactiveGrid' | 'columns' | 'button' | 'domObject' | 'jquerySelector' | 'javaScriptExpression':
                 return (v[0].text, v[3])
             case 'selectionType':
                 return (v[0].text, v[3][0].text)
             # case 'enableMetaTags' | 'enableDuplicatePageSubmissions':
             #     return (v[0].text, v[3])
-            case _:
-                raise RuleNotImplemented()
+            case _: # pragma: no cover
+                raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")
 
     def visit_dynamic_action_client_side_condition(self, node, visited_children):
         parts = visited_children[5]
@@ -99,7 +99,7 @@ class DynamicActionVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('clientSideCondition', DynamicActionClientSideCondition(d) )
     
@@ -115,6 +115,6 @@ class DynamicActionVisitor:
                 return (v[0].text, v[3][0].text)
             # case 'enableMetaTags' | 'enableDuplicatePageSubmissions':
             #     return (v[0].text, v[3])
-            case _:
-                raise RuleNotImplemented()
+            case _: # pragma: no cover
+                raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")
 

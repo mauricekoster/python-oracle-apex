@@ -210,8 +210,8 @@ class RegionVisitor:
                     'displayAvatar' | 'displayBadge' | \
                     'compactNosThreshold' | 'currentFacetsSelector' | 'displayChartForTopNValues':
                 return (v[0].text, v[3])
-            # case 'templateOptions':
-            #     return (v[0].text, v[3][0])
+            case 'timeAxisType' | 'zoomAndScroll':
+                return (v[0].text, v[3][0].text)
             case 'showCurrentFacets':
                 return (v[0].text, v[3].text)
             case _: # pragma: no cover

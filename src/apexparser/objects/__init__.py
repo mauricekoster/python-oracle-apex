@@ -84,7 +84,9 @@ from .series import (
     SeriesExecution,
 )
 from .axis import (
-    Axis
+    Axis,
+    AxisMinorTicks,
+    AxisValue,
 )
 from .region import (
     Region, 

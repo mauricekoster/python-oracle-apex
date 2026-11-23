@@ -93,6 +93,9 @@ def test_action_c_settings(apex_parser):
             type: sqlQuery
             sqlQuery: select msrp from OOW_DEMO_items where id = :P3_ADD_ID;
             itemsToSubmit: P3_ADD_ID
+            plsqlCode:
+                ```plsql
+                ```
         }
     )
 """)
@@ -103,4 +106,5 @@ def test_action_c_settings(apex_parser):
     assert a.settings.type == 'sqlQuery'
     assert a.settings.sqlQuery == 'select msrp from OOW_DEMO_items where id = :P3_ADD_ID;'
     assert a.settings.itemsToSubmit == ['P3_ADD_ID']
+    assert a.settings.plsqlCode == '```plsql\n```'
     

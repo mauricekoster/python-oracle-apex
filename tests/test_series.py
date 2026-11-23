@@ -116,3 +116,20 @@ def test_series_column_mapping(apex_parser):
     assert isinstance(s, Series)
     assert s.columnMapping.label == 'SALE_DATE'
     assert s.columnMapping.value == 'TOTAL_SALES'
+
+def test_series_line(apex_parser):
+    s = apex_parser.parse(
+"""series A (
+        name: Sales Over Time
+        line {
+            type: curved
+            style: dotted
+            width: 3
+        }
+    )
+""")
+
+    assert isinstance(s, Series)
+    assert s.line.type == 'curved' 
+    assert s.line.style == 'dotted'
+    assert s.line.width == 3

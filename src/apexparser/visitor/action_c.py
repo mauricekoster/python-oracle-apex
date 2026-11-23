@@ -99,7 +99,7 @@ class ActionCVisitor:
     def visit_action_c_settings_property(self, node, visited_children):
         v = visited_children[0]
         match v[0].text:
-            case 'sqlQuery' | 'itemsToSubmit':
+            case 'sqlQuery' | 'itemsToSubmit' | 'plsqlCode':
                 return (v[0].text, v[3])
             case 'type':
                 return (v[0].text, v[3][0].text)

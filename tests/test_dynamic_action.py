@@ -44,14 +44,33 @@ def test_dynamic_action_when(apex_parser):
     d = apex_parser.parse(
 """dynamicAction A (
         when {
+            event: AAA
+            customEvent: BBB
             selectionType: items
+            region: @/ref
+            interactiveGrid: @interactive
+            columns: CCC
+            button: @button
             items: P2_NAVIGATION
+            domObject: DDD
+            jquerySelector: EEE
+            javaScriptExpression:
+                ```js
+                ```
         }
     )
 """)
 
-# TODO:
-
     assert isinstance(d, DynamicAction)
+    d.when.event == 'AAA'
+    d.when.customEvent == 'BBB'
     d.when.selectionType == 'items'
+    d.when.region == '@/ref'
+    d.when.interactiveGrid == '@interactive'
+    d.when.columns == ['CCC']
+    d.when.button == '@button'
     d.when.items == ['P2_NAVIGATION']
+    d.when.domObject == 'DDD'
+    d.when.jquerySelector == 'EEE'
+    d.when.javaScriptExpression == '```js\n```'
+

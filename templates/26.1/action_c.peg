@@ -36,4 +36,5 @@ action_c_settings                      = indent "settings" ws "{" line_end actio
 action_c_settings_property_line        = indent action_c_settings_property line_end
 action_c_settings_property             = "type" ":" ws ( "sqlQuery" / "something-else" )
                                        / "sqlQuery" ":" ws code_block
+                                       / "plsqlCode" ":" ws code_block
                                        / "itemsToSubmit" ":" ws one_or_more_string_like_values

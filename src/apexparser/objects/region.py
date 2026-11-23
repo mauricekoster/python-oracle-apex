@@ -170,8 +170,14 @@ class RegionLegend(ApexGroup):
         
 
 class RegionSettings(ApexGroup):
-    pass
-
+    @property
+    def timeAxisType(self):
+        return self.properties.get('timeAxisType', None)
+    
+    @property
+    def zoomAndScroll(self):
+        return self.properties.get('zoomAndScroll', None)
+    
 
 class RegionPluginAvatar(ApexGroup):
     @property

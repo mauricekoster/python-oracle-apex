@@ -111,3 +111,26 @@ class SeriesVisitor:
             #    return (v[0].text, v[3][0].text)
             case _: # pragma: no cover
                 raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")
+
+    def visit_series_line(self, node, visited_children):
+        parts = visited_children[5]
+        d = {}
+        for item in parts:
+            if type(item) is tuple:
+                d[item[0]] = item[1]
+            else: # pragma: no cover
+                raise RuleNotImplemented()
+        return ('line', SeriesLine(d))
+    
+    def visit_series_line_property_line(self, node, visited_children):
+        return visited_children[1]
+    
+    def visit_series_line_property(self, node, visited_children):
+        v = visited_children[0]
+        match v[0].text:
+            case 'width':
+                return (v[0].text, v[3])
+            case 'type' | 'style':
+                return (v[0].text, v[3][0].text)
+            case _: # pragma: no cover
+                raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")
