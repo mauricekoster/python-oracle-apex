@@ -539,6 +539,7 @@ button_direct_property              = "buttonName" ":" ws string_like_value
 button_group_block                  = button_layout
                                     / button_appearance
                                     / button_behavior
+                                    / button_server_side_condition
 
 button_layout                       = indent "layout" ws "{" line_end button_layout_property_line* indent "}" line_end
 button_layout_property_line         = indent page_item_layout_property line_end
@@ -577,6 +578,24 @@ button_behavior_property            = "type" ":" ws string_like_value
                                     / "warnOnUnsavedChanges" ":" ws ( "doNotCheck" )
                                     / "databaseAction" ":" ws ( "insert" / "update" / "delete" )
                                     / "requiresConfirmation" ":" ws boolean
+
+button_server_side_condition                      = indent "serverSideCondition" ws "{" line_end button_server_side_condition_property_line* indent "}" line_end
+button_server_side_condition_property_line        = indent button_server_side_condition_property line_end
+button_server_side_condition_property             = "type" ":" ws string_like_value
+                                                  / "sqlQuery" ":" ws code_block
+                                                  / "language" ":" ws ( "sql" / "plsql" / "javaScript-mle" )
+                                                  / "sqlExpression" ":" ws code_block
+                                                  / "plsqlExpression" ":" ws code_block
+                                                  / "javaScriptExpression" ":" ws code_block
+                                                  / "plsqlFunctionBody" ":" ws code_block
+                                                  / "javaScriptFunctionBody" ":" ws code_block
+                                                  / "value" ":" ws string_like_value
+                                                  / "item" ":" ws string_like_value
+                                                  / "preference" ":" ws string_like_value
+                                                  / "page" ":" ws number
+                                                  / "pages" ":" ws array_of_number
+                                                  / "text" ":" ws string_like_value
+                                                  / "list" ":" ws array_of_string_like_value
 process                             = indent "process" (required_ws component_id)? ws "(" line_end process_body_line* indent ")" line_end
 process_body_line                   = process_direct_property_line
                                     / process_group_block

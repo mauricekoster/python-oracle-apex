@@ -24,6 +24,15 @@ class ButtonBehavior(ApexGroup):
         return self.properties.get('target', None)
 
 
+class ButtonServerSideCondition(ApexGroup):
+    @property
+    def type(self):
+        return self.properties.get('type', None)
+    
+    @property
+    def item(self):
+        return self.properties.get('item', None)
+    
 
 class Button(ApexObject):
     def __init__(self, component_id=None, initial_data={}):
@@ -48,3 +57,9 @@ class Button(ApexObject):
     @property
     def behavior(self) -> ButtonBehavior:
         return self.groups.get('behavior', ButtonBehavior())
+
+    @property
+    def serverSideCondition(self) -> ButtonServerSideCondition:
+        return self.groups.get('serverSideCondition', None)
+    
+    

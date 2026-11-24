@@ -28,3 +28,20 @@ def test_button_behavior(apex_parser):
 
     assert isinstance(b, Button)
     assert b.behavior.target['page'] == 1
+
+
+def test_button_server_side_condition(apex_parser):
+    b: Button = apex_parser.parse(
+"""button A (
+        serverSideCondition {
+            type: itemIsNull
+            item: P7_ID
+        }
+    )
+""")
+
+    assert isinstance(b, Button)
+    assert b.serverSideCondition.type == 'itemIsNull'
+    assert b.serverSideCondition.item == 'P7_ID'
+
+        
