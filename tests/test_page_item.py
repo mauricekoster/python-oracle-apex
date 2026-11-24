@@ -134,7 +134,40 @@ def test_page_item_layout(apex_parser):
     )
 """)
 
+# TODO: layout
+
     assert isinstance(p, PageItem)  
     assert p.layout.sequence == 10
     assert p.layout.region == '@store'  
     assert p.layout.slot == 'regionBody'
+
+def test_page_item_advanced(apex_parser):
+    p = apex_parser.parse(
+"""pageItem A (
+        advanced {
+            cssClasses: mnw180
+        }
+    )
+""")
+
+# TODO: advanced
+
+    assert isinstance(p, PageItem)  
+    assert p.advanced.cssClasses == ['mnw180']
+
+
+def test_page_item_settings(apex_parser):
+    p = apex_parser.parse(
+"""pageItem A (
+        settings {
+            trimSpaces: none
+            showControls: movingOnly
+        }
+    )
+""")
+
+
+    assert isinstance(p, PageItem)  
+    assert p.settings.trimSpaces == 'none'
+    assert p.settings.showControls == 'movingOnly'
+

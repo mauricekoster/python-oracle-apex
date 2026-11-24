@@ -28,7 +28,7 @@ page_item_label_property            = "label" ":" ws string_like_value
 page_item_settings                  = indent "settings" ws "{" line_end page_item_settings_property_line* indent "}" line_end
 page_item_settings_property_line    = indent page_item_settings_property line_end
 page_item_settings_property         = "trimSpaces" ":" ws ( "none" / "something-else" )
-                                    / "dummy" ":" ws string_like_value
+                                    / "showControls" ":" ws string_like_value
 
 
 page_item_layout                    = indent "layout" ws "{" line_end page_item_layout_property_line* indent "}" line_end
@@ -66,9 +66,9 @@ page_item_validation_property       = "valueRequired" ":" ws boolean
 
 page_item_advanced                  = indent "advanced" ws "{" line_end page_item_advanced_property_line* indent "}" line_end
 page_item_advanced_property_line    = indent page_item_advanced_property line_end
-page_item_advanced_property         = "cssClasses" ":" ws array_of_string_like_value
+page_item_advanced_property         = "cssClasses" ":" ws one_or_more_string_like_values
                                     / "customAttributes" ":" ws string_like_value
-                                    / "optionHtmlAttributes" ":" ws array_of_string_like_value
+                                    / "optionHtmlAttributes" ":" ws one_or_more_string_like_values
                                     / "preText" ":" ws code_block
                                     / "postText" ":" ws code_block
                                     / "warnOnUnsavedChanges" ":" ws ( "ignore" )

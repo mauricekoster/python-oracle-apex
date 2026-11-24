@@ -14,10 +14,15 @@ class PageItemLabel(ApexGroup):
         return self.properties.get('alignment', None) 
 
 class PageItemSettings(ApexGroup):
-    def __init__(self, initial_data={}):
-        super().__init__(initial_data)
-
-
+    @property
+    def trimSpaces(self):
+        return self.properties.get('trimSpaces', None)
+    
+    @property
+    def showControls(self):
+        return self.properties.get('showControls', None)
+    
+    
 class PageItemLayout(ApexGroup):
     @property
     def sequence(self):
@@ -66,9 +71,12 @@ class PageItemValidation(ApexGroup):
     def __init__(self, initial_data={}):
             super().__init__(initial_data)
 
+
 class PageItemAdvanced(ApexGroup):
-    def __init__(self, initial_data={}):
-            super().__init__(initial_data)
+    @property
+    def cssClasses(self):
+        return self.properties.get('cssClasses', None)
+    
 
 class PageItemSessionState(ApexGroup):
     def __init__(self, initial_data={}):
@@ -137,5 +145,13 @@ class PageItem(ApexObject):
     @property
     def source(self) -> PageItemSource:
         return self.groups.get('source', None)
+    
+    @property
+    def advanced(self) -> PageItemAdvanced:
+        return self.groups.get('advanced', None)
+    
+    @property
+    def settings(self) -> PageItemSettings:
+        return self.groups.get('settings', None)
     
     

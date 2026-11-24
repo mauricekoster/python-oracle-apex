@@ -23,7 +23,7 @@ class PageItemVisitor:
                     page_item.add_property(item[0], item[1])
             elif item is None:
                 continue
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented(f"unprocessed: {item}")
         return page_item
 
@@ -48,7 +48,7 @@ class PageItemVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('label', PageItemLabel(d) )
     
@@ -62,7 +62,7 @@ class PageItemVisitor:
                 return (v[0].text, v[3])
             case 'alignment' | 'duplicateSubmissionUrl':
                 return (v[0].text, v[3][0].text)
-            case _:
+            case _: # pragma: no cover
                 raise RuleNotImplemented()
 
 
@@ -72,7 +72,7 @@ class PageItemVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('settings', PageItemSettings(d) )
     
@@ -82,11 +82,11 @@ class PageItemVisitor:
     def visit_page_item_settings_property(self, node, visited_children):
         v = visited_children[0]
         match v[0].text:
-            # case 'sequence' | 'label':
-            #     return (v[0].text, v[3])
+            case 'showControls' :
+                return (v[0].text, v[3])
             case 'trimSpaces':
                 return (v[0].text, v[3][0].text)
-            case _:
+            case _: # pragma: no cover
                 raise RuleNotImplemented()
 
     def visit_page_item_session_state(self, node, visited_children):
@@ -95,7 +95,7 @@ class PageItemVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('sessionState', PageItemSessionState(d) )
     
@@ -109,7 +109,7 @@ class PageItemVisitor:
             #     return (v[0].text, v[3])
             case 'dataType' | 'storage':
                 return (v[0].text, v[3][0].text)
-            case _:
+            case _: # pragma: no cover
                 raise RuleNotImplemented()
 
 
@@ -119,7 +119,7 @@ class PageItemVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('layout', PageItemLayout(d) )
     
@@ -135,7 +135,7 @@ class PageItemVisitor:
                 return (v[0].text, v[3][0].text)
             case 'enableMetaTags' | 'enableDuplicatePageSubmissions':
                 return (v[0].text, v[3])
-            case _:
+            case _: # pragma: no cover
                 raise RuleNotImplemented()
 
     def visit_page_item_appearance(self, node, visited_children):
@@ -144,7 +144,7 @@ class PageItemVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('appearance', PageItemAppearance(d) )
     
@@ -156,7 +156,7 @@ class PageItemVisitor:
         match v[0].text:
             case 'template' | 'cssClasses' | 'templateOptions' | 'width' | 'valuePlaceholder' | 'height':
                 return (v[0].text, v[3])
-            case _:
+            case _: # pragma: no cover
                 raise RuleNotImplemented()
 
     def visit_page_item_validation(self, node, visited_children):
@@ -165,7 +165,7 @@ class PageItemVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('validation', PageItemValidation(d) )
     
@@ -179,7 +179,7 @@ class PageItemVisitor:
                 return (v[0].text, v[3])
             case '?':
                 return (v[0].text, v[3][0])
-            case _:
+            case _: # pragma: no cover
                 raise RuleNotImplemented()
 
     def visit_page_item_advanced(self, node, visited_children):
@@ -188,7 +188,7 @@ class PageItemVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('advanced', PageItemAdvanced(d) )
     
@@ -198,12 +198,12 @@ class PageItemVisitor:
     def visit_page_item_advanced_property(self, node, visited_children):
         v = visited_children[0]
         match v[0].text:
-            case 'customAttributes':
+            case 'customAttributes' | 'cssClasses':
                 return (v[0].text, v[3])
             case 'postText':
                 return (v[0].text, v[3][0])
-            case _:
-                raise RuleNotImplemented()
+            case _: # pragma: no cover
+                raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")
 
 
     def visit_page_item_security(self, node, visited_children):
@@ -212,7 +212,7 @@ class PageItemVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('security', PageItemSecurity(d) )
     
@@ -226,7 +226,7 @@ class PageItemVisitor:
                 return (v[0].text, v[3])
             case 'sessionStateProtection' | 'restrictedChars':
                 return (v[0].text, v[3][0])
-            case _:
+            case _: # pragma: no cover
                 raise RuleNotImplemented()
 
     def visit_page_item_lov(self, node, visited_children):
@@ -235,7 +235,7 @@ class PageItemVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('lov', PageItemLov(d) )
     
@@ -249,7 +249,7 @@ class PageItemVisitor:
                 return (v[0].text, v[3])
             case 'type':
                 return (v[0].text, v[3][0].text)
-            case _:
+            case _: # pragma: no cover
                 raise RuleNotImplemented()
 
     def visit_page_item_default(self, node, visited_children):
@@ -258,7 +258,7 @@ class PageItemVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('default', PageItemDefault(d) )
     
@@ -272,7 +272,7 @@ class PageItemVisitor:
                 return (v[0].text, v[3])
             case 'type':
                 return (v[0].text, v[3][0].text)
-            case _:
+            case _: # pragma: no cover
                 raise RuleNotImplemented()
 
     def visit_page_item_source(self, node, visited_children):
