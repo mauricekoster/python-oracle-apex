@@ -1,6 +1,7 @@
 action_e                            = indent "action" (required_ws component_id)? ws "(" line_end action_e_body_line* indent ")" line_end
 action_e_body_line                  = action_e_direct_property_line
                                     / action_e_group_block
+                                    / action_e_child_component
                                     / blank_lines
 
 action_e_direct_property_line       = indent action_e_direct_property line_end
@@ -31,3 +32,4 @@ action_e_behavior_property          = "type" ":" ws ( "redirectThisApp" / "redir
                                     / "targetUrl" ":" ws string_like_value
                                     / "linkAttributes" ":" ws string_like_value
 
+action_e_child_component            = menu_a

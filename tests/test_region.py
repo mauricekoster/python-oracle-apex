@@ -143,14 +143,28 @@ def test_region_pagination(apex_parser):
     r = apex_parser.parse(
 """region A (
         pagination {
+            type: something
+            displayPosition: bottomLeft
+            partialPageRefresh: true
+            showTotalCount: false
+            maxRowsToDisplay: all
+            cardsPerPage: 10
             entitiesPerPage: 100
+            initialEntitiesCount: 10
         }
     )
 """)
 
     assert isinstance(r, Region)
 
+    assert r.pagination.type == 'something'
+    assert r.pagination.displayPosition == 'bottomLeft'
+    assert r.pagination.partialPageRefresh == True
+    assert r.pagination.showTotalCount == False
+    assert r.pagination.maxRowsToDisplay == 'all'
+    assert r.pagination.cardsPerPage == 10
     assert r.pagination.entitiesPerPage == 100
+    assert r.pagination.initialEntitiesCount == 10
 
 
 def test_region_accessibility(apex_parser):

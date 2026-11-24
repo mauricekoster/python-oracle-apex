@@ -16,5 +16,6 @@
 {% include "branch_a.peg" %}
 {% include "series.peg" %}
 {% include "axis.peg" %}
+{% include "menu_a.peg" %}
 
 {% include "base.peg" %}

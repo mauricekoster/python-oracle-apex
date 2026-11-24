@@ -17,6 +17,7 @@ from .column_f import ColumnFVisitor
 from .branch_a import BranchAVisitor
 from .series import SeriesVisitor
 from .axis import AxisVisitor
+from .menu_a import MenuAVisitor
 
 from . import RuleNotImplemented
 
@@ -37,7 +38,8 @@ class ApxNodeVisitor(NodeVisitor,
                      ColumnCVisitor,
                      ColumnFVisitor,
                      SeriesVisitor,
-                     AxisVisitor
+                     AxisVisitor,
+                     MenuAVisitor
                      ):
 
     def visit_component(self, node, visited_children):
@@ -83,6 +85,24 @@ class ApxNodeVisitor(NodeVisitor,
 
         return ret
 
+    def visit_array_of_value(self, node, visited_children):
+        return visited_children[0]
+
+    def visit_array_of_value_oneline(self, node, visited_children):
+        retval = [visited_children[2]]
+        for item in visited_children[3]:
+            value = item[1]
+            retval.append(value)
+        return retval
+
+    def visit_array_of_value_multiline(self, node, visited_children):
+        retval = []
+        for item in visited_children[3]:
+            value = item[1]
+            retval.append(value)
+        return retval
+
+
     def visit_complex(self, node, visited_children):
         d = {}
         for k, v in visited_children[2]:
@@ -100,10 +120,7 @@ class ApxNodeVisitor(NodeVisitor,
 
     def visit_key_value(self, node, visited_children):
         value = visited_children[3]
-        if type(value) is list:
-            return (visited_children[0], value[0])
-        else:
-            return (visited_children[0], value)
+        return (visited_children[0], value)
         
     def visit_string_like_value(self, node, visited_children):
         t = node.text

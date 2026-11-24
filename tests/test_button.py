@@ -15,6 +15,12 @@ def test_button_behavior(apex_parser):
     behavior {
         target: {
             page: 1
+            clearCache: [ 
+                6 
+                XX
+                AA
+                RIR 
+            ]
         }
     }
     )

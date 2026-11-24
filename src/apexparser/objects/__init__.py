@@ -88,6 +88,11 @@ from .axis import (
     AxisMinorTicks,
     AxisValue,
 )
+from .menu import (
+    Menu,
+    MenuBehavior,
+    MenuLayout,
+)
 from .region import (
     Region, 
     RegionAccessibility,

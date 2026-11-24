@@ -11,6 +11,7 @@ component                           = page_item blank_lines
                                     / column_b blank_lines
                                     / column_c blank_lines
                                     / column_f blank_lines
+                                    / menu_a blank_lines
                                     / series blank_lines
                                     / axis blank_lines
                                     / region blank_lines
@@ -722,6 +723,7 @@ action_d_appearance_property         = "displayType" ":" ws ( "text" / "icon" / 
 action_e                            = indent "action" (required_ws component_id)? ws "(" line_end action_e_body_line* indent ")" line_end
 action_e_body_line                  = action_e_direct_property_line
                                     / action_e_group_block
+                                    / action_e_child_component
                                     / blank_lines
 
 action_e_direct_property_line       = indent action_e_direct_property line_end
@@ -752,6 +754,7 @@ action_e_behavior_property          = "type" ":" ws ( "redirectThisApp" / "redir
                                     / "targetUrl" ":" ws string_like_value
                                     / "linkAttributes" ":" ws string_like_value
 
+action_e_child_component            = menu_a
 facet                       = indent "facet" (required_ws component_id)? ws "(" line_end facet_body_line* indent ")" line_end
 facet_body_line             = facet_direct_property_line
                             / facet_group_block
@@ -1075,6 +1078,33 @@ axis_minor_ticks                      = indent "minorTicks" ws "{" line_end axis
 axis_minor_ticks_property_line        = indent axis_minor_ticks_property line_end
 axis_minor_ticks_property             = "show" ":" ws ( "auto" / "true" / "false" )
                                       / "step" ":" ws number
+menu_a               = indent "menu" (required_ws component_id)? ws "(" line_end menu_a_body_line* indent ")" line_end
+menu_a_body_line     = menu_a_direct_property_line
+                       / menu_a_group_block
+                       #/ menu_a_child_component
+                       / blank_lines
+
+menu_a_direct_property_line     = indent menu_a_direct_property line_end 
+menu_a_direct_property          = "type" ":" ws ( "menuEntry" / "subMenu" / "separator" )
+                                / "label" ":" ws string_like_value
+                                / "parentMenu" ":" ws reference
+
+menu_a_group_block              = menu_a_layout
+                                / menu_a_behavior
+
+menu_a_layout                      = indent "layout" ws "{" line_end menu_a_layout_property_line* indent "}" line_end
+menu_a_layout_property_line        = indent menu_a_layout_property line_end
+menu_a_layout_property             = "sequence" ":" ws number
+
+
+menu_a_behavior                      = indent "behavior" ws "{" line_end menu_a_behavior_property_line* indent "}" line_end
+menu_a_behavior_property_line        = indent menu_a_behavior_property line_end
+menu_a_behavior_property             = "type" ":" ws ( "redirectThisApp" / "redirectOtherApp" / "redirectUrl" / "triggerAction" )
+                                     / "target" ":" ws value
+                                     / "targetUrl" ":" ws string_like_value
+                                     / "linkAttributes" ":" ws string_like_value
+
+#menu_a_child_component          = trigger_action_a
 
 reference                       = "@" reference_character*
 variable                        = "&" reference_character "."
@@ -1092,7 +1122,10 @@ indent                          = ~r"[ \t]*"
 value                           = multiline_string / array / complex / boolean / number / reference / variable / special_variable / string / identifier
 array                           = array_of_value
 array_separator                 = required_ws / line_end indent
-array_of_value                  = "[" ( ws value ( array_separator value )* ws / line_end ( indent value line_end )? indent )? "]"
+array_of_value                  = array_of_value_oneline / array_of_value_multiline
+array_of_value_oneline          = "[" ws value ( array_separator value )* ws "]"
+array_of_value_multiline        = "[" ws line_end ( indent value ws line_end )* indent "]"
+
 array_of_number                 = "[" ( ws number ( array_separator number )* ws / line_end ( indent number line_end )? indent )? "]"
 array_of_string_like_value      = "[" (line_end indent string_like_value)+ line_end indent "]"
 one_or_more_string_like_values  = array_of_string_like_value / string_like_value

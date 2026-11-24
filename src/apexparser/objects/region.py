@@ -206,9 +206,37 @@ class RegionPluginBadge(ApexGroup):
 
 class RegionPagination(ApexGroup):
     @property
+    def type(self):
+        return self.properties.get('type', None)
+    
+    @property
+    def displayPosition(self):
+        return self.properties.get('displayPosition', None)
+    
+    @property
+    def partialPageRefresh(self):
+        return self.properties.get('partialPageRefresh', None)
+    
+    @property
+    def showTotalCount(self):
+        return self.properties.get('showTotalCount', None)
+    
+    @property
+    def maxRowsToDisplay(self):
+        return self.properties.get('maxRowsToDisplay', None)
+    
+    @property
+    def cardsPerPage(self):
+        return self.properties.get('cardsPerPage', None)
+    
+    @property
     def entitiesPerPage(self):
         return self.properties.get('entitiesPerPage', None)
 
+    @property
+    def initialEntitiesCount(self):
+        return self.properties.get('initialEntitiesCount', None)
+    
 
 class RegionAccessibility(ApexGroup):
     @property
