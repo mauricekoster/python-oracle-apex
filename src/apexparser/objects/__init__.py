@@ -97,6 +97,7 @@ from .region import (
     RegionChartLayout,
     RegionComponentAppearance,
     RegionComponentAdvanced,
+    RegionEntityTitle,
     RegionImage,
     RegionLayout,
     RegionLegend,

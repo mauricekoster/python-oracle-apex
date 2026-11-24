@@ -240,7 +240,7 @@ class RegionVisitor:
             # case 'showCurrentFacets':
             #     return (v[0].text, v[3].text)
             case _: # pragma: no cover
-                raise RuleNotImplemented() 
+                raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")
 
     def visit_region_plugin_badge(self, node, visited_children):
         parts = visited_children[5]
@@ -258,14 +258,12 @@ class RegionVisitor:
     def visit_region_plugin_badge_property(self, node, visited_children):
         v = visited_children[0]
         match v[0].text:
-            case 'label' | 'value':
+            case 'label' | 'value' | 'state':
                 return (v[0].text, v[3])
-            # case 'templateOptions':
-            #     return (v[0].text, v[3][0])
-            # case 'showCurrentFacets':
-            #     return (v[0].text, v[3].text)
+            case 'columnWidth':
+                return (v[0].text, v[3][0].text)
             case _: # pragma: no cover
-                raise RuleNotImplemented() 
+                raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")
 
     def visit_region_pagination(self, node, visited_children):
         parts = visited_children[5]
@@ -515,5 +513,28 @@ class RegionVisitor:
                 return (v[0].text, v[3])
             case 'language':
                 return (v[0].text, v[3][0].text)
+            case _: # pragma: no cover
+                raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")
+
+    def visit_region_entity_title(self, node, visited_children):
+        parts = visited_children[5]
+        d = {}
+        for item in parts:
+            if type(item) is tuple:
+                d[item[0]] = item[1]
+            else: # pragma: no cover
+                raise RuleNotImplemented()
+        return ('entityTitle', RegionEntityTitle(d))
+    
+    def visit_region_entity_title_property_line(self, node, visited_children):
+        return visited_children[1]
+    
+    def visit_region_entity_title_property(self, node, visited_children):
+        v = visited_children[0]
+        match v[0].text:
+            case 'singular' | 'plural':
+                return (v[0].text, v[3])
+            #case '':
+            #    return (v[0].text, v[3][0].text)
             case _: # pragma: no cover
                 raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")

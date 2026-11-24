@@ -126,6 +126,8 @@ def test_region_plugin_badge(apex_parser):
         plugin-badge {
             label: Sale
             value: SALE
+            state: STATUS_COLOR
+            columnWidth: small
         }
     )
 """)
@@ -134,6 +136,8 @@ def test_region_plugin_badge(apex_parser):
 
     assert r.plugin_badge.label == 'Sale'
     assert r.plugin_badge.value == 'SALE'
+    assert r.plugin_badge.state == 'STATUS_COLOR'
+    assert r.plugin_badge.columnWidth == 'small'
 
 def test_region_pagination(apex_parser):
     r = apex_parser.parse(
@@ -398,3 +402,18 @@ def test_region_server_side_condition(apex_parser):
     assert r.serverSideCondition.type == 'expression'
     assert r.serverSideCondition.language == 'sql'
     assert r.serverSideCondition.sqlExpression == '1=1'
+
+
+def test_region_entity_title(apex_parser):
+    r = apex_parser.parse(
+"""region A (
+        entityTitle {
+            singular: Store
+            plural: Stores
+        }
+    )
+""")
+
+    assert isinstance(r, Region)
+    assert r.entityTitle.singular == 'Store'
+    assert r.entityTitle.plural == 'Stores'

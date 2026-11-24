@@ -21,6 +21,7 @@ region_group_block                  = region_layout
                                     / region_chart_layout
                                     / region_component_appearance
                                     / region_component_advanced
+                                    / region_entity_title
                                     / region_image
                                     / region_legend
                                     / region_messages
@@ -158,6 +159,8 @@ region_plugin_badge                 = indent "plugin-badge" ws "{" line_end regi
 region_plugin_badge_property_line   = indent region_plugin_badge_property line_end
 region_plugin_badge_property        = "label" ":" ws string_like_value
                                     / "value" ":" ws string_like_value
+                                    / "state" ":" ws string_like_value
+                                    / "columnWidth" ":" ws ( "small" / number )
 
 region_accessibility                = indent "accessibility" ws "{" line_end region_accessibility_property_line* indent "}" line_end
 region_accessibility_property_line  = indent region_accessibility_property line_end
@@ -263,6 +266,11 @@ region_server_side_condition_property             = "type" ":" ws string_like_va
                                                   / "pages" ":" ws array_of_number
                                                   / "text" ":" ws string_like_value
                                                   / "list" ":" ws one_or_more_string_like_values
+
+region_entity_title                      = indent "entityTitle" ws "{" line_end region_entity_title_property_line* indent "}" line_end
+region_entity_title_property_line        = indent region_entity_title_property line_end
+region_entity_title_property             = "singular" ":" ws string_like_value
+                                          / "plural" ":" ws string_like_value
 
 
 region_child_component              = facet

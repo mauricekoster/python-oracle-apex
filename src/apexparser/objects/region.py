@@ -196,6 +196,12 @@ class RegionPluginBadge(ApexGroup):
     @property
     def value(self):
         return self.properties.get('value', None)
+    @property
+    def state(self):
+        return self.properties.get('state', None)
+    @property
+    def columnWidth(self):
+        return self.properties.get('columnWidth', None)
 
 
 class RegionPagination(ApexGroup):
@@ -294,6 +300,17 @@ class RegionServerSideCondition(ApexGroup):
     def sqlExpression(self):
         return self.properties.get('sqlExpression', None)
 
+class RegionEntityTitle(ApexGroup):
+    @property
+    def singular(self):
+        return self.properties.get('singular', None)
+    
+    @property
+    def plural(self):
+        return self.properties.get('plural', None)
+    
+    
+
 
 class Region(ApexObject):
     # direct
@@ -383,6 +400,10 @@ class Region(ApexObject):
     @property
     def serverSideCondition(self) -> RegionServerSideCondition:
         return self.groups.get('serverSideCondition', None)
+    
+    @property
+    def entityTitle(self) -> RegionEntityTitle:
+        return self.groups.get('entityTitle', None)
     
     
     # child
