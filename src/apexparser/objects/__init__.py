@@ -124,6 +124,7 @@ from .page import (
     PageCss, 
     PageHelp, 
     PageHtmlHeader,
+    PageJavaScript,
     PageNavigation, 
     PageSecurity
 )

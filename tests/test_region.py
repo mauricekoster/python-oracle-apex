@@ -366,7 +366,7 @@ def test_region_title(apex_parser):
     assert r.title.cssClasses == ['red', 'green', 'blue']
 
 
-def test_region_title(apex_parser):
+def test_region_legend(apex_parser):
     r = apex_parser.parse(
 """region A (
         legend {

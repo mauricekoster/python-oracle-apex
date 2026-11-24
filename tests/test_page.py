@@ -149,3 +149,30 @@ def test_page_advanced(apex_parser):
     assert p.advanced.enableDuplicatePageSubmissions == False
     assert p.advanced.reloadOnSubmit == "always"
     assert p.advanced.duplicateSubmissionUrl == "http://example.com"
+
+
+
+def test_page_javascript(apex_parser):
+    p : Page = apex_parser.parse(
+    """page A (
+        name: Hallo
+        javaScript {
+            fileUrls: [
+                url1
+                url2
+            ]
+            executeWhenPageLoads:
+                ```js
+                some code
+                ```
+            functionAndGlobalVariableDeclaration: var htmldb_delete_message = '"DELETE_CONFIRM_MSG"';
+            includeStandardJavaScriptAndCss: true
+        }
+    )
+""")
+
+    assert isinstance(p, Page)
+    assert p.javaScript.fileUrls == ['url1', 'url2']
+    assert p.javaScript.executeWhenPageLoads == '```js\nsome code\n```'
+    assert p.javaScript.functionAndGlobalVariableDeclaration == 'var htmldb_delete_message = \'"DELETE_CONFIRM_MSG"\';'
+    assert p.javaScript.includeStandardJavaScriptAndCss == True

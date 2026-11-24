@@ -1,3 +1,5 @@
+# pragma: no cover
+
 from invoke import task
 from jinja2 import FileSystemLoader, Environment, ChoiceLoader, PackageLoader, TemplateNotFound, TemplateSyntaxError
 from pathlib import Path

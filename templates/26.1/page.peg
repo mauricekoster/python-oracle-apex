@@ -16,6 +16,7 @@ page_group_block                    = page_appearance
                                     / page_css
                                     / page_help
                                     / page_html_header
+                                    / page_javascript
                                     / page_navigation
                                     / page_security
 
@@ -65,6 +66,13 @@ page_help                           = indent "help" ws "{" line_end page_help_pr
 page_help_property_line             = indent page_help_property line_end
 page_help_property                  = "helpText" ":" ws code_block
 
+
+page_javascript                      = indent "javaScript" ws "{" line_end page_javascript_property_line* indent "}" line_end
+page_javascript_property_line        = indent page_javascript_property line_end
+page_javascript_property             = "fileUrls" ":" ws array_of_string_like_value
+                                     / "functionAndGlobalVariableDeclaration" ":" ws code_block
+                                     / "executeWhenPageLoads" ":" ws code_block
+                                     / "includeStandardJavaScriptAndCss" ":" ws boolean
 
 
 page_child_component                = region

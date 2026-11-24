@@ -98,6 +98,24 @@ class PageHelp(ApexGroup):
     def helpText(self):
         return self.properties.get('helpText', None)
 
+class PageJavaScript(ApexGroup):
+    @property
+    def fileUrls(self):
+        return self.properties.get('fileUrls', None)
+    
+    @property
+    def executeWhenPageLoads(self):
+        return self.properties.get('executeWhenPageLoads', None)
+    
+    @property
+    def functionAndGlobalVariableDeclaration(self):
+        return self.properties.get('functionAndGlobalVariableDeclaration', None)
+    
+    @property
+    def includeStandardJavaScriptAndCss(self):
+        return self.properties.get('includeStandardJavaScriptAndCss', None)
+
+
 class Page(ApexObject):
     def __init__(self, component_id=None, initial_data={}):
         super().__init__(component_id, initial_data)
@@ -117,21 +135,17 @@ class Page(ApexObject):
 
     @property
     def title(self):
-        return self.properties['title']
+        return self.properties.get('title', None)
 
     @property
     def alias(self):
-        return self.properties['alias']
+        return self.properties.get('alias', None)
 
     # Groups
 
     @property
     def appearance(self) -> PageAppearance:
         return self.groups.get('appearance', None)
-
-    @appearance.setter
-    def appearance(self, value):
-        self.groups['appearance'] = value
 
     @property
     def navigation(self) -> PageNavigation:
@@ -153,6 +167,12 @@ class Page(ApexObject):
     def advanced(self) -> PageAdvanced:
         return self.groups.get('advanced', None)
 
+    @property
+    def javaScript(self) -> PageJavaScript:
+        return self.groups.get('javaScript', None)
+    
+    
+    
 
     # Children
 

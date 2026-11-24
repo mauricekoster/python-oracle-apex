@@ -1,7 +1,7 @@
 from apexparser import *
 
 
-def test_computation_a_properties(apex_parser):
+def test_computation_a_0(apex_parser):
     c: Computation = apex_parser.parse(
 """computation A (
     )

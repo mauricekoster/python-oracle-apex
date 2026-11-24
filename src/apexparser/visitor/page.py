@@ -201,3 +201,26 @@ class PageVisitor:
     def visit_page_help_property(self, node, visited_children):
         v = visited_children[0]
         return (v.text, visited_children[3])
+
+    def visit_page_javascript(self, node, visited_children):
+        parts = visited_children[5]
+        d = {}
+        for item in parts:
+            if type(item) is tuple:
+                d[item[0]] = item[1]
+            else: # pragma: no cover
+                raise RuleNotImplemented()
+        return ('javaScript', PageJavaScript(d))
+    
+    def visit_page_javascript_property_line(self, node, visited_children):
+        return visited_children[1]
+    
+    def visit_page_javascript_property(self, node, visited_children):
+        v = visited_children[0]
+        match v[0].text:
+            case 'functionAndGlobalVariableDeclaration' | 'fileUrls' | 'executeWhenPageLoads' | 'includeStandardJavaScriptAndCss':
+                return (v[0].text, v[3])
+            #case '':
+            #    return (v[0].text, v[3][0].text)
+            case _: # pragma: no cover
+                raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")
