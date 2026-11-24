@@ -21,7 +21,12 @@ class PageItemSettings(ApexGroup):
     @property
     def showControls(self):
         return self.properties.get('showControls', None)
+
+    @property
+    def valueProtected(self):
+        return self.properties.get('valueProtected', None)
     
+        
     
 class PageItemLayout(ApexGroup):
     @property

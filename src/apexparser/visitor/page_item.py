@@ -82,7 +82,7 @@ class PageItemVisitor:
     def visit_page_item_settings_property(self, node, visited_children):
         v = visited_children[0]
         match v[0].text:
-            case 'showControls' :
+            case 'showControls' | 'valueProtected':
                 return (v[0].text, v[3])
             case 'trimSpaces':
                 return (v[0].text, v[3][0].text)

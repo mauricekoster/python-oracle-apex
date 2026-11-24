@@ -162,6 +162,7 @@ def test_page_item_settings(apex_parser):
         settings {
             trimSpaces: none
             showControls: movingOnly
+            valueProtected: true
         }
     )
 """)
@@ -170,4 +171,5 @@ def test_page_item_settings(apex_parser):
     assert isinstance(p, PageItem)  
     assert p.settings.trimSpaces == 'none'
     assert p.settings.showControls == 'movingOnly'
+    assert p.settings.valueProtected == True
 
