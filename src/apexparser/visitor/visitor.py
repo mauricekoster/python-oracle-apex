@@ -18,6 +18,7 @@ from .branch_a import BranchAVisitor
 from .series import SeriesVisitor
 from .axis import AxisVisitor
 from .menu_a import MenuAVisitor
+from .validation_b import ValidationBVisitor
 
 from . import RuleNotImplemented
 
@@ -39,7 +40,8 @@ class ApxNodeVisitor(NodeVisitor,
                      ColumnFVisitor,
                      SeriesVisitor,
                      AxisVisitor,
-                     MenuAVisitor
+                     MenuAVisitor,
+                     ValidationBVisitor
                      ):
 
     def visit_component(self, node, visited_children):

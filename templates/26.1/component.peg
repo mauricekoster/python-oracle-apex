@@ -14,5 +14,6 @@ component                           = page_item blank_lines
                                     / menu_a blank_lines
                                     / series blank_lines
                                     / axis blank_lines
+                                    / validation_b blank_lines
                                     / region blank_lines
                                     / page_object blank_lines

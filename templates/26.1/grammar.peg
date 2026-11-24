@@ -17,5 +17,6 @@
 {% include "series.peg" %}
 {% include "axis.peg" %}
 {% include "menu_a.peg" %}
+{% include "validation_b.peg" %}
 
 {% include "base.peg" %}

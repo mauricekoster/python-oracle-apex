@@ -82,3 +82,4 @@ page_child_component                = region
                                     / process
                                     / computation_a
                                     / branch_a
+                                    / validation_b
