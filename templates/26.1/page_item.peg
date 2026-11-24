@@ -108,14 +108,14 @@ page_item_default_property          = "type" ":" ws ( "static" / "item" / "sqlQu
                                         / "sqlQueryMultipleValues" / "expression" / "functionBody" / "sequence" )
                                     / "staticValue" ":" ws code_block
                                     / "item" ":" ws string_like_value
-                                    / "sqlQuerySingleValue" ":" ws multiline_string
-                                    / "sqlQueryMultipleValues" ":" ws multiline_string
+                                    / "sqlQuerySingleValue" ":" ws code_block
+                                    / "sqlQueryMultipleValues" ":" ws code_block
                                     / "language" ":" ws ( "sql" / "plsql" / "javaScript-mle" )
-                                    / "sqlExpression" ":" ws multiline_string
-                                    / "plsqlExpression" ":" ws multiline_string
-                                    / "javaScriptExpression" ":" ws multiline_string
-                                    / "plsqlFunctionBody" ":" ws multiline_string
-                                    / "javaScriptFunctionBody" ":" ws multiline_string
+                                    / "sqlExpression" ":" ws code_block
+                                    / "plsqlExpression" ":" ws code_block
+                                    / "javaScriptExpression" ":" ws code_block
+                                    / "plsqlFunctionBody" ":" ws code_block
+                                    / "javaScriptFunctionBody" ":" ws code_block
                                     / "sequence" ":" ws string_like_value
 
 page_item_source                      = indent "source" ws "{" line_end page_item_source_property_line* indent "}" line_end

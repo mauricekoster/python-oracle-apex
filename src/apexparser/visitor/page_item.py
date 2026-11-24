@@ -268,12 +268,12 @@ class PageItemVisitor:
     def visit_page_item_default_property(self, node, visited_children):
         v = visited_children[0]
         match v[0].text:
-            case 'staticValue':
+            case 'staticValue' | 'sqlQuerySingleValue':
                 return (v[0].text, v[3])
             case 'type':
                 return (v[0].text, v[3][0].text)
             case _: # pragma: no cover
-                raise RuleNotImplemented()
+                raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")
 
     def visit_page_item_source(self, node, visited_children):
         parts = visited_children[5]

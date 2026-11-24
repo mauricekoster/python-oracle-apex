@@ -97,14 +97,17 @@ def test_page_item_default(apex_parser):
         default {
             type: static
             staticValue: &APP_PAGE_ID.
+            sqlQuerySingleValue: select sysdate from dual
         }
     )
 """)
 
+# TODO: default    
+
     assert isinstance(p, PageItem)
     assert p.default.type == 'static'
     assert p.default.staticValue == '&APP_PAGE_ID.'
-
+    assert p.default.sqlQuerySingleValue == 'select sysdate from dual'
 
 def test_page_item_source(apex_parser):
     p = apex_parser.parse(

@@ -113,7 +113,12 @@ class PageItemDefault(ApexGroup):
     @property
     def staticValue(self):
         return self.properties.get('staticValue', None)
-
+    
+    @property
+    def sqlQuerySingleValue(self):
+        return self.properties.get('sqlQuerySingleValue', None)
+    
+    
 
 
 class PageItem(ApexObject):
