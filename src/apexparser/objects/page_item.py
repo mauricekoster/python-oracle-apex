@@ -19,9 +19,6 @@ class PageItemSettings(ApexGroup):
 
 
 class PageItemLayout(ApexGroup):
-    def __init__(self, initial_data={}):
-        super().__init__(initial_data)
-
     @property
     def sequence(self):
         return self.properties.get('sequence', None)
@@ -29,6 +26,26 @@ class PageItemLayout(ApexGroup):
     @property
     def region(self):
         return self.properties.get('region', None)
+
+    @property
+    def slot(self):
+        return self.properties.get('slot', None)
+
+
+class PageItemSource(ApexGroup):    
+    @property
+    def type(self):
+        return self.properties.get('type', None)
+    
+    @property
+    def databaseColumn(self):
+        return self.properties.get('databaseColumn', None)
+    
+    @property
+    def used(self):
+        return self.properties.get('used', None)
+    
+    
 
 
 class PageItemAppearance(ApexGroup):
@@ -116,3 +133,9 @@ class PageItem(ApexObject):
     @property
     def default(self) -> PageItemDefault:
         return self.groups.get('default', PageItemDefault())
+
+    @property
+    def source(self) -> PageItemSource:
+        return self.groups.get('source', None)
+    
+    

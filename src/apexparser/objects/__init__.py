@@ -60,6 +60,7 @@ from .page_item import (
     PageItemSecurity,
     PageItemSessionState,
     PageItemSettings,
+    PageItemSource,
     PageItemValidation
 )
 from .process import (

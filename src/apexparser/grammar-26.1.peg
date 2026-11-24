@@ -402,6 +402,7 @@ page_item_group_block               = page_item_label
                                     / page_item_session_state
                                     / page_item_lov
                                     / page_item_default
+                                    / page_item_source
 
 page_item_label                     = indent "label" ws "{" line_end page_item_label_property_line* indent "}" line_end
 page_item_label_property_line       = indent page_item_label_property line_end
@@ -500,6 +501,31 @@ page_item_default_property          = "type" ":" ws ( "static" / "item" / "sqlQu
                                     / "plsqlFunctionBody" ":" ws multiline_string
                                     / "javaScriptFunctionBody" ":" ws multiline_string
                                     / "sequence" ":" ws string_like_value
+
+page_item_source                      = indent "source" ws "{" line_end page_item_source_property_line* indent "}" line_end
+page_item_source_property_line        = indent page_item_source_property line_end
+page_item_source_property             = "formRegion" ":" ws reference
+                                      / "column" ":" ws string_like_value
+                                      / "dataType" ":" ws ( "varchar2" / "number" / "date" / "timestamp" / "timestampWithTimeZone" 
+                                        / "timestampWithLocalTimeZone" / "intervalYearToMonth" / "intervalDayToSecond"
+                                        / "clob" / "blob" / "boolean" / "rowid" / "bfile" / "sdoGeometry" )
+                                      / "queryOnly" ":" ws boolean
+                                      / "primaryKey" ":" ws boolean
+                                      / "type" ":" ws ( "staticValue" / "databaseColumn" / "item" / "sqlQuerySingleValue" 
+                                        / "sqlQueryMultipleValues" / "expression" / "functionBody" / "preference" / "null" )
+                                      / "staticValue" ":" ws code_block
+                                      / "sqlQuery" ":" ws code_block
+                                      / "item" ":" ws string_like_value
+                                      / "language" ":" ws ( "sql" / "plsql" / "javaScript-mle" )
+                                      / "sqlExpression" ":" ws code_block
+                                      / "plsqlExpression" ":" ws code_block
+                                      / "javaScriptExpression" ":" ws code_block
+                                      / "plsqlFunctionBody" ":" ws code_block
+                                      / "javaScriptFunctionBody" ":" ws code_block
+                                      / "databaseColumn" ":" ws string_like_value
+                                      / "preference" ":" ws string_like_value
+                                      / "used" ":" ws ( "always" / "onlyWhenSessionStateIsNull" )
+                                      / "postCalculationComputation" ":" ws code_block
 button                              = indent "button" (required_ws component_id)? ws "(" line_end button_body_line* indent ")" line_end
 button_body_line                    = button_direct_property_line
                                     / button_group_block
