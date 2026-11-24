@@ -23,7 +23,7 @@ def test_page_p00005(apex_parser):
 
 def test_page_p00006(apex_parser):
     p = apex_parser.parse_file("examples/brookstrut/pages/p00006-stores-report-content-row.apx")
-    assert p.name == "Administration"
+    assert p.name == "Stores Report  - Content Row"
 
 def test_page_p00007(apex_parser):
     p = apex_parser.parse_file("examples/brookstrut/pages/p00007-store.apx")

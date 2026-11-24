@@ -21,10 +21,13 @@ class ActionEVisitor:
                     act.add_group(item[0], item[1])
                 else:
                     act.add_property(item[0], item[1])
+            elif isinstance(item, ApexObject):
+                act.add_child(item)
             elif item is None:
                 continue
             else: # pragma: no cover
-                raise RuleNotImplemented(f"unprocessed: {item}")
+                name = f"Action '{item.component_id}'" if isinstance(item, ApexObject) else item[1].text
+                raise RuleNotImplemented(f"unprocessed: {name}")
         return act
 
     def visit_action_e_body_line(self, node, visited_children):
