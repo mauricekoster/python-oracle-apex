@@ -541,3 +541,26 @@ class RegionVisitor:
             #    return (v[0].text, v[3][0].text)
             case _: # pragma: no cover
                 raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")
+
+    def visit_region_gen_ai(self, node, visited_children):
+        parts = visited_children[5]
+        d = {}
+        for item in parts:
+            if type(item) is tuple:
+                d[item[0]] = item[1]
+            else: # pragma: no cover
+                raise RuleNotImplemented()
+        return ('genAI', RegionGenAI(d))
+    
+    def visit_region_gen_ai_property_line(self, node, visited_children):
+        return visited_children[1]
+    
+    def visit_region_gen_ai_property(self, node, visited_children):
+        v = visited_children[0]
+        match v[0].text:
+            case 'naturalLanguageSupport':
+                return (v[0].text, v[3])
+            #case '':
+            #    return (v[0].text, v[3][0].text)
+            case _: # pragma: no cover
+                raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")

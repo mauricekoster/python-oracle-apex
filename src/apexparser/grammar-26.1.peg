@@ -126,6 +126,7 @@ region_group_block                  = region_layout
                                     / region_component_appearance
                                     / region_component_advanced
                                     / region_entity_title
+                                    / region_gen_ai
                                     / region_image
                                     / region_legend
                                     / region_messages
@@ -375,6 +376,18 @@ region_entity_title                      = indent "entityTitle" ws "{" line_end 
 region_entity_title_property_line        = indent region_entity_title_property line_end
 region_entity_title_property             = "singular" ":" ws string_like_value
                                           / "plural" ":" ws string_like_value
+
+region_gen_ai                      = indent "genAI" ws "{" line_end region_gen_ai_property_line* indent "}" line_end
+region_gen_ai_property_line        = indent region_gen_ai_property line_end
+region_gen_ai_property             = "naturalLanguageSupport" ":" ws boolean
+                                   / "defaultSearchMode" ":" ws ( "searchModeRow" / "searchModeAI" )
+                                   / "reportContext" ":" ws code_block
+                                   / "enabled" ":" ws boolean
+                                   / "agent" ":" ws reference
+                                   / "service" ":" ws reference
+                                   / "systemPrompt" ":" ws code_block
+                                   / "welcomeMessage" ":" ws code_block
+
 
 
 region_child_component              = facet

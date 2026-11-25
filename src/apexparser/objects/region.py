@@ -13,6 +13,13 @@ class RegionLayout(ApexGroup):
 class RegionAppearance(ApexGroup):
     pass
 
+class RegionGenAI(ApexGroup):
+    @property
+    def naturalLanguageSupport(self):
+        return self.properties.get('naturalLanguageSupport', None)
+    
+    
+
 class RegionTitle(ApexGroup):
     @property
     def title(self):
@@ -432,6 +439,11 @@ class Region(ApexObject):
     @property
     def entityTitle(self) -> RegionEntityTitle:
         return self.groups.get('entityTitle', None)
+
+    @property
+    def genAI(self) -> RegionGenAI:
+        return self.groups.get('genAI', None)
+    
     
     
     # child
@@ -439,4 +451,5 @@ class Region(ApexObject):
     @property
     def columns(self) -> list[Column]:
         return [x for x in self.children if isinstance(x, Column)]
+
     

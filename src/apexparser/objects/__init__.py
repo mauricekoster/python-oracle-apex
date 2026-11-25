@@ -116,6 +116,7 @@ from .region import (
     RegionComponentAppearance,
     RegionComponentAdvanced,
     RegionEntityTitle,
+    RegionGenAI,
     RegionImage,
     RegionLayout,
     RegionLegend,

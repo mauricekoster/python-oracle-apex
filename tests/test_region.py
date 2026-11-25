@@ -431,3 +431,19 @@ def test_region_entity_title(apex_parser):
     assert isinstance(r, Region)
     assert r.entityTitle.singular == 'Store'
     assert r.entityTitle.plural == 'Stores'
+
+
+def test_region_gen_ai(apex_parser):
+    r = apex_parser.parse(
+"""region A (
+        genAI {
+            naturalLanguageSupport: true
+        }
+    )
+""")
+
+# TODO: genAI
+
+    assert isinstance(r, Region)
+    assert r.genAI.naturalLanguageSupport == True
+
