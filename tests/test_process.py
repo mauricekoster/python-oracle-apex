@@ -136,4 +136,74 @@ def test_process_source_3(apex_parser):
     assert p.source.tableName == 'OOW_DEMO_STORES'
     assert p.source.pkColumn == 'ID'
     assert p.source.pkItem == 'P7_ID'
-        
+
+
+def test_process_target(apex_parser):
+    p : Process = apex_parser.parse(
+    """process process-row-of-oow-demo-stores (
+        target {
+            tableName: OOW_DEMO_STORES
+            pkColumn: ID
+            pkItem: P7_ID
+            returnKeyIntoItem: P7_ID
+        }
+    )
+""")
+
+# TODO: target
+
+    assert isinstance(p, Process)
+
+    assert p.target.tableName == 'OOW_DEMO_STORES'
+
+
+def test_process_success_message(apex_parser):
+    p : Process = apex_parser.parse(
+    """process process-row-of-oow-demo-stores (
+        successMessage {
+            successMessage: Action Processed.
+        }
+    )
+""")
+
+    assert isinstance(p, Process)
+
+    assert p.successMessage.successMessage == 'Action Processed.'
+
+
+def test_process_error(apex_parser):
+    p : Process = apex_parser.parse(
+    """process process-row-of-oow-demo-stores (
+        error {
+            errorMessage: #SQLERRM#
+            displayLocation: onErrorPage
+        }
+    )
+""")
+
+    assert isinstance(p, Process)
+
+    assert p.error.errorMessage == '#SQLERRM#'
+    assert p.error.displayLocation == 'onErrorPage'
+
+def test_process_server_side_condition(apex_parser):
+    p : Process = apex_parser.parse(
+    """process process-row-of-oow-demo-stores (
+        serverSideCondition {
+            type: requestIsContainedInValue
+            value: CREATE,SAVE,DELETE
+            whenButtonPressed: @delete
+            item: P7_STORE_ITEMS
+        }
+    )
+""")
+
+# TODO: serverSideCondition
+
+    assert isinstance(p, Process)
+
+    assert p.serverSideCondition.type == 'requestIsContainedInValue'
+    assert p.serverSideCondition.value == 'CREATE,SAVE,DELETE'
+    assert p.serverSideCondition.whenButtonPressed == '@delete'
+    assert p.serverSideCondition.item == 'P7_STORE_ITEMS'
+                

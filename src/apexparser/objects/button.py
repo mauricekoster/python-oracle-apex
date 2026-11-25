@@ -23,7 +23,27 @@ class ButtonBehavior(ApexGroup):
     def target(self):
         return self.properties.get('target', None)
 
-
+    @property
+    def action(self):
+        return self.properties.get('action', None)
+    
+    @property
+    def warnOnUnsavedChanges(self):
+        return self.properties.get('warnOnUnsavedChanges', None)
+    
+    @property
+    def databaseAction(self):
+        return self.properties.get('databaseAction', None)
+    
+    @property
+    def targetUrl(self):
+        return self.properties.get('targetUrl', None)
+    
+    @property
+    def executeValidations(self):
+        return self.properties.get('executeValidations', None)
+    
+    
 class ButtonServerSideCondition(ApexGroup):
     @property
     def type(self):

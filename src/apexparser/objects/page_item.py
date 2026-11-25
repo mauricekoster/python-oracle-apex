@@ -41,6 +41,11 @@ class PageItemLayout(ApexGroup):
     def slot(self):
         return self.properties.get('slot', None)
 
+    @property
+    def startNewRow(self):
+        return self.properties.get('startNewRow', None)
+    
+    
 
 class PageItemSource(ApexGroup):    
     @property
@@ -54,6 +59,10 @@ class PageItemSource(ApexGroup):
     @property
     def used(self):
         return self.properties.get('used', None)
+    
+    @property
+    def plsqlFunctionBody(self):
+        return self.properties.get('plsqlFunctionBody', None)
     
     
 
@@ -71,6 +80,14 @@ class PageItemAppearance(ApexGroup):
     def height(self):
         return self.properties.get('height', None)
 
+    @property
+    def formatMask(self):
+        return self.properties.get('formatMask', None)
+    
+    @property
+    def width(self):
+        return self.properties.get('width', None)
+    
 
 class PageItemValidation(ApexGroup):
     def __init__(self, initial_data={}):
@@ -104,6 +121,15 @@ class PageItemLov(ApexGroup):
     def displayNullValue(self):
         return self.properties.get('displayNullValue', None)
 
+    @property
+    def nullDisplayValue(self):
+        return self.properties.get('nullDisplayValue', None)
+    
+    @property
+    def sqlQuery(self):
+        return self.properties.get('sqlQuery', None)
+    
+    
 
 class PageItemDefault(ApexGroup):
     @property

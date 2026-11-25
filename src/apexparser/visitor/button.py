@@ -110,14 +110,14 @@ class ButtonVisitor:
     def visit_button_behavior_property(self, node, visited_children):
         v = visited_children[0]
         match v[0].text:
-            case 'target':
+            case 'target' | 'targetUrl' | 'executeValidations':
                 return (v[0].text, v[3])
-            case 'action':
-                return (v[0].text, v[3][0])
+            case 'databaseAction' | 'action':
+                return (v[0].text, v[3][0].text)
             case 'warnOnUnsavedChanges':
                 return (v[0].text, v[3].text)
             case _: # pragma: no cover
-                raise RuleNotImplemented()
+                raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")
 
     def visit_button_server_side_condition(self, node, visited_children):
         parts = visited_children[5]

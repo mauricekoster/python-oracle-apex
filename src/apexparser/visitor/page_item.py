@@ -129,14 +129,14 @@ class PageItemVisitor:
     def visit_page_item_layout_property(self, node, visited_children):
         v = visited_children[0]
         match v[0].text:
-            case 'sequence' | 'slot' | 'region':
+            case 'sequence' | 'slot' | 'region' | 'startNewRow':
                 return (v[0].text, v[3])
             case 'alignment':
                 return (v[0].text, v[3][0].text)
             case 'enableMetaTags' | 'enableDuplicatePageSubmissions':
                 return (v[0].text, v[3])
             case _: # pragma: no cover
-                raise RuleNotImplemented()
+                raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")
 
     def visit_page_item_appearance(self, node, visited_children):
         parts = visited_children[5]
@@ -154,10 +154,10 @@ class PageItemVisitor:
     def visit_page_item_appearance_property(self, node, visited_children):
         v = visited_children[0]
         match v[0].text:
-            case 'template' | 'cssClasses' | 'templateOptions' | 'width' | 'valuePlaceholder' | 'height':
+            case 'template' | 'cssClasses' | 'templateOptions' | 'width' | 'valuePlaceholder' | 'height' | 'width' | 'formatMask':
                 return (v[0].text, v[3])
             case _: # pragma: no cover
-                raise RuleNotImplemented()
+                raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")
 
     def visit_page_item_validation(self, node, visited_children):
         parts = visited_children[5]
@@ -245,12 +245,12 @@ class PageItemVisitor:
     def visit_page_item_lov_property(self, node, visited_children):
         v = visited_children[0]
         match v[0].text:
-            case 'lov' | 'displayNullValue':
+            case 'lov' | 'displayNullValue' | 'nullDisplayValue' | 'sqlQuery':
                 return (v[0].text, v[3])
             case 'type':
                 return (v[0].text, v[3][0].text)
             case _: # pragma: no cover
-                raise RuleNotImplemented()
+                raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")
 
     def visit_page_item_default(self, node, visited_children):
         parts = visited_children[5]
@@ -291,7 +291,7 @@ class PageItemVisitor:
     def visit_page_item_source_property(self, node, visited_children):
         v = visited_children[0]
         match v[0].text:
-            case 'databaseColumn':
+            case 'databaseColumn' | 'plsqlFunctionBody':
                 return (v[0].text, v[3])
             case 'type' | 'used':
                 return (v[0].text, v[3][0].text)

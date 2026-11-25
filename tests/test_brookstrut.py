@@ -27,7 +27,7 @@ def test_page_p00006(apex_parser):
 
 def test_page_p00007(apex_parser):
     p = apex_parser.parse_file("examples/brookstrut/pages/p00007-store.apx")
-    assert p.name == "Administration"
+    assert p.name == "Store"
 
 def test_page_p00008(apex_parser):
     p = apex_parser.parse_file("examples/brookstrut/pages/p00008-store-regions.apx")

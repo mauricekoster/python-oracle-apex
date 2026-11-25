@@ -45,26 +45,29 @@ def test_page_item_lov(apex_parser):
         lov {
             type: sharedComponent
             lov: @sales-history-navigation
-            displayNullValue: false
+            displayNullValue: true
+            nullDisplayValue: - Select Value -
+            sqlQuery:
+                ```sql
+                ```
         }
     )
 """)
 
 # TODO:
-# sqlQuery
 # staticValues
 # language
 # plsqlFunctionBody
 # javaScriptFunctionBody
 # displayExtraValues
-# nullDisplayValue
 # nullReturnValue
 
     assert isinstance(p, PageItem)
     assert p.lov.type == 'sharedComponent'
     assert p.lov.lov == '@sales-history-navigation'
-    assert p.lov.displayNullValue == False
-    
+    assert p.lov.displayNullValue == True
+    assert p.lov.nullDisplayValue == '- Select Value -'
+    assert p.lov.sqlQuery == '```sql\n```'
 
 
 def test_page_item_appearance(apex_parser):
@@ -74,6 +77,8 @@ def test_page_item_appearance(apex_parser):
             template: @/hidden
             templateOptions: #DEFAULT#
             height: 1
+            formatMask: DD-MON-YYYY
+            width: 64
         }
     )
 """)
@@ -81,14 +86,14 @@ def test_page_item_appearance(apex_parser):
 # TODO:
 # cssClasses
 # icon
-# formatMask
 # valuePlaceholder
-# width
 
     assert isinstance(p, PageItem)
     assert p.appearance.template == '@/hidden'
     assert p.appearance.templateOptions == ['#DEFAULT#']
     assert p.appearance.height == 1
+    assert p.appearance.width == 64
+    assert p.appearance.formatMask == 'DD-MON-YYYY'
 
 
 def test_page_item_default(apex_parser):
@@ -116,6 +121,9 @@ def test_page_item_source(apex_parser):
             type: databaseColumn
             databaseColumn: ID
             used: always
+            plsqlFunctionBody:
+                ```plsql
+                ```
         }
     )
 """)
@@ -124,6 +132,7 @@ def test_page_item_source(apex_parser):
     assert p.source.type == 'databaseColumn'
     assert p.source.databaseColumn == 'ID'
     assert p.source.used == 'always'
+    assert p.source.plsqlFunctionBody == '```plsql\n```'
 
 
 def test_page_item_layout(apex_parser):
@@ -133,6 +142,7 @@ def test_page_item_layout(apex_parser):
             sequence: 10
             region: @store
             slot: regionBody
+            startNewRow: false
         }
     )
 """)
@@ -143,6 +153,8 @@ def test_page_item_layout(apex_parser):
     assert p.layout.sequence == 10
     assert p.layout.region == '@store'  
     assert p.layout.slot == 'regionBody'
+    assert p.layout.startNewRow == False
+    
 
 def test_page_item_advanced(apex_parser):
     p = apex_parser.parse(
