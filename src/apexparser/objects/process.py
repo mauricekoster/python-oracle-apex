@@ -42,6 +42,18 @@ class ProcessSource(ApexGroup):
     def plsqlCode(self):
         return self.properties.get('plsqlCode', None)
 
+    @property
+    def tableName(self):
+        return self.properties.get('tableName', None)
+    
+    @property
+    def pkColumn(self):
+        return self.properties.get('pkColumn', None)
+    
+    @property
+    def pkItem(self):
+        return self.properties.get('pkItem', None)
+    
 
 class Process(ApexObject):
     # Properties

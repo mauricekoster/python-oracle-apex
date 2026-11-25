@@ -39,30 +39,29 @@ class ProcessVisitor:
 
     def visit_process_group_block(self, node, visited_children):
         return visited_children[0]
-
-
+    
     def visit_process_source(self, node, visited_children):
         parts = visited_children[5]
         d = {}
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
-        return ('source', ProcessSource(d) )
-
+        return ('source', ProcessSource(d))
+    
     def visit_process_source_property_line(self, node, visited_children):
         return visited_children[1]
-
+    
     def visit_process_source_property(self, node, visited_children):
         v = visited_children[0]
-        
-        title, _, _, value = v
-        match title.text:
+        match v[0].text:
+            case 'remoteServer' | 'plsqlCode' | 'tableName' | 'pkColumn' | 'pkItem':
+                return (v[0].text, v[3])
             case 'location' | 'language':
-                value = value[0].text
-        return (title.text, value)
-
+                return (v[0].text, v[3][0].text)
+            case _: # pragma: no cover
+                raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")
 
 
     def visit_process_execution(self, node, visited_children):
@@ -71,20 +70,22 @@ class ProcessVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
-        return ('execution', ProcessExecution(d) )
-
+        return ('execution', ProcessExecution(d))
+    
     def visit_process_execution_property_line(self, node, visited_children):
         return visited_children[1]
-
+    
     def visit_process_execution_property(self, node, visited_children):
         v = visited_children[0]
-        
-        title, _, _, value = v
-        if title.text == 'runProcess':
-            value = value[0].text
-        return (title.text, value)
+        match v[0].text:
+            case 'sequence' | 'point':
+                return (v[0].text, v[3])
+            case 'runProcess':
+                return (v[0].text, v[3][0].text)
+            case _: # pragma: no cover
+                raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")
 
 
     def visit_process_advanced(self, node, visited_children):
@@ -93,17 +94,20 @@ class ProcessVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
-        return ('advanced', ProcessAdvanced(d) )
-
+        return ('advanced', ProcessAdvanced(d))
+    
     def visit_process_advanced_property_line(self, node, visited_children):
         return visited_children[1]
-
+    
     def visit_process_advanced_property(self, node, visited_children):
         v = visited_children[0]
-        
-        title, _, _, value = v
-        return (title.text, value)
-
+        match v[0].text:
+            case 'staticId' | 'executionMappingIdentifier':
+                return (v[0].text, v[3])
+            #case '':
+            #    return (v[0].text, v[3][0].text)
+            case _: # pragma: no cover
+                raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")
 

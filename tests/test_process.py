@@ -118,4 +118,22 @@ def test_process_source_2b(apex_parser):
     )
 """)
     assert p.source.plsqlCode == "```plsql\napex_authentication.send_login_username_cookie (\n    p_username => lower(:P101_USERNAME) );\n```"
+
+def test_process_source_3(apex_parser):
+    p : Process = apex_parser.parse(
+    """process fetch-row-from-oow-demo-stores (
+        source {
+            tableName: OOW_DEMO_STORES
+            pkColumn: ID
+            pkItem: P7_ID
+        }
+    )
+""")
+
+    assert isinstance(p, Process)
+
     
+    assert p.source.tableName == 'OOW_DEMO_STORES'
+    assert p.source.pkColumn == 'ID'
+    assert p.source.pkItem == 'P7_ID'
+        

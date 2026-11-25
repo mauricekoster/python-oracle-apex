@@ -621,7 +621,10 @@ process_source_property             = "location" ":" ws ( "localDatabase" / "res
                                     / "plsqlCode" ":" ws code_block
                                     / "javaScriptCode" ":" ws code_block
                                     / "remoteServer" ":" ws reference
-
+                                    # UNDOCUMENTED:
+                                    / "tableName" ":" ws string_like_value
+                                    / "pkColumn" ":" ws string_like_value
+                                    / "pkItem" ":" ws string_like_value
 
 process_execution                   = indent "execution" ws "{" line_end process_execution_property_line* indent "}" line_end
 process_execution_property_line     = indent process_execution_property line_end
