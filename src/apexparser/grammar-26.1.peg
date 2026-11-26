@@ -975,6 +975,7 @@ column_b_direct_property        = "columnName" ":" ws string_like_value
                                 / "type" ":" ws string_like_value
 
 column_b_group_block            = column_b_layout
+                                / column_b_heading
                                 / column_b_appearance
                                 / column_b_source
 
@@ -1001,6 +1002,12 @@ column_b_source_property        = "primaryKey" ":" ws boolean
                                 / "availableOnClient" ":" ws boolean
                                 / "valueProtected" ":" ws boolean
                                 / "timezoneAware" ":" ws string_like_value
+
+column_b_heading                      = indent "heading" ws "{" line_end column_b_heading_property_line* indent "}" line_end
+column_b_heading_property_line        = indent column_b_heading_property line_end
+column_b_heading_property             = "heading" ":" ws string_like_value
+                                         / "alternativeLabel" ":" ws string_like_value
+                                         / "alignment" ":" ws ( "start" / "center" / "end" )
 
 
 # column_b_child_component        = action_f

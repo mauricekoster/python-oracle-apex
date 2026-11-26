@@ -83,3 +83,20 @@ def test_column_b_source(apex_parser):
     assert c.source.availableOnClient == False
     assert c.source.valueProtected == True
     assert c.source.timezoneAware == 'yes'
+
+def test_column_b_heading(apex_parser):
+    c: Column = apex_parser.parse(
+"""column A (
+        type: plainText
+        heading {
+            heading: Average Sales per Store
+            alternativeLabel: alt
+            alignment: end
+        }
+    )
+""")
+
+    assert isinstance(c, Column)
+    assert c.variant == 'column_b'
+    assert c.heading.heading == 'Average Sales per Store'
+    assert c.heading.alignment == 'end'

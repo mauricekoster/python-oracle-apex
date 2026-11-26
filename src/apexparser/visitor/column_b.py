@@ -12,7 +12,7 @@ class ColumnBVisitor:
         else:
             component_id = None
 
-        act = Column(component_id)
+        act = Column(component_id, variant='column_b')
         for item in body_parts:
             if type(item) is tuple:
                 if type(item[1]) is dict:
@@ -23,7 +23,7 @@ class ColumnBVisitor:
                     act.add_property(item[0], item[1])
             elif item is None:
                 continue
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented(f"unprocessed: {item}")
         return act
 
@@ -47,7 +47,7 @@ class ColumnBVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('layout', ColumnLayout(d) )
     
@@ -63,7 +63,7 @@ class ColumnBVisitor:
                 return (v[0].text, v[3][0].text)
             # case 'enableMetaTags' | 'enableDuplicatePageSubmissions':
             #     return (v[0].text, v[3])
-            case _:
+            case _: # pragma: no cover
                 raise RuleNotImplemented()
 
     def visit_column_b_appearance(self, node, visited_children):
@@ -72,7 +72,7 @@ class ColumnBVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('appearance', ColumnAppearance(d) )
     
@@ -88,7 +88,7 @@ class ColumnBVisitor:
                 return (v[0].text, v[3][0].text)
             # case 'enableMetaTags' | 'enableDuplicatePageSubmissions':
             #     return (v[0].text, v[3])
-            case _:
+            case _: # pragma: no cover
                 raise RuleNotImplemented()
 
     def visit_column_b_source(self, node, visited_children):
@@ -97,7 +97,7 @@ class ColumnBVisitor:
         for item in parts:
             if type(item) is tuple:
                 d[item[0]] = item[1]
-            else:
+            else: # pragma: no cover
                 raise RuleNotImplemented()
         return ('source', ColumnSource(d) )
     
@@ -113,7 +113,28 @@ class ColumnBVisitor:
             #     return (v[0].text, v[3][0].text)
             # case 'enableMetaTags' | 'enableDuplicatePageSubmissions':
             #     return (v[0].text, v[3])
-            case _:
+            case _: # pragma: no cover
                 raise RuleNotImplemented()
 
+    def visit_column_b_heading(self, node, visited_children):
+        parts = visited_children[5]
+        d = {}
+        for item in parts:
+            if type(item) is tuple:
+                d[item[0]] = item[1]
+            else: # pragma: no cover
+                raise RuleNotImplemented()
+        return ('heading', ColumnHeading(d))
     
+    def visit_column_b_heading_property_line(self, node, visited_children):
+        return visited_children[1]
+    
+    def visit_column_b_heading_property(self, node, visited_children):
+        v = visited_children[0]
+        match v[0].text:
+            case 'heading' | 'alternativeLabel':
+                return (v[0].text, v[3])
+            case 'alignment':
+                return (v[0].text, v[3][0].text)
+            case _: # pragma: no cover
+                raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")

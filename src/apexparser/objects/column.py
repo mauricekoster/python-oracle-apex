@@ -10,6 +10,10 @@ class ColumnHeading(ApexGroup):
     def alignment(self):
         return self.properties.get('alignment', None)
 
+    @property
+    def alternativeLabel(self):
+        return self.properties.get('alternativeLabel', None)
+
 
 class ColumnLayout(ApexGroup):
     @property
