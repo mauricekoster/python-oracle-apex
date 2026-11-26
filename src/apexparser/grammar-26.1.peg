@@ -119,6 +119,7 @@ region_direct_property              = "name" ":" ws string_like_value
 
 region_group_block                  = region_layout
                                     / region_accessibility
+                                    / region_actions_menu
                                     / region_advanced
                                     / region_appearance
                                     / region_chart
@@ -388,6 +389,28 @@ region_gen_ai_property             = "naturalLanguageSupport" ":" ws boolean
                                    / "systemPrompt" ":" ws code_block
                                    / "welcomeMessage" ":" ws code_block
 
+region_actions_menu                      = indent "actionsMenu" ws "{" line_end region_actions_menu_property_line* indent "}" line_end
+region_actions_menu_property_line        = indent region_actions_menu_property line_end
+region_actions_menu_property             = "includeActionsMenu" ":" ws boolean
+                                         / "filter" ":" ws boolean
+                                         / "selectColumns" ":" ws boolean
+                                         / "rowsPerPage" ":" ws boolean
+                                         / "sort" ":" ws boolean
+                                         / "controlBreak" ":" ws boolean
+                                         / "highlight" ":" ws boolean
+                                         / "compute" ":" ws boolean
+                                         / "aggregate" ":" ws boolean
+                                         / "chart" ":" ws boolean
+                                         / "groupBy" ":" ws boolean
+                                         / "pivot" ":" ws boolean
+                                         / "flashback" ":" ws boolean
+                                         / "saveReport" ":" ws boolean
+                                         / "savePublicReport" ":" ws boolean
+                                         / "savePublicReportAuthorization" ":" ws reference
+                                         / "reset" ":" ws boolean
+                                         / "help" ":" ws boolean
+                                         / "download" ":" ws boolean
+                                         / "subscription" ":" ws boolean
 
 
 region_child_component              = facet

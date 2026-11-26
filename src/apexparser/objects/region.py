@@ -13,11 +13,17 @@ class RegionLayout(ApexGroup):
 class RegionAppearance(ApexGroup):
     pass
 
+
 class RegionGenAI(ApexGroup):
     @property
     def naturalLanguageSupport(self):
         return self.properties.get('naturalLanguageSupport', None)
     
+    
+class RegionActionsMenu(ApexGroup):
+    @property
+    def savePublicReport(self):
+        return self.properties.get('savePublicReport', None)
     
 
 class RegionTitle(ApexGroup):
@@ -443,6 +449,10 @@ class Region(ApexObject):
     @property
     def genAI(self) -> RegionGenAI:
         return self.groups.get('genAI', None)
+    
+    @property
+    def actionsMenu(self) -> RegionActionsMenu:
+        return self.groups.get('actionsMenu', None)
     
     
     

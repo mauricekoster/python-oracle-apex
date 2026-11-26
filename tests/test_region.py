@@ -447,3 +447,16 @@ def test_region_gen_ai(apex_parser):
     assert isinstance(r, Region)
     assert r.genAI.naturalLanguageSupport == True
 
+def test_region_actions_menu(apex_parser):
+    r = apex_parser.parse(
+"""region A (
+        actionsMenu {
+            savePublicReport: true
+        }
+    )
+""")
+
+# TODO: actionsMenu
+
+    assert isinstance(r, Region)
+    assert r.actionsMenu.savePublicReport == True

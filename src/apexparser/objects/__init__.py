@@ -109,6 +109,7 @@ from .menu import (
 from .region import (
     Region, 
     RegionAccessibility,
+    RegionActionsMenu,
     RegionAdvanced,
     RegionAppearance, 
     RegionChart,
