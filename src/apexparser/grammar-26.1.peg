@@ -117,8 +117,7 @@ region_direct_property              = "name" ":" ws string_like_value
                                     / "title" ":" ws string_like_value
                                     / "type" ":" ws string_like_value
 
-region_group_block                  = region_layout
-                                    / region_accessibility
+region_group_block                  = region_accessibility
                                     / region_actions_menu
                                     / region_advanced
                                     / region_appearance
@@ -126,9 +125,11 @@ region_group_block                  = region_layout
                                     / region_chart_layout
                                     / region_component_appearance
                                     / region_component_advanced
+                                    / region_download
                                     / region_entity_title
                                     / region_gen_ai
                                     / region_image
+                                    / region_layout
                                     / region_legend
                                     / region_messages
                                     / region_pagination
@@ -411,6 +412,18 @@ region_actions_menu_property             = "includeActionsMenu" ":" ws boolean
                                          / "help" ":" ws boolean
                                          / "download" ":" ws boolean
                                          / "subscription" ":" ws boolean
+
+region_download                      = indent "download" ws "{" line_end region_download_property_line* indent "}" line_end
+region_download_property_line        = indent region_download_property line_end
+region_download_property             = "authorization" ":" ws reference
+                                     / "formats" ":" ws array_of_string_like_value
+                                     / "sendAsEmail" ":" ws boolean
+                                     / "csvSeparator" ":" ws string_like_value
+                                     / "csvEnclosedBy" ":" ws string_like_value
+                                     / "csvExportEnabled" ":" ws boolean
+                                     / "filename" ":" ws string_like_value
+                                     / "supplementalText" ":" ws code_block
+                                     / "linkText" ":" ws string_like_value
 
 
 region_child_component              = facet

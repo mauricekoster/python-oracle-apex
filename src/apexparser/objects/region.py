@@ -26,6 +26,12 @@ class RegionActionsMenu(ApexGroup):
         return self.properties.get('savePublicReport', None)
     
 
+class RegionDownload(ApexGroup):
+    @property
+    def formats(self):
+        return self.properties.get('formats', None)
+    
+
 class RegionTitle(ApexGroup):
     @property
     def title(self):
@@ -454,6 +460,9 @@ class Region(ApexObject):
     def actionsMenu(self) -> RegionActionsMenu:
         return self.groups.get('actionsMenu', None)
     
+    @property
+    def download(self) -> RegionDownload:
+        return self.groups.get('download', None)
     
     
     # child

@@ -460,3 +460,21 @@ def test_region_actions_menu(apex_parser):
 
     assert isinstance(r, Region)
     assert r.actionsMenu.savePublicReport == True
+
+
+def test_region_download(apex_parser):
+    r = apex_parser.parse(
+"""region A (
+        download {
+            formats: [
+                csv
+                html
+            ]
+        }
+    )
+""")
+
+# TODO: download
+
+    assert isinstance(r, Region)
+    assert r.download.formats == ['csv', 'html']
