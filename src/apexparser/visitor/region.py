@@ -61,7 +61,7 @@ class RegionVisitor:
     def visit_region_layout_property(self, node, visited_children):
         v = visited_children[0]
         match v[0].text:
-            case 'sequence' | 'slot' | 'parentRegion':
+            case 'sequence' | 'slot' | 'parentRegion' | 'startNewRow':
                 return (v[0].text, v[3])
             # case 'reloadOnSubmit' | 'duplicateSubmissionUrl':
             #     return (v[0].text, v[3][0].text)
@@ -206,7 +206,7 @@ class RegionVisitor:
                 return (v[0].text, v[3])
             case 'displayColumn' | 'startDateColumn' | 'additionalCalendarViews' | 'maxEventsDay':
                 return (v[0].text, v[3])
-            case 'timeAxisType' | 'zoomAndScroll' | 'outputAs':
+            case 'timeAxisType' | 'zoomAndScroll' | 'outputAs' | 'export':
                 return (v[0].text, v[3][0].text)
             case 'showCurrentFacets' :
                 return (v[0].text, v[3].text)

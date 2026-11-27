@@ -229,6 +229,7 @@ def test_region_layout(apex_parser):
             sequence: 40
             parentRegion: @help-container
             slot: subRegions
+            startNewRow: false
         }
     )
 """)
@@ -239,6 +240,7 @@ def test_region_layout(apex_parser):
     assert r.layout.sequence == 40
     assert r.layout.parentRegion == '@help-container'
     assert r.layout.slot == 'subRegions'
+    assert r.layout.startNewRow == False
 
 
 def test_region_legend(apex_parser):
@@ -469,6 +471,7 @@ def test_region_settings(apex_parser):
                 navigation
             ]
             maxEventsDay: 50
+            export: csv
         }
     )
 """)
@@ -502,6 +505,7 @@ def test_region_settings(apex_parser):
     assert r.settings.startDateColumn == 'THE_DAY'
     assert r.settings.additionalCalendarViews == ['list', 'navigation']
     assert r.settings.maxEventsDay == 50
+    assert r.settings.export == 'csv'
 
 
 def test_region_source(apex_parser):

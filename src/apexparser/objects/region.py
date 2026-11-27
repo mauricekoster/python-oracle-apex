@@ -12,6 +12,10 @@ class RegionLayout(ApexGroup):
     @property
     def slot(self):
         return self.properties.get('slot', None)
+
+    @property
+    def startNewRow(self):
+        return self.properties.get('startNewRow', None)
     
 
 class RegionAppearance(ApexGroup):
@@ -251,6 +255,10 @@ class RegionSettings(ApexGroup):
     @property
     def maxEventsDay(self):
         return self.properties.get('maxEventsDay', None)
+
+    @property
+    def export(self):
+        return self.properties.get('export', None)
     
     
 class RegionPluginAvatar(ApexGroup):
