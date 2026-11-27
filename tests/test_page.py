@@ -54,6 +54,21 @@ def test_page_appearance(apex_parser):
     assert p.appearance.mediaType == 'image'
 
 
+def test_page_config(apex_parser):
+    p : Page = apex_parser.parse(
+    """page A (
+        name: Hallo
+
+        config {
+            buildOption: @feature-theme-style-selection
+        }
+    )
+""")
+    assert isinstance(p, Page)
+    assert p.name == "Hallo"
+    assert p.config.buildOption == '@feature-theme-style-selection'
+
+
 def test_page_navigation(apex_parser):
     p : Page = apex_parser.parse(
     """page A (

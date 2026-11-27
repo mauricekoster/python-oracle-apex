@@ -13,6 +13,7 @@ page_direct_property                = "page" ":" ws number
 
 page_group_block                    = page_appearance
                                     / page_advanced
+                                    / page_config
                                     / page_css
                                     / page_dialog
                                     / page_help
@@ -84,6 +85,10 @@ page_dialog_property             =  "width" ":" ws string_like_value
                                  / "cssClasses" ":" ws array_of_string_like_value 
                                  / "chained" ":" ws boolean 
                                  / "resizable" ":" ws boolean 
+
+page_config                      = indent "config" ws "{" line_end page_config_property_line* indent "}" line_end
+page_config_property_line        = indent page_config_property line_end
+page_config_property             = "buildOption" ":" ws reference
 
 
 page_child_component                = region

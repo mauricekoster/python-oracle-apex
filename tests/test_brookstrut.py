@@ -57,6 +57,26 @@ def test_page_p00015(apex_parser):
     p = apex_parser.parse_file("examples/brookstrut/pages/p00015-region-stores.apx")
     assert p.name == "Region Stores"
 
+def test_page_p00016(apex_parser):
+    p = apex_parser.parse_file("examples/brookstrut/pages/p00016-top-users.apx")
+    assert p.name == "Region Stores"
+
+def test_page_p00017(apex_parser):
+    p = apex_parser.parse_file("examples/brookstrut/pages/p00017-activity-calendar.apx")
+    assert p.name == "Region Stores"
+
+def test_page_p00018(apex_parser):
+    p = apex_parser.parse_file("examples/brookstrut/pages/p00018-sales-by-product.apx")
+    assert p.name == "Region Stores"
+
+def test_page_p00019(apex_parser):
+    p = apex_parser.parse_file("examples/brookstrut/pages/p00019-reports.apx")
+    assert p.name == "Region Stores"
+
+def test_page_p00020(apex_parser):
+    p = apex_parser.parse_file("examples/brookstrut/pages/p00020-sales-by-store-by-day.apx")
+    assert p.name == "Region Stores"
+
 def test_page_p00101(apex_parser):
     p = apex_parser.parse_file("examples/brookstrut/pages/p00101-login.apx")
     assert p.name == "Login"

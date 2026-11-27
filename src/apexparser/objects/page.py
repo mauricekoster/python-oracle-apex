@@ -150,6 +150,14 @@ class PageDialog(ApexGroup):
         return self.properties.get('chained', None)
     
 
+class PageConfig(ApexGroup):
+    @property
+    def buildOption(self):
+        return self.properties.get('buildOption', None)
+    
+    
+
+
 class Page(ApexObject):
     def __init__(self, component_id=None, initial_data={}):
         super().__init__(component_id, initial_data)
@@ -209,7 +217,9 @@ class Page(ApexObject):
     def dialog(self) -> PageDialog:
         return self.groups.get('dialog', None)
     
-        
+    @property
+    def config(self) -> PageConfig:
+        return self.groups.get('config', None)
     
 
     # Children
