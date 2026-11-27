@@ -23,5 +23,6 @@
 {% include "aggregate_a.peg" %}
 {% include "sort_a.peg" %}
 {% include "display_column_a.peg" %}
+{% include "filter_c.peg" %}
 
 {% include "base.peg" %}

@@ -3,6 +3,7 @@ from .base import ApexObject, ApexGroup
 from .action import *
 from .branch import *
 from .entry_b import *
+from .filter import *
 from .column import *
 from .validation import *
 from .breadcrumb import *

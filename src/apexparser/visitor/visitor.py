@@ -23,6 +23,7 @@ from .display_column_a import DisplayColumnAVisitor
 from .aggregate_a import AggregateAVisitor
 from .sort_a import SortAVisitor
 from .saved_report_a import SavedReportAVisitor
+from .filter_c import FilterCVisitor
 
 from . import RuleNotImplemented
 
@@ -49,7 +50,8 @@ class ApxNodeVisitor(NodeVisitor,
                      DisplayColumnAVisitor,
                      AggregateAVisitor,
                      SortAVisitor,
-                     SavedReportAVisitor
+                     SavedReportAVisitor,
+                     FilterCVisitor
                      ):
 
     def visit_component(self, node, visited_children):
