@@ -59,7 +59,7 @@ def test_page_p00015(apex_parser):
 
 def test_page_p00016(apex_parser):
     p = apex_parser.parse_file("examples/brookstrut/pages/p00016-top-users.apx")
-    assert p.name == "Region Stores"
+    assert p.name == "Top Users"
 
 def test_page_p00017(apex_parser):
     p = apex_parser.parse_file("examples/brookstrut/pages/p00017-activity-calendar.apx")

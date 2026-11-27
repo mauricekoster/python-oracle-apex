@@ -82,9 +82,9 @@ class PageItemVisitor:
     def visit_page_item_settings_property(self, node, visited_children):
         v = visited_children[0]
         match v[0].text:
-            case 'showControls' | 'valueProtected' | 'minValue' | 'maxValue':
+            case 'showControls' | 'valueProtected' | 'minValue' | 'maxValue' | 'executeValidations':
                 return (v[0].text, v[3])
-            case 'trimSpaces' | 'numberAlignment' | 'virtualKeyboard':
+            case 'trimSpaces' | 'numberAlignment' | 'virtualKeyboard' | 'pageActionOnSelection':
                 return (v[0].text, v[3][0].text)
             case _: # pragma: no cover
                 raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")
@@ -291,7 +291,7 @@ class PageItemVisitor:
     def visit_page_item_source_property(self, node, visited_children):
         v = visited_children[0]
         match v[0].text:
-            case 'databaseColumn' | 'plsqlFunctionBody' | 'sqlQuery':
+            case 'databaseColumn' | 'plsqlFunctionBody' | 'sqlQuery' | 'staticValue':
                 return (v[0].text, v[3])
             case 'type' | 'used':
                 return (v[0].text, v[3][0].text)

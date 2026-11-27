@@ -37,7 +37,9 @@ page_item_settings_property         = "trimSpaces" ":" ws ( "none" / "something-
                                     / "maxValue" ":" ws number
                                     / "numberAlignment" ":" ws ( "start" / "center" / "end" )
                                     / "virtualKeyboard" ":" ws ( "decimal" / "numeric" / "text" )
-
+                                    # selectList
+                                    / "pageActionOnSelection" ":" ws ( "redirectSetValue" / "redirectToPage" / "submitPage" / "none" / "redirectToUrl" )
+                                    / "executeValidations" ":" ws boolean
 
 page_item_layout                    = indent "layout" ws "{" line_end page_item_layout_property_line* indent "}" line_end
 page_item_layout_property_line      = indent page_item_layout_property line_end

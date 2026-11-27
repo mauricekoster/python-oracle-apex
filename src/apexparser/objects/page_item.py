@@ -42,6 +42,13 @@ class PageItemSettings(ApexGroup):
     def virtualKeyboard(self):
         return self.properties.get('virtualKeyboard', None)
     
+    @property
+    def pageActionOnSelection(self):
+        return self.properties.get('pageActionOnSelection', None)
+    
+    @property
+    def executeValidations(self):
+        return self.properties.get('executeValidations', None)
     
     
 class PageItemLayout(ApexGroup):
@@ -89,8 +96,10 @@ class PageItemSource(ApexGroup):
     def sqlQuery(self):
         return self.properties.get('sqlQuery', None)
     
+    @property
+    def staticValue(self):
+        return self.properties.get('staticValue', None)
     
-
 
 class PageItemAppearance(ApexGroup):
     @property

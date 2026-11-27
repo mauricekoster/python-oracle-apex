@@ -201,6 +201,8 @@ def test_page_item_settings(apex_parser):
             maxValue: 100
             numberAlignment: end
             virtualKeyboard: text
+            pageActionOnSelection: none
+            executeValidations: false
         }
     )
 """)
@@ -214,6 +216,8 @@ def test_page_item_settings(apex_parser):
     assert p.settings.maxValue == 100
     assert p.settings.numberAlignment == 'end'
     assert p.settings.virtualKeyboard == 'text'
+    assert p.settings.pageActionOnSelection == 'none'
+    assert p.settings.executeValidations == False
 
 
 def test_page_item_source(apex_parser):
@@ -229,6 +233,7 @@ def test_page_item_source(apex_parser):
             plsqlFunctionBody:
                 ```plsql
                 ```
+            staticValue: 00001.0000000000
         }
     )
 """)
@@ -239,3 +244,4 @@ def test_page_item_source(apex_parser):
     assert p.source.used == 'always'
     assert p.source.sqlQuery == '```sql\n```'
     assert p.source.plsqlFunctionBody == '```plsql\n```'
+    assert p.source.staticValue == '00001.0000000000'
