@@ -462,6 +462,13 @@ def test_region_settings(apex_parser):
             zoomAndScroll: liveScrollOnly
             overline: &REGION.
             outputAs: text
+            displayColumn: "Page Events"
+            startDateColumn: THE_DAY
+            additionalCalendarViews: [
+                list
+                navigation
+            ]
+            maxEventsDay: 50
         }
     )
 """)
@@ -490,6 +497,11 @@ def test_region_settings(apex_parser):
     assert r.settings.zoomAndScroll == 'liveScrollOnly'
     assert r.settings.overline == '&REGION.'
     assert r.settings.outputAs == 'text'
+
+    assert r.settings.displayColumn == 'Page Events'
+    assert r.settings.startDateColumn == 'THE_DAY'
+    assert r.settings.additionalCalendarViews == ['list', 'navigation']
+    assert r.settings.maxEventsDay == 50
 
 
 def test_region_source(apex_parser):

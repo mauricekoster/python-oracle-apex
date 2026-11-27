@@ -157,6 +157,11 @@ region_settings_property            = "timeAxisType" ":" ws ( "auto" / "disabled
                                     / "displayBadge" ":" ws boolean
                                     / "overline" ":" ws string_like_value
                                     / "outputAs" ":" ws ( "text" / "binary" )
+                                    # Calendar
+                                    / "displayColumn" ":" ws string_like_value
+                                    / "startDateColumn" ":" ws string_like_value
+                                    / "additionalCalendarViews" ":" ws array_of_string_like_value
+                                    / "maxEventsDay" ":" ws number
 
 region_plugin_avatar                = indent "plugin-avatar" ws "{" line_end region_plugin_avatar_property_line* indent "}" line_end
 region_plugin_avatar_property_line  = indent region_plugin_avatar_property line_end

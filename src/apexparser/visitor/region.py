@@ -204,6 +204,8 @@ class RegionVisitor:
                     'displayAvatar' | 'displayBadge' | 'overline' |\
                     'compactNosThreshold' | 'currentFacetsSelector' | 'displayChartForTopNValues':
                 return (v[0].text, v[3])
+            case 'displayColumn' | 'startDateColumn' | 'additionalCalendarViews' | 'maxEventsDay':
+                return (v[0].text, v[3])
             case 'timeAxisType' | 'zoomAndScroll' | 'outputAs':
                 return (v[0].text, v[3][0].text)
             case 'showCurrentFacets' :

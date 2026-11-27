@@ -235,6 +235,22 @@ class RegionSettings(ApexGroup):
     @property
     def outputAs(self):
         return self.properties.get('outputAs', None)
+
+    @property
+    def displayColumn(self):
+        return self.properties.get('displayColumn', None)
+    
+    @property
+    def startDateColumn(self):
+        return self.properties.get('startDateColumn', None)
+    
+    @property
+    def additionalCalendarViews(self):
+        return self.properties.get('additionalCalendarViews', None)
+    
+    @property
+    def maxEventsDay(self):
+        return self.properties.get('maxEventsDay', None)
     
     
 class RegionPluginAvatar(ApexGroup):
