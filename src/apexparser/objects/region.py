@@ -9,6 +9,10 @@ class RegionLayout(ApexGroup):
     def parentRegion(self):
         return self.properties.get('parentRegion', None)
 
+    @property
+    def slot(self):
+        return self.properties.get('slot', None)
+    
 
 class RegionAppearance(ApexGroup):
     @property
@@ -98,6 +102,15 @@ class RegionSource(ApexGroup):
     def plsqlFunctionBody(self):
         return self.properties.get('plsqlFunctionBody', None)
 
+    @property
+    def location(self):
+        return self.properties.get('location', None)
+    
+    @property
+    def htmlCode(self):
+        return self.properties.get('htmlCode', None)
+    
+    
 
 class RegionAdvanced(ApexGroup):
     pass

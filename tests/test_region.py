@@ -41,6 +41,25 @@ def test_region_appearance(apex_parser):
     assert r.appearance.renderComponents == 'aboveContent'
 
 
+def test_region_layout(apex_parser):
+    r = apex_parser.parse(
+"""region (
+        layout {
+            sequence: 40
+            parentRegion: @help-container
+            slot: subRegions
+        }
+    )
+""")
+
+# TODO: layout
+
+    assert isinstance(r, Region)
+    assert r.layout.sequence == 40
+    assert r.layout.parentRegion == '@help-container'
+    assert r.layout.slot == 'subRegions'
+
+
 def test_region_settings(apex_parser):
     r = apex_parser.parse(
 """region A (
@@ -80,6 +99,14 @@ def test_region_source(apex_parser):
     r = apex_parser.parse(
 """region A (
         source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery: 
+                ```sql
+                ```
+            htmlCode:
+                ```html
+                ```
             list: @application-actions
             plsqlFunctionBody:
                 ```plsql
@@ -92,16 +119,12 @@ def test_region_source(apex_parser):
 """)
 
 # TODO:
-# "sqlQuery"
 # "plsqlCode"
-# "htmlCode"
 # "text"
 # "language"
 # "javaScriptFunctionBody"
-# "location"
 # "remoteServer"
 # "sampleData"
-# "type"
 # "tableOwner"
 # "tableName"
 # "includeRowidColumn"
@@ -127,7 +150,10 @@ def test_region_source(apex_parser):
 
     assert r.source.list == '@application-actions'
     assert r.source.plsqlFunctionBody == '```plsql\ndeclare\nbegin\nend;\n```'
-
+    assert r.source.location == 'localDatabase'
+    assert r.source.type == 'sqlQuery'
+    assert r.source.sqlQuery == '```sql\n```'
+    assert r.source.htmlCode == '```html\n```'
 
 def test_region_plugin_avatar(apex_parser):
     r = apex_parser.parse(
