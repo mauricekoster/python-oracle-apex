@@ -60,6 +60,11 @@ class PageItemLayout(ApexGroup):
     @property
     def startNewRow(self):
         return self.properties.get('startNewRow', None)
+
+    @property
+    def labelColumnSpan(self):
+        return self.properties.get('labelColumnSpan', None)
+    
     
     
 
@@ -79,6 +84,10 @@ class PageItemSource(ApexGroup):
     @property
     def plsqlFunctionBody(self):
         return self.properties.get('plsqlFunctionBody', None)
+    
+    @property
+    def sqlQuery(self):
+        return self.properties.get('sqlQuery', None)
     
     
 
@@ -145,6 +154,10 @@ class PageItemLov(ApexGroup):
     def sqlQuery(self):
         return self.properties.get('sqlQuery', None)
     
+    @property
+    def displayExtraValues(self):
+        return self.properties.get('displayExtraValues', None)
+    
     
 
 class PageItemDefault(ApexGroup):
@@ -169,6 +182,18 @@ class PageItemServerSideCondition(ApexGroup):
     @property
     def sqlQuery(self):
         return self.properties.get('sqlQuery', None)
+
+
+class PageItemHelp(ApexGroup):
+    @property
+    def inlineHelpText(self):
+        return self.properties.get('inlineHelpText', None)
+    
+    @property
+    def helpText(self):
+        return self.properties.get('helpText', None)
+    
+    
 
 
 class PageItem(ApexObject):
@@ -201,6 +226,10 @@ class PageItem(ApexObject):
     @property
     def default(self) -> PageItemDefault:
         return self.groups.get('default', PageItemDefault())
+
+    @property
+    def help(self) -> PageItemHelp:
+        return self.groups.get('help', None)
 
     @property
     def source(self) -> PageItemSource:

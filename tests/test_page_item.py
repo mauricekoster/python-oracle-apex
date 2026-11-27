@@ -21,53 +21,20 @@ def test_page_item_properties(apex_parser):
     assert p.name == 'Name'
     assert p.type == 'Type'
 
-def test_page_item_label(apex_parser):
+
+def test_page_item_advanced(apex_parser):
     p = apex_parser.parse(
 """pageItem A (
-        label {
-            label: Navigation
-            alignment: left
+        advanced {
+            cssClasses: mnw180
         }
     )
 """)
 
-# TODO:
-# tableCellAttributes
+# TODO: advanced
 
-    assert isinstance(p, PageItem)
-    assert p.label.label == 'Navigation'
-    assert p.label.alignment == 'left'
-
-
-def test_page_item_lov(apex_parser):
-    p = apex_parser.parse(
-"""pageItem A (
-        lov {
-            type: sharedComponent
-            lov: @sales-history-navigation
-            displayNullValue: true
-            nullDisplayValue: - Select Value -
-            sqlQuery:
-                ```sql
-                ```
-        }
-    )
-""")
-
-# TODO:
-# staticValues
-# language
-# plsqlFunctionBody
-# javaScriptFunctionBody
-# displayExtraValues
-# nullReturnValue
-
-    assert isinstance(p, PageItem)
-    assert p.lov.type == 'sharedComponent'
-    assert p.lov.lov == '@sales-history-navigation'
-    assert p.lov.displayNullValue == True
-    assert p.lov.nullDisplayValue == '- Select Value -'
-    assert p.lov.sqlQuery == '```sql\n```'
+    assert isinstance(p, PageItem)  
+    assert p.advanced.cssClasses == ['mnw180']
 
 
 def test_page_item_appearance(apex_parser):
@@ -114,25 +81,41 @@ def test_page_item_default(apex_parser):
     assert p.default.staticValue == '&APP_PAGE_ID.'
     assert p.default.sqlQuerySingleValue == 'select sysdate from dual'
 
-def test_page_item_source(apex_parser):
+
+def test_page_item_help(apex_parser):
     p = apex_parser.parse(
 """pageItem A (
-        source {
-            type: databaseColumn
-            databaseColumn: ID
-            used: always
-            plsqlFunctionBody:
-                ```plsql
+        name: Name
+        help {
+            inlineHelpText: The default Theme Style applies to all users.
+            helpText:
+                ```html
                 ```
         }
     )
 """)
 
     assert isinstance(p, PageItem)
-    assert p.source.type == 'databaseColumn'
-    assert p.source.databaseColumn == 'ID'
-    assert p.source.used == 'always'
-    assert p.source.plsqlFunctionBody == '```plsql\n```'
+    assert p.help.inlineHelpText == 'The default Theme Style applies to all users.'
+    assert p.help.helpText == '```html\n```'
+
+
+def test_page_item_label(apex_parser):
+    p = apex_parser.parse(
+"""pageItem A (
+        label {
+            label: Navigation
+            alignment: left
+        }
+    )
+""")
+
+# TODO:
+# tableCellAttributes
+
+    assert isinstance(p, PageItem)
+    assert p.label.label == 'Navigation'
+    assert p.label.alignment == 'left'
 
 
 def test_page_item_layout(apex_parser):
@@ -143,6 +126,7 @@ def test_page_item_layout(apex_parser):
             region: @store
             slot: regionBody
             startNewRow: false
+            labelColumnSpan: 0
         }
     )
 """)
@@ -154,21 +138,56 @@ def test_page_item_layout(apex_parser):
     assert p.layout.region == '@store'  
     assert p.layout.slot == 'regionBody'
     assert p.layout.startNewRow == False
-    
+    assert p.layout.labelColumnSpan == '0'
 
-def test_page_item_advanced(apex_parser):
+ 
+def test_page_item_lov(apex_parser):
     p = apex_parser.parse(
 """pageItem A (
-        advanced {
-            cssClasses: mnw180
+        lov {
+            type: sharedComponent
+            lov: @sales-history-navigation
+            displayNullValue: true
+            nullDisplayValue: - Select Value -
+            displayExtraValues: false
+            sqlQuery:
+                ```sql
+                ```
         }
     )
 """)
 
-# TODO: advanced
+# TODO:
+# staticValues
+# language
+# plsqlFunctionBody
+# javaScriptFunctionBody
+# displayExtraValues
+# nullReturnValue
+
+    assert isinstance(p, PageItem)
+    assert p.lov.type == 'sharedComponent'
+    assert p.lov.lov == '@sales-history-navigation'
+    assert p.lov.displayNullValue == True
+    assert p.lov.nullDisplayValue == '- Select Value -'
+    assert p.lov.sqlQuery == '```sql\n```'
+
+
+def test_page_item_server_side_condition(apex_parser):
+    p = apex_parser.parse(
+"""pageItem A (
+        serverSideCondition {
+            type: rowsReturned
+            sqlQuery:
+                ```sql
+                ```
+        }
+    )
+""")
 
     assert isinstance(p, PageItem)  
-    assert p.advanced.cssClasses == ['mnw180']
+    assert p.serverSideCondition.type == 'rowsReturned'
+    assert p.serverSideCondition.sqlQuery == '```sql\n```'
 
 
 def test_page_item_settings(apex_parser):
@@ -197,20 +216,26 @@ def test_page_item_settings(apex_parser):
     assert p.settings.virtualKeyboard == 'text'
 
 
-def test_page_item_server_side_condition(apex_parser):
+def test_page_item_source(apex_parser):
     p = apex_parser.parse(
 """pageItem A (
-        serverSideCondition {
-            type: rowsReturned
+        source {
+            type: databaseColumn
+            databaseColumn: ID
+            used: always
             sqlQuery:
                 ```sql
+                ```
+            plsqlFunctionBody:
+                ```plsql
                 ```
         }
     )
 """)
 
-
-    assert isinstance(p, PageItem)  
-    assert p.serverSideCondition.type == 'rowsReturned'
-    assert p.serverSideCondition.sqlQuery == '```sql\n```'
-
+    assert isinstance(p, PageItem)
+    assert p.source.type == 'databaseColumn'
+    assert p.source.databaseColumn == 'ID'
+    assert p.source.used == 'always'
+    assert p.source.sqlQuery == '```sql\n```'
+    assert p.source.plsqlFunctionBody == '```plsql\n```'

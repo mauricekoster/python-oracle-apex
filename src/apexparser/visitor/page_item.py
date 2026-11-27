@@ -129,7 +129,7 @@ class PageItemVisitor:
     def visit_page_item_layout_property(self, node, visited_children):
         v = visited_children[0]
         match v[0].text:
-            case 'sequence' | 'slot' | 'region' | 'startNewRow':
+            case 'sequence' | 'slot' | 'region' | 'startNewRow' | 'labelColumnSpan':
                 return (v[0].text, v[3])
             case 'alignment':
                 return (v[0].text, v[3][0].text)
@@ -245,7 +245,7 @@ class PageItemVisitor:
     def visit_page_item_lov_property(self, node, visited_children):
         v = visited_children[0]
         match v[0].text:
-            case 'lov' | 'displayNullValue' | 'nullDisplayValue' | 'sqlQuery':
+            case 'lov' | 'displayNullValue' | 'nullDisplayValue' | 'sqlQuery' | 'displayExtraValues':
                 return (v[0].text, v[3])
             case 'type':
                 return (v[0].text, v[3][0].text)
@@ -291,7 +291,7 @@ class PageItemVisitor:
     def visit_page_item_source_property(self, node, visited_children):
         v = visited_children[0]
         match v[0].text:
-            case 'databaseColumn' | 'plsqlFunctionBody':
+            case 'databaseColumn' | 'plsqlFunctionBody' | 'sqlQuery':
                 return (v[0].text, v[3])
             case 'type' | 'used':
                 return (v[0].text, v[3][0].text)
@@ -315,6 +315,29 @@ class PageItemVisitor:
         v = visited_children[0]
         match v[0].text:
             case 'type' | 'sqlQuery':
+                return (v[0].text, v[3])
+            #case '':
+            #    return (v[0].text, v[3][0].text)
+            case _: # pragma: no cover
+                raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")
+
+    def visit_page_item_help(self, node, visited_children):
+        parts = visited_children[5]
+        d = {}
+        for item in parts:
+            if type(item) is tuple:
+                d[item[0]] = item[1]
+            else: # pragma: no cover
+                raise RuleNotImplemented()
+        return ('help', PageItemHelp(d))
+    
+    def visit_page_item_help_property_line(self, node, visited_children):
+        return visited_children[1]
+    
+    def visit_page_item_help_property(self, node, visited_children):
+        v = visited_children[0]
+        match v[0].text:
+            case 'inlineHelpText' | 'helpText':
                 return (v[0].text, v[3])
             #case '':
             #    return (v[0].text, v[3][0].text)

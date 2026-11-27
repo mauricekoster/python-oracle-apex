@@ -83,7 +83,7 @@ def test_page_p00101(apex_parser):
 
 def test_page_p10010(apex_parser):
     p = apex_parser.parse_file("examples/brookstrut/pages/p10010-theme-style-selection.apx")
-    assert p.name == "Login"
+    assert p.name == "Theme Style Selection"
 
 def test_page_p10020(apex_parser):
     p = apex_parser.parse_file("examples/brookstrut/pages/p10020-configuration-options.apx")

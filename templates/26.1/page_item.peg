@@ -7,18 +7,19 @@ page_item_direct_property_line      = indent page_item_direct_property line_end
 page_item_direct_property           = "name" ":" ws string_like_value
                                     / "type" ":" ws string_like_value
 
-page_item_group_block               = page_item_label
-                                    / page_item_settings
-                                    / page_item_layout
+page_item_group_block               = page_item_advanced
                                     / page_item_appearance
-                                    / page_item_validation
-                                    / page_item_advanced
+                                    / page_item_default
+                                    / page_item_help
+                                    / page_item_label
+                                    / page_item_layout
+                                    / page_item_lov
                                     / page_item_security
                                     / page_item_server_side_condition
                                     / page_item_session_state
-                                    / page_item_lov
-                                    / page_item_default
+                                    / page_item_settings
                                     / page_item_source
+                                    / page_item_validation
 
 page_item_label                     = indent "label" ws "{" line_end page_item_label_property_line* indent "}" line_end
 page_item_label_property_line       = indent page_item_label_property line_end
@@ -166,3 +167,8 @@ page_item_server_side_condition_property             = "type" ":" ws string_like
                                                      / "pages" ":" ws array_of_number 
                                                      / "text" ":" ws string_like_value 
                                                      / "list" ":" ws array_of_string_like_value 
+
+page_item_help                      = indent "help" ws "{" line_end page_item_help_property_line* indent "}" line_end
+page_item_help_property_line        = indent page_item_help_property line_end
+page_item_help_property             = "inlineHelpText" ":" ws code_block 
+                                    / "helpText" ":" ws code_block 
