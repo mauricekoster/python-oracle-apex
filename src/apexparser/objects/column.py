@@ -139,7 +139,24 @@ class ColumnAdvanced(ApexGroup):
     @property
     def endUserAlias(self):
         return self.properties.get('endUserAlias', None)
+
+    @property
+    def computeSum(self):
+        return self.properties.get('computeSum', None)
     
+    @property
+    def cssClasses(self):
+        return self.properties.get('cssClasses', None)
+    
+    @property
+    def customAttributes(self):
+        return self.properties.get('customAttributes', None)
+    
+    @property
+    def cellWidth(self):
+        return self.properties.get('cellWidth', None)
+    
+        
 class ColumnLink(ApexGroup):
     @property
     def target(self):

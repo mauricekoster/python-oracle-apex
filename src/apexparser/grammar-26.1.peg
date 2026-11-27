@@ -1137,10 +1137,13 @@ column_c_direct_property        = "columnName" ":" ws string_like_value
                                 / "reportColumnQueryId" ":" ws string_like_value
                                 / "derivedColumn" ":" ws string_like_value
                                 / "type" ":" ws ( "plainText" / "plainTextBasedOnLov" / "richText" / "link" / "displayImage" / "downloadBlob" / "percentGraph" / "hidden" / "displayAsTextSavesState" / "datePickerClassic" / "datePicker" / "textField" / "textArea" / "selectList" / "radioGroup" / "hiddenField" / "popupLov" / "popupKeyLov" / "simpleCheckbox" / "rowSelector" )
+                                # Testing purpose
+                                / "variant" ":" ws "column_c"
 
-column_c_group_block            = column_c_layout
+column_c_group_block            = column_c_advanced
                                 / column_c_appearance
                                 / column_c_heading
+                                / column_c_layout
                                 / column_c_link
                                 / column_c_sorting
 
@@ -1177,6 +1180,14 @@ column_c_link_property_line        = indent column_c_link_property line_end
 column_c_link_property             = "target" ":" ws value
                                    / "linkText" ":" ws string_like_value
                                    / "linkAttributes" ":" ws string_like_value
+
+column_c_advanced                      = indent "advanced" ws "{" line_end column_c_advanced_property_line* indent "}" line_end
+column_c_advanced_property_line        = indent column_c_advanced_property line_end
+column_c_advanced_property             = "cssClasses" ":" ws array_of_string_like_value 
+                                       / "customAttributes" ":" ws string_like_value 
+                                       / "cellWidth" ":" ws number 
+                                       / "computeSum" ":" ws boolean 
+                                                                          
 column_f                        = indent "column" (required_ws component_id)? ws "(" line_end column_f_body_line* indent ")" line_end
 column_f_body_line              = column_f_direct_property_line
                                 / column_f_group_block

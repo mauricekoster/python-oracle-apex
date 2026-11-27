@@ -28,6 +28,31 @@ def test_column_c_properties(apex_parser):
     assert c.type == 'plainText'
 
 
+def test_column_c_advanced(apex_parser):
+    c: Column = apex_parser.parse(
+"""column C (
+        variant: column_c
+
+        advanced {
+            cssClasses: [
+                dummy
+            ]
+            computeSum: true
+            customAttributes: something
+            cellWidth: 99
+        }
+    )
+""")
+
+    assert isinstance(c, Column)
+    assert c.variant == 'column_c'
+
+    assert c.advanced.cssClasses == ['dummy']
+    assert c.advanced.computeSum == True
+    assert c.advanced.customAttributes == 'something'
+    assert c.advanced.cellWidth == 99
+
+
 def test_column_c_layout(apex_parser):
     c: Column = apex_parser.parse(
 """column C (
@@ -47,6 +72,8 @@ def test_column_c_layout(apex_parser):
     assert c.variant == 'column_c'
     assert c.layout.sequence == 20
     assert c.layout.columnAlignment == 'center'
+
+
 
 
 def test_column_c_appearance(apex_parser):
