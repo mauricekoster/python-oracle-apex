@@ -165,6 +165,7 @@ region_group_block                  = region_accessibility
                                     / region_settings
                                     / region_source
                                     / region_title
+                                    / region_toolbar
 
 region_layout                       = indent "layout" ws "{" line_end region_layout_property_line* indent "}" line_end
 region_layout_property_line         = indent region_layout_property line_end
@@ -480,6 +481,13 @@ region_security                      = indent "security" ws "{" line_end region_
 region_security_property_line        = indent region_security_property line_end
 region_security_property             = "authorizationScheme" ":" ws reference 
                                      / "escapeSpecialChars" ":" ws boolean
+
+
+region_toolbar                      = indent "toolbar" ws "{" line_end region_toolbar_property_line* indent "}" line_end
+region_toolbar_property_line        = indent region_toolbar_property line_end
+region_toolbar_property             = "show" ":" ws boolean 
+                                    / "controls" ":" ws array_of_string_like_value 
+                                    / "addButtonLabel" ":" ws string_like_value 
 
 
 region_child_component              = facet

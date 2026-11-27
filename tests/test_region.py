@@ -596,3 +596,28 @@ def test_region_title(apex_parser):
     assert r.title.htmlExpression == '```html\n```'
     assert r.title.cssClasses == ['red', 'green', 'blue']
 
+
+def test_region_toolbar(apex_parser):
+    r = apex_parser.parse(
+"""region A (
+        toolbar {
+            show: true
+            controls: [
+                searchCol
+                searchField
+                actionsMenu
+                resetButton
+                saveButton
+            ]
+            addButtonLabel: Toolbar Text
+        }
+    )
+""")
+
+# TODO: toolbar
+
+    assert isinstance(r, Region)
+
+    assert r.toolbar.controls == ['searchCol', 'searchField' , 'actionsMenu', 'resetButton', 'saveButton']
+    assert r.toolbar.show == True
+    assert r.toolbar.addButtonLabel == 'Toolbar Text'

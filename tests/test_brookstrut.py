@@ -77,6 +77,46 @@ def test_page_p00020(apex_parser):
     p = apex_parser.parse_file("examples/brookstrut/pages/p00020-sales-by-store-by-day.apx")
     assert p.name == "Sales by Store by Day"
 
+def test_page_p00021(apex_parser):
+    p = apex_parser.parse_file("examples/brookstrut/pages/p00021-event-log.apx")
+    assert p.name == "Event Log"
+
+def test_page_p00022(apex_parser):
+    p = apex_parser.parse_file("examples/brookstrut/pages/p00022-sales-by-store-by-week.apx")
+    assert p.name == "Sales by Store by Week"
+
+def test_page_p00023(apex_parser):
+    p = apex_parser.parse_file("examples/brookstrut/pages/p00023-sales-history-interactive-grid.apx")
+    assert p.name == "Sales by Store by Day"
+
+def test_page_p00024(apex_parser):
+    p = apex_parser.parse_file("examples/brookstrut/pages/p00024-sales-history-generation-log.apx")
+    assert p.name == "Sales History Generation Log"
+
+def test_page_p00025(apex_parser):
+    p = apex_parser.parse_file("examples/brookstrut/pages/p00025-sales-by-product-and-store-by-week.apx")
+    assert p.name == "Sales by Store by Day"
+
+def test_page_p00026(apex_parser):
+    p = apex_parser.parse_file("examples/brookstrut/pages/p00026-remove-transaction-history.apx")
+    assert p.name == "Sales by Store by Day"
+
+def test_page_p00027(apex_parser):
+    p = apex_parser.parse_file("examples/brookstrut/pages/p00027-product-availability.apx")
+    assert p.name == "Product Availability"
+
+def test_page_p00028(apex_parser):
+    p = apex_parser.parse_file("examples/brookstrut/pages/p00028-generate-transactions.apx")
+    assert p.name == "Sales by Store by Day"
+
+def test_page_p00029(apex_parser):
+    p = apex_parser.parse_file("examples/brookstrut/pages/p00029-generate-transaction.apx")
+    assert p.name == "Sales by Store by Day"
+
+def test_page_p00030(apex_parser):
+    p = apex_parser.parse_file("examples/brookstrut/pages/p00030-transaction.apx")
+    assert p.name == "Sales by Store by Day"
+
 def test_page_p00101(apex_parser):
     p = apex_parser.parse_file("examples/brookstrut/pages/p00101-login.apx")
     assert p.name == "Login"

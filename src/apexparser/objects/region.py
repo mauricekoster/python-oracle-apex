@@ -439,6 +439,20 @@ class RegionSecurity(ApexGroup):
     @property
     def escapeSpecialChars(self):
         return self.properties.get('escapeSpecialChars', None)
+
+
+class RegionToolbar(ApexGroup):
+    @property
+    def controls(self):
+        return self.properties.get('controls', None)
+
+    @property
+    def show(self):
+        return self.properties.get('show', None)
+    
+    @property
+    def addButtonLabel(self):
+        return self.properties.get('addButtonLabel', None)
     
 
 class Region(ApexObject):
@@ -557,6 +571,10 @@ class Region(ApexObject):
     @property
     def security(self) -> RegionSecurity:
         return self.groups.get('security', None)
+    
+    @property
+    def toolbar(self) -> RegionToolbar:
+        return self.groups.get('toolbar', None)
     
     
     # child
