@@ -204,9 +204,9 @@ class RegionVisitor:
                     'displayAvatar' | 'displayBadge' | 'overline' |\
                     'compactNosThreshold' | 'currentFacetsSelector' | 'displayChartForTopNValues':
                 return (v[0].text, v[3])
-            case 'timeAxisType' | 'zoomAndScroll':
+            case 'timeAxisType' | 'zoomAndScroll' | 'outputAs':
                 return (v[0].text, v[3][0].text)
-            case 'showCurrentFacets':
+            case 'showCurrentFacets' :
                 return (v[0].text, v[3].text)
             case _: # pragma: no cover
                 raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")

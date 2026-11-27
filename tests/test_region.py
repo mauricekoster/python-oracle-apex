@@ -67,6 +67,7 @@ def test_region_settings(apex_parser):
             timeAxisType: mixedFrequency
             zoomAndScroll: liveScrollOnly
             overline: &REGION.
+            outputAs: text
         }
     )
 """)
@@ -91,9 +92,11 @@ def test_region_settings(apex_parser):
 # displayBadge
 
     assert isinstance(r, Region)
-    r.settings.timeAxisType == 'mixedFrequency'
-    r.settings.zoomAndScroll == 'liveScrollOnly'
-    r.settings.overline == '&REGION.'
+    assert r.settings.timeAxisType == 'mixedFrequency'
+    assert r.settings.zoomAndScroll == 'liveScrollOnly'
+    assert r.settings.overline == '&REGION.'
+    assert r.settings.outputAs == 'text'
+
 
 def test_region_source(apex_parser):
     r = apex_parser.parse(

@@ -87,4 +87,4 @@ def test_page_p10010(apex_parser):
 
 def test_page_p10020(apex_parser):
     p = apex_parser.parse_file("examples/brookstrut/pages/p10020-configuration-options.apx")
-    assert p.name == "Login"    
+    assert p.name == "Configuration Options"    

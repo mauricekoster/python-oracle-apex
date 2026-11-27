@@ -232,7 +232,11 @@ class RegionSettings(ApexGroup):
     def overline(self):
         return self.properties.get('overline', None)
         
-
+    @property
+    def outputAs(self):
+        return self.properties.get('outputAs', None)
+    
+    
 class RegionPluginAvatar(ApexGroup):
     @property
     def icon(self):
