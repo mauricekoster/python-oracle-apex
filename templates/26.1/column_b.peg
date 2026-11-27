@@ -8,9 +8,12 @@ column_b_direct_property_line   = indent column_b_direct_property line_end
 column_b_direct_property        = "columnName" ":" ws string_like_value
                                 / "type" ":" ws string_like_value
 
-column_b_group_block            = column_b_layout
-                                / column_b_heading
+column_b_group_block            = column_b_advanced
                                 / column_b_appearance
+                                / column_b_column_formatting
+                                / column_b_heading
+                                / column_b_layout
+                                / column_b_link
                                 / column_b_source
 
 column_b_layout                 = indent "layout" ws "{" line_end column_b_layout_property_line* indent "}" line_end
@@ -43,6 +46,21 @@ column_b_heading_property             = "heading" ":" ws string_like_value
                                          / "alternativeLabel" ":" ws string_like_value
                                          / "alignment" ":" ws ( "start" / "center" / "end" )
 
+column_b_advanced                      = indent "advanced" ws "{" line_end column_b_advanced_property_line* indent "}" line_end
+column_b_advanced_property_line        = indent column_b_advanced_property line_end
+column_b_advanced_property             = "htmlDomId" ":" ws string_like_value
+                                       / "endUserAlias" ":" ws string_like_value
+
+column_b_link                      = indent "link" ws "{" line_end column_b_link_property_line* indent "}" line_end
+column_b_link_property_line        = indent column_b_link_property line_end
+column_b_link_property             = "target" ":" ws value
+                                   / "linkText" ":" ws string_like_value
+                                   / "linkAttributes" ":" ws string_like_value
+
+
+column_b_column_formatting                      = indent "columnFormatting" ws "{" line_end column_b_column_formatting_property_line* indent "}" line_end
+column_b_column_formatting_property_line        = indent column_b_column_formatting_property line_end
+column_b_column_formatting_property             = "htmlExpression" ":" ws code_block
 
 # column_b_child_component        = action_f
 

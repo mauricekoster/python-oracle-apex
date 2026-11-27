@@ -18,5 +18,10 @@
 {% include "axis.peg" %}
 {% include "menu_a.peg" %}
 {% include "validation_b.peg" %}
+{% include "saved_report_a.peg" %}
+{% include "saved_report_b.peg" %}
+{% include "aggregate_a.peg" %}
+{% include "sort_a.peg" %}
+{% include "display_column_a.peg" %}
 
 {% include "base.peg" %}

@@ -108,6 +108,9 @@
 			"    def visit_$2_group_block(self, node, visited_children):",
 			"        return visited_children[0]",
 			"",
+			"    def visit_$2_child_component(self, node, visited_children):",
+            "        return visited_children[0]",
+			""
 		],
 		"include": ["**/visitor/*.py"]
 	},

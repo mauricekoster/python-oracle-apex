@@ -21,9 +21,12 @@ from .entry_b import (
 )
 from .column import (
     Column,
+    ColumnAdvanced,
     ColumnAppearance,
+    ColumnColumnFormatting,
     ColumnHeading,
     ColumnLayout,
+    ColumnLink,
     ColumnLink,
     ColumnSorting,
     ColumnSource,
@@ -45,7 +48,22 @@ from .button import (
     ButtonLayout,
     ButtonServerSideCondition,
 )
-
+from .aggregate import (
+    Aggregate
+)
+from .sort import (
+    Sort,
+    SortSort
+)
+from .display_column import (
+    DisplayColumn,
+    DisplayColumnIdentification
+)
+from .saved_report import (
+    SavedReport,
+    SavedReportDescription,
+    SavedReportView
+)
 from .dynamic_action import (
     DynamicAction,
     DynamicActionExecution,

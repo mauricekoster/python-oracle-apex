@@ -19,6 +19,10 @@ from .series import SeriesVisitor
 from .axis import AxisVisitor
 from .menu_a import MenuAVisitor
 from .validation_b import ValidationBVisitor
+from .display_column_a import DisplayColumnAVisitor
+from .aggregate_a import AggregateAVisitor
+from .sort_a import SortAVisitor
+from .saved_report_a import SavedReportAVisitor
 
 from . import RuleNotImplemented
 
@@ -41,7 +45,11 @@ class ApxNodeVisitor(NodeVisitor,
                      SeriesVisitor,
                      AxisVisitor,
                      MenuAVisitor,
-                     ValidationBVisitor
+                     ValidationBVisitor,
+                     DisplayColumnAVisitor,
+                     AggregateAVisitor,
+                     SortAVisitor,
+                     SavedReportAVisitor
                      ):
 
     def visit_component(self, node, visited_children):

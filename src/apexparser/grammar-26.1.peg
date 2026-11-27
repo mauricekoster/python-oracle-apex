@@ -11,6 +11,10 @@ component                           = page_item blank_lines
                                     / column_b blank_lines
                                     / column_c blank_lines
                                     / column_f blank_lines
+                                    / saved_report_a blank_lines
+                                    / display_column_a blank_lines
+                                    / aggregate_a blank_lines
+                                    / sort_a blank_lines
                                     / menu_a blank_lines
                                     / series blank_lines
                                     / axis blank_lines
@@ -434,6 +438,7 @@ region_child_component              = facet
                                     / column_f
                                     / series
                                     / axis
+                                    / saved_report_a
 page_item                           = indent "pageItem" (required_ws component_id)? ws "(" line_end page_item_body_line* indent ")" line_end
 page_item_body_line                 = page_item_direct_property_line
                                     / page_item_group_block
@@ -974,9 +979,12 @@ column_b_direct_property_line   = indent column_b_direct_property line_end
 column_b_direct_property        = "columnName" ":" ws string_like_value
                                 / "type" ":" ws string_like_value
 
-column_b_group_block            = column_b_layout
-                                / column_b_heading
+column_b_group_block            = column_b_advanced
                                 / column_b_appearance
+                                / column_b_column_formatting
+                                / column_b_heading
+                                / column_b_layout
+                                / column_b_link
                                 / column_b_source
 
 column_b_layout                 = indent "layout" ws "{" line_end column_b_layout_property_line* indent "}" line_end
@@ -1009,6 +1017,21 @@ column_b_heading_property             = "heading" ":" ws string_like_value
                                          / "alternativeLabel" ":" ws string_like_value
                                          / "alignment" ":" ws ( "start" / "center" / "end" )
 
+column_b_advanced                      = indent "advanced" ws "{" line_end column_b_advanced_property_line* indent "}" line_end
+column_b_advanced_property_line        = indent column_b_advanced_property line_end
+column_b_advanced_property             = "htmlDomId" ":" ws string_like_value
+                                       / "endUserAlias" ":" ws string_like_value
+
+column_b_link                      = indent "link" ws "{" line_end column_b_link_property_line* indent "}" line_end
+column_b_link_property_line        = indent column_b_link_property line_end
+column_b_link_property             = "target" ":" ws value
+                                   / "linkText" ":" ws string_like_value
+                                   / "linkAttributes" ":" ws string_like_value
+
+
+column_b_column_formatting                      = indent "columnFormatting" ws "{" line_end column_b_column_formatting_property_line* indent "}" line_end
+column_b_column_formatting_property_line        = indent column_b_column_formatting_property line_end
+column_b_column_formatting_property             = "htmlExpression" ":" ws code_block
 
 # column_b_child_component        = action_f
 
@@ -1332,6 +1355,74 @@ validation_b_server_side_condition_property             = "whenButtonPressed" ":
                                                         / "list" ":" ws array_of_string_like_value
                                                         / "executeCondition" ":" ws ( "forEachRow" / "once" )
 
+saved_report_a               = indent "savedReport" (required_ws component_id)? ws "(" line_end saved_report_a_body_line* indent ")" line_end
+saved_report_a_body_line     = saved_report_a_direct_property_line
+                       / saved_report_a_group_block
+                       / saved_report_a_child_component
+                       / blank_lines
+
+saved_report_a_direct_property_line     = indent saved_report_a_direct_property line_end 
+saved_report_a_direct_property          = "visibility" ":" ws ( "primaryDefault" / "alternativeDefault" / "public" / "private" )
+                                        / "name" ":" ws string_like_value
+                                        / "staticId" ":" ws string_like_value
+
+
+saved_report_a_group_block              = saved_report_a_description
+                                        / saved_report_a_view
+
+saved_report_a_child_component          = aggregate_a
+                                        / display_column_a
+                                        / sort_a
+
+
+saved_report_a_description                      = indent "description" ws "{" line_end saved_report_a_description_property_line* indent "}" line_end
+saved_report_a_description_property_line        = indent saved_report_a_description_property line_end
+saved_report_a_description_property             = "description" ":" ws code_block
+
+saved_report_a_view                      = indent "view" ws "{" line_end saved_report_a_view_property_line* indent "}" line_end
+saved_report_a_view_property_line        = indent saved_report_a_view_property line_end
+saved_report_a_view_property             = "chart" ":" ws boolean
+                                         / "groupBy" ":" ws boolean
+                                         / "pivot" ":" ws boolean
+                                         / "default" ":" ws string_like_value
+                                         / "rowsPerPage" ":" ws string_like_value
+
+aggregate_a               = indent "aggregate" (required_ws component_id)? ws "(" line_end aggregate_a_body_line* indent ")" line_end
+aggregate_a_body_line     = aggregate_a_direct_property_line
+                       / blank_lines
+
+aggregate_a_direct_property_line     = indent aggregate_a_direct_property line_end 
+aggregate_a_direct_property          = "function" ":" ws ( "sum" / "average" / "count" / "countDistinct" / "min" / "max" / "median" )
+                                     / "column" ":" ws string_like_value
+
+sort_a               = indent "sort" (required_ws component_id)? ws "(" line_end sort_a_body_line* indent ")" line_end
+sort_a_body_line     = sort_a_direct_property_line
+                       / sort_a_group_block
+                       / blank_lines
+
+sort_a_direct_property_line     = indent sort_a_direct_property line_end 
+sort_a_direct_property          = "column" ":" ws string_like_value
+
+sort_a_group_block              = sort_a_sort
+
+sort_a_sort                      = indent "sort" ws "{" line_end sort_a_sort_property_line* indent "}" line_end
+sort_a_sort_property_line        = indent sort_a_sort_property line_end
+sort_a_sort_property             = "direction" ":" ws ( "asc" / "desc" )
+                                 / "nulls" ":" ws ( "first" / "last" )
+                                 / "sequence" ":" ws number
+display_column_a               = indent "displayColumn" (required_ws component_id)? ws "(" line_end display_column_a_body_line* indent ")" line_end
+display_column_a_body_line     = display_column_a_direct_property_line
+                       / display_column_a_group_block
+                       / blank_lines
+
+display_column_a_direct_property_line     = indent display_column_a_direct_property line_end 
+display_column_a_direct_property          = "sequence" ":" ws number
+
+display_column_a_group_block              = display_column_a_identification
+
+display_column_a_identification                      = indent "identification" ws "{" line_end display_column_a_identification_property_line* indent "}" line_end
+display_column_a_identification_property_line        = indent display_column_a_identification_property line_end
+display_column_a_identification_property             = "column" ":" ws string_like_value
 
 reference                       = "@" reference_character*
 variable                        = "&" reference_character "."

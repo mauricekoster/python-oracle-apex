@@ -131,6 +131,35 @@ class ColumnLink(ApexGroup):
         return self.properties.get('linkAttributes', None)
 
 
+class ColumnAdvanced(ApexGroup):
+    @property
+    def htmlDomId(self):
+        return self.properties.get('htmlDomId', None)
+    
+    @property
+    def endUserAlias(self):
+        return self.properties.get('endUserAlias', None)
+    
+class ColumnLink(ApexGroup):
+    @property
+    def target(self):
+        return self.properties.get('target', None)
+    
+    @property
+    def linkText(self):
+        return self.properties.get('linkText', None)
+    
+    @property
+    def linkAttributes(self):
+        return self.properties.get('linkAttributes', None)
+    
+
+class ColumnColumnFormatting(ApexGroup):
+    @property
+    def htmlExpression(self):
+        return self.properties.get('htmlExpression', None)
+    
+    
 class Column(ApexObject):
     
     # Properties
@@ -180,3 +209,17 @@ class Column(ApexObject):
     @property
     def link(self) -> ColumnLink:
         return self.groups.get('link', None)
+
+    @property
+    def advanced(self) -> ColumnAdvanced:
+        return self.groups.get('advanced', None)
+    
+    @property
+    def link(self) -> ColumnLink:
+        return self.groups.get('link', None)
+    
+    @property
+    def columnFormatting(self) -> ColumnColumnFormatting:
+        return self.groups.get('columnFormatting', None)
+    
+    

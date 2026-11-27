@@ -138,3 +138,70 @@ class ColumnBVisitor:
                 return (v[0].text, v[3][0].text)
             case _: # pragma: no cover
                 raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")
+
+    def visit_column_b_advanced(self, node, visited_children):
+        parts = visited_children[5]
+        d = {}
+        for item in parts:
+            if type(item) is tuple:
+                d[item[0]] = item[1]
+            else: # pragma: no cover
+                raise RuleNotImplemented()
+        return ('advanced', ColumnAdvanced(d))
+    
+    def visit_column_b_advanced_property_line(self, node, visited_children):
+        return visited_children[1]
+    
+    def visit_column_b_advanced_property(self, node, visited_children):
+        v = visited_children[0]
+        match v[0].text:
+            case 'htmlDomId' | 'endUserAlias':
+                return (v[0].text, v[3])
+            case _: # pragma: no cover
+                raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")
+
+    def visit_column_b_link(self, node, visited_children):
+        parts = visited_children[5]
+        d = {}
+        for item in parts:
+            if type(item) is tuple:
+                d[item[0]] = item[1]
+            else: # pragma: no cover
+                raise RuleNotImplemented()
+        return ('link', ColumnLink(d))
+    
+    def visit_column_b_link_property_line(self, node, visited_children):
+        return visited_children[1]
+    
+    def visit_column_b_link_property(self, node, visited_children):
+        v = visited_children[0]
+        match v[0].text:
+            case 'target' | 'linkText' | 'linkAttributes':
+                return (v[0].text, v[3])
+            #case '':
+            #    return (v[0].text, v[3][0].text)
+            case _: # pragma: no cover
+                raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")
+
+    def visit_column_b_column_formatting(self, node, visited_children):
+        parts = visited_children[5]
+        d = {}
+        for item in parts:
+            if type(item) is tuple:
+                d[item[0]] = item[1]
+            else: # pragma: no cover
+                raise RuleNotImplemented()
+        return ('columnFormatting', ColumnColumnFormatting(d))
+    
+    def visit_column_b_column_formatting_property_line(self, node, visited_children):
+        return visited_children[1]
+    
+    def visit_column_b_column_formatting_property(self, node, visited_children):
+        v = visited_children
+        match v[0].text:
+            case 'htmlExpression':
+                return (v[0].text, v[3])
+            #case '':
+            #    return (v[0].text, v[3][0].text)
+            case _: # pragma: no cover
+                raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")

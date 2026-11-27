@@ -330,3 +330,4 @@ region_child_component              = facet
                                     / column_f
                                     / series
                                     / axis
+                                    / saved_report_a
