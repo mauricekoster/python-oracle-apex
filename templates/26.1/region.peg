@@ -35,6 +35,7 @@ region_group_block                  = region_accessibility
                                     / region_plugin_avatar
                                     / region_plugin_badge
                                     / region_report_layout
+                                    / region_security
                                     / region_server_side_condition
                                     / region_settings
                                     / region_source
@@ -343,6 +344,11 @@ region_page_header_property             = "font" ":" ws ( "helvetica" / "times" 
                                         / "fontColor" ":" ws string_like_value 
                                         / "alignment" ":" ws ( "start" / "center" / "end" ) 
                                         / "pageHeaderText" ":" ws code_block 
+
+region_security                      = indent "security" ws "{" line_end region_security_property_line* indent "}" line_end
+region_security_property_line        = indent region_security_property line_end
+region_security_property             = "authorizationScheme" ":" ws reference 
+                                     / "escapeSpecialChars" ":" ws boolean
 
 
 region_child_component              = facet

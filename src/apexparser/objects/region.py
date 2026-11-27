@@ -407,8 +407,15 @@ class RegionPageHeader(ApexGroup):
     def pageHeaderText(self):
         return self.properties.get('pageHeaderText', None)
     
+class RegionSecurity(ApexGroup):
+    @property
+    def authorizationScheme(self):
+        return self.properties.get('authorizationScheme', None)
     
-
+    @property
+    def escapeSpecialChars(self):
+        return self.properties.get('escapeSpecialChars', None)
+    
 
 class Region(ApexObject):
     # direct
@@ -522,6 +529,10 @@ class Region(ApexObject):
     @property
     def pageHeader(self) -> RegionPageHeader:
         return self.groups.get('pageHeader', None)
+
+    @property
+    def security(self) -> RegionSecurity:
+        return self.groups.get('security', None)
     
     
     # child
