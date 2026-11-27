@@ -11,8 +11,26 @@ class RegionLayout(ApexGroup):
 
 
 class RegionAppearance(ApexGroup):
-    pass
-
+    @property
+    def template(self):
+        return self.properties.get('template', None)
+    
+    @property
+    def templateOptions(self):
+        return self.properties.get('templateOptions', None)
+    
+    @property
+    def cssClasses(self):
+        return self.properties.get('cssClasses', None)
+    
+    @property
+    def icon(self):
+        return self.properties.get('icon', None)
+    
+    @property
+    def renderComponents(self):
+        return self.properties.get('renderComponents', None)
+    
 
 class RegionGenAI(ApexGroup):
     @property

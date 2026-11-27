@@ -174,8 +174,8 @@ region_layout_property              = "sequence" ":" ws number
 region_appearance                   = indent "appearance" ws "{" line_end region_appearance_property_line* indent "}" line_end
 region_appearance_property_line     = indent region_appearance_property line_end
 region_appearance_property          = "template" ":" ws reference
-                                    / "templateOptions" ":" ws (array_of_string_like_value / string_like_value)
-                                    / "cssClasses" ":" ws array_of_string_like_value
+                                    / "templateOptions" ":" ws one_or_more_string_like_values
+                                    / "cssClasses" ":" ws one_or_more_string_like_values
                                     / "icon" ":" ws string_like_value
                                     / "renderComponents" ":" ws ( "aboveContent" / "belowContent" ) 
 

@@ -86,16 +86,12 @@ class RegionVisitor:
     def visit_region_appearance_property(self, node, visited_children):
         v = visited_children[0]
         match v[0].text:
-            case 'template':
+            case 'template' | 'templateOptions' | 'cssClasses' | 'icon':
                 return (v[0].text, v[3])
-            case 'templateOptions':
-                return (v[0].text, v[3][0])
-            case 'reloadOnSubmit' | 'duplicateSubmissionUrl':
+            case 'renderComponents':
                 return (v[0].text, v[3][0].text)
-            case 'enableMetaTags' | 'enableDuplicatePageSubmissions':
-                return (v[0].text, v[3])
             case _: # pragma: no cover
-                raise RuleNotImplemented()
+                raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")
 
     def visit_region_image(self, node, visited_children):
         parts = visited_children[5]

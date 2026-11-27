@@ -19,6 +19,28 @@ def test_region_1(apex_parser):
     assert isinstance(r, Region)
 
 
+
+def test_region_appearance(apex_parser):
+    r = apex_parser.parse(
+"""region (
+        appearance {
+            template: @/hero
+            templateOptions: #DEFAULT#
+            cssClasses: t-HeroRegion--featured
+            icon: fa-home
+            renderComponents: aboveContent
+        }
+    )
+""")
+
+    assert isinstance(r, Region)
+    assert r.appearance.template == '@/hero'
+    assert r.appearance.templateOptions == [ '#DEFAULT#' ]
+    assert r.appearance.cssClasses == [ 't-HeroRegion--featured' ]
+    assert r.appearance.icon == 'fa-home'
+    assert r.appearance.renderComponents == 'aboveContent'
+
+
 def test_region_settings(apex_parser):
     r = apex_parser.parse(
 """region A (
