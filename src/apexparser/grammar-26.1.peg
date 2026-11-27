@@ -490,6 +490,7 @@ region_child_component              = facet
                                     / series
                                     / axis
                                     / saved_report_a
+                                    / filter_c
 page_item                           = indent "pageItem" (required_ws component_id)? ws "(" line_end page_item_body_line* indent ")" line_end
 page_item_body_line                 = page_item_direct_property_line
                                     / page_item_group_block

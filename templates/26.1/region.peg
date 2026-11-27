@@ -365,3 +365,4 @@ region_child_component              = facet
                                     / series
                                     / axis
                                     / saved_report_a
+                                    / filter_c
