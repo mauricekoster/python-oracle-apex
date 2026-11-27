@@ -387,6 +387,22 @@ class RegionEntityTitle(ApexGroup):
     def plural(self):
         return self.properties.get('plural', None)
     
+
+class RegionPage(ApexGroup):
+    @property
+    def borderWidth(self):
+        return self.properties.get('borderWidth', None)
+    
+    @property
+    def borderColor(self):
+        return self.properties.get('borderColor', None)
+
+
+class RegionPageHeader(ApexGroup):
+    @property
+    def pageHeaderText(self):
+        return self.properties.get('pageHeaderText', None)
+    
     
 
 
@@ -494,6 +510,14 @@ class Region(ApexObject):
     @property
     def download(self) -> RegionDownload:
         return self.groups.get('download', None)
+    
+    @property
+    def page(self) -> RegionPage:
+        return self.groups.get('page', None)
+    
+    @property
+    def pageHeader(self) -> RegionPageHeader:
+        return self.groups.get('pageHeader', None)
     
     
     # child

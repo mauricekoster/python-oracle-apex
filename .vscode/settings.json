@@ -90,6 +90,39 @@
           // replace all matches
           "command": "editor.action.replaceAll"
         },
+        {
+          "command": "editor.actions.findWithArgs",
+          "args": {
+            "searchString": "<number>", 
+            "replaceString": "number",
+          }
+        },
+        { // run this second 
+          // replace all matches
+          "command": "editor.action.replaceAll"
+        },
+        {
+          "command": "editor.actions.findWithArgs",
+          "args": {
+            "searchString": "<multiline-string>", 
+            "replaceString": "code_block",
+          }
+        },
+        { // run this second 
+          // replace all matches
+          "command": "editor.action.replaceAll"
+        },
+        {
+          "command": "editor.actions.findWithArgs",
+          "args": {
+            "searchString": " \\| ", 
+            "replaceString": " / ",
+          }
+        },
+        { // run this second 
+          // replace all matches
+          "command": "editor.action.replaceAll"
+        },
         { // run this third
           // close search widget 
           "command": "closeFindWidget"

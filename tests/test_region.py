@@ -526,3 +526,35 @@ def test_region_download(apex_parser):
 
     assert isinstance(r, Region)
     assert r.download.formats == ['csv', 'html']
+
+
+def test_region_page(apex_parser):
+    r = apex_parser.parse(
+"""region A (
+        page {
+            borderWidth: 0.5
+            borderColor: #666666
+        }
+    )
+""")
+
+# TODO: page
+
+    assert isinstance(r, Region)
+    assert r.page.borderWidth == 0.5
+    assert r.page.borderColor == '#666666'
+
+
+def test_region_page_header(apex_parser):
+    r = apex_parser.parse(
+"""region A (
+        pageHeader {
+            pageHeaderText: Region Performance
+        }
+    )
+""")
+
+# TODO: pageHeader
+
+    assert isinstance(r, Region)
+    assert r.pageHeader.pageHeaderText == 'Region Performance'

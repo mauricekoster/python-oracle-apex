@@ -28,6 +28,8 @@ region_group_block                  = region_accessibility
                                     / region_layout
                                     / region_legend
                                     / region_messages
+                                    / region_page
+                                    / region_page_header
                                     / region_pagination
                                     / region_performance
                                     / region_plugin_avatar
@@ -320,6 +322,26 @@ region_download_property             = "authorization" ":" ws reference
                                      / "filename" ":" ws string_like_value
                                      / "supplementalText" ":" ws code_block
                                      / "linkText" ":" ws string_like_value
+
+region_page                      = indent "page" ws "{" line_end region_page_property_line* indent "}" line_end
+region_page_property_line        = indent region_page_property line_end
+region_page_property             = "size" ":" ws ( "letter" / "legal" / "tabloid" / "a4" / "a3" / "custom" ) 
+                                 / "orientation" ":" ws ( "portrait" / "landscape" ) 
+                                 / "units" ":" ws ( "inches" / "millimeters" / "centimeters" / "points" ) 
+                                 / "width" ":" ws number 
+                                 / "height" ":" ws number 
+                                 / "borderWidth" ":" ws number 
+                                 / "borderColor" ":" ws string_like_value 
+
+
+region_page_header                      = indent "pageHeader" ws "{" line_end region_page_header_property_line* indent "}" line_end
+region_page_header_property_line        = indent region_page_header_property line_end
+region_page_header_property             = "font" ":" ws ( "helvetica" / "times" / "courier" ) 
+                                        / "fontWeight" ":" ws ( "normal" / "bold" ) 
+                                        / "fontSize" ":" ws number 
+                                        / "fontColor" ":" ws string_like_value 
+                                        / "alignment" ":" ws ( "start" / "center" / "end" ) 
+                                        / "pageHeaderText" ":" ws code_block 
 
 
 region_child_component              = facet
