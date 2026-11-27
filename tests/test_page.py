@@ -176,3 +176,39 @@ def test_page_javascript(apex_parser):
     assert p.javaScript.executeWhenPageLoads == '```js\nsome code\n```'
     assert p.javaScript.functionAndGlobalVariableDeclaration == 'var htmldb_delete_message = \'"DELETE_CONFIRM_MSG"\';'
     assert p.javaScript.includeStandardJavaScriptAndCss == True
+
+
+
+def test_page_dialog(apex_parser):
+    p : Page = apex_parser.parse(
+    """page A (
+        name: Hallo
+        dialog {
+            width: 100px
+            height: 200px
+            maxWidth: 800px
+            resizable: false
+            attributes: [
+              A
+              B
+              C
+            ]
+            cssClasses: [
+              G
+              H
+              I
+            ]
+            chained: true
+        }
+    )
+""")
+
+    assert isinstance(p, Page)
+    assert p.dialog.width == '100px'
+    assert p.dialog.height == '200px'
+    assert p.dialog.maxWidth == '800px'
+    assert p.dialog.resizable == False
+    assert p.dialog.attributes == [ 'A', 'B', 'C' ]
+    assert p.dialog.cssClasses == [ 'G', 'H', 'I' ]
+    assert p.dialog.chained == True
+

@@ -156,6 +156,7 @@ from .page import (
     PageAdvanced, 
     PageAppearance, 
     PageCss, 
+    PageDialog,
     PageHelp, 
     PageHtmlHeader,
     PageJavaScript,

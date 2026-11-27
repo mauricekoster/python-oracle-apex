@@ -37,6 +37,7 @@ page_direct_property                = "page" ":" ws number
 page_group_block                    = page_appearance
                                     / page_advanced
                                     / page_css
+                                    / page_dialog
                                     / page_help
                                     / page_html_header
                                     / page_javascript
@@ -96,6 +97,16 @@ page_javascript_property             = "fileUrls" ":" ws array_of_string_like_va
                                      / "functionAndGlobalVariableDeclaration" ":" ws code_block
                                      / "executeWhenPageLoads" ":" ws code_block
                                      / "includeStandardJavaScriptAndCss" ":" ws boolean
+
+page_dialog                      = indent "dialog" ws "{" line_end page_dialog_property_line* indent "}" line_end
+page_dialog_property_line        = indent page_dialog_property line_end
+page_dialog_property             =  "width" ":" ws string_like_value 
+                                 / "height" ":" ws string_like_value 
+                                 / "maxWidth" ":" ws string_like_value 
+                                 / "attributes" ":" ws array_of_string_like_value 
+                                 / "cssClasses" ":" ws array_of_string_like_value 
+                                 / "chained" ":" ws boolean 
+                                 / "resizable" ":" ws boolean 
 
 
 page_child_component                = region

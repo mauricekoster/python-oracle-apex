@@ -116,6 +116,40 @@ class PageJavaScript(ApexGroup):
         return self.properties.get('includeStandardJavaScriptAndCss', None)
 
 
+class PageDialog(ApexGroup):
+    @property
+    def resizable(self):
+        return self.properties.get('resizable', None)
+    
+    @property
+    def width(self):
+        return self.properties.get('width', None)
+    
+    @property
+    def height(self):
+        return self.properties.get('height', None)
+    
+    @property
+    def maxWidth(self):
+        return self.properties.get('maxWidth', None)
+    
+    @property
+    def resizable(self):
+        return self.properties.get('resizable', None)
+    
+    @property
+    def attributes(self):
+        return self.properties.get('attributes', None)
+    
+    @property
+    def cssClasses(self):
+        return self.properties.get('cssClasses', None)
+    
+    @property
+    def chained(self):
+        return self.properties.get('chained', None)
+    
+
 class Page(ApexObject):
     def __init__(self, component_id=None, initial_data={}):
         super().__init__(component_id, initial_data)
@@ -171,7 +205,11 @@ class Page(ApexObject):
     def javaScript(self) -> PageJavaScript:
         return self.groups.get('javaScript', None)
     
+    @property
+    def dialog(self) -> PageDialog:
+        return self.groups.get('dialog', None)
     
+        
     
 
     # Children
