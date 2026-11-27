@@ -493,6 +493,7 @@ page_item_group_block               = page_item_label
                                     / page_item_validation
                                     / page_item_advanced
                                     / page_item_security
+                                    / page_item_server_side_condition
                                     / page_item_session_state
                                     / page_item_lov
                                     / page_item_default
@@ -626,6 +627,24 @@ page_item_source_property             = "formRegion" ":" ws reference
                                       / "preference" ":" ws string_like_value
                                       / "used" ":" ws ( "always" / "onlyWhenSessionStateIsNull" )
                                       / "postCalculationComputation" ":" ws code_block
+
+page_item_server_side_condition                      = indent "serverSideCondition" ws "{" line_end page_item_server_side_condition_property_line* indent "}" line_end
+page_item_server_side_condition_property_line        = indent page_item_server_side_condition_property line_end
+page_item_server_side_condition_property             = "type" ":" ws string_like_value 
+                                                     / "sqlQuery" ":" ws code_block 
+                                                     / "language" ":" ws ( "sql" / "plsql" / "javaScript-mle" ) 
+                                                     / "sqlExpression" ":" ws code_block 
+                                                     / "plsqlExpression" ":" ws code_block 
+                                                     / "javaScriptExpression" ":" ws code_block 
+                                                     / "plsqlFunctionBody" ":" ws code_block 
+                                                     / "javaScriptFunctionBody" ":" ws code_block 
+                                                     / "value" ":" ws string_like_value 
+                                                     / "item" ":" ws string_like_value 
+                                                     / "preference" ":" ws string_like_value 
+                                                     / "page" ":" ws number 
+                                                     / "pages" ":" ws array_of_number 
+                                                     / "text" ":" ws string_like_value 
+                                                     / "list" ":" ws array_of_string_like_value 
 button                              = indent "button" (required_ws component_id)? ws "(" line_end button_body_line* indent ")" line_end
 button_body_line                    = button_direct_property_line
                                     / button_group_block

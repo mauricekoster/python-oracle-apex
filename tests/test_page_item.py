@@ -196,3 +196,21 @@ def test_page_item_settings(apex_parser):
     assert p.settings.numberAlignment == 'end'
     assert p.settings.virtualKeyboard == 'text'
 
+
+def test_page_item_server_side_condition(apex_parser):
+    p = apex_parser.parse(
+"""pageItem A (
+        serverSideCondition {
+            type: rowsReturned
+            sqlQuery:
+                ```sql
+                ```
+        }
+    )
+""")
+
+
+    assert isinstance(p, PageItem)  
+    assert p.serverSideCondition.type == 'rowsReturned'
+    assert p.serverSideCondition.sqlQuery == '```sql\n```'
+

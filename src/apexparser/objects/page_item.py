@@ -160,7 +160,15 @@ class PageItemDefault(ApexGroup):
     def sqlQuerySingleValue(self):
         return self.properties.get('sqlQuerySingleValue', None)
     
+
+class PageItemServerSideCondition(ApexGroup):
+    @property
+    def type(self):
+        return self.properties.get('type', None)
     
+    @property
+    def sqlQuery(self):
+        return self.properties.get('sqlQuery', None)
 
 
 class PageItem(ApexObject):
@@ -205,5 +213,10 @@ class PageItem(ApexObject):
     @property
     def settings(self) -> PageItemSettings:
         return self.groups.get('settings', None)
+
+    @property
+    def serverSideCondition(self) -> PageItemServerSideCondition:
+        return self.groups.get('serverSideCondition', None)
+    
     
     

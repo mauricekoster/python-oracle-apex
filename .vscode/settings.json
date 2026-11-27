@@ -104,6 +104,17 @@
         {
           "command": "editor.actions.findWithArgs",
           "args": {
+            "searchString": "<array-of-number>", 
+            "replaceString": "array_of_number",
+          }
+        },
+        { // run this second 
+          // replace all matches
+          "command": "editor.action.replaceAll"
+        },
+        {
+          "command": "editor.actions.findWithArgs",
+          "args": {
             "searchString": "<multiline-string>", 
             "replaceString": "code_block",
           }
