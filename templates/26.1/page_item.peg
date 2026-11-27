@@ -30,6 +30,11 @@ page_item_settings_property_line    = indent page_item_settings_property line_en
 page_item_settings_property         = "trimSpaces" ":" ws ( "none" / "something-else" )
                                     / "showControls" ":" ws string_like_value
                                     / "valueProtected" ":" ws boolean
+                                    # NumberField
+                                    / "minValue" ":" ws number
+                                    / "maxValue" ":" ws number
+                                    / "numberAlignment" ":" ws ( "start" / "center" / "end" )
+                                    / "virtualKeyboard" ":" ws ( "decimal" / "numeric" / "text" )
 
 
 page_item_layout                    = indent "layout" ws "{" line_end page_item_layout_property_line* indent "}" line_end

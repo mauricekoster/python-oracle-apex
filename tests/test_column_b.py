@@ -157,3 +157,21 @@ def test_column_b_column_formatting(apex_parser):
     assert c.variant == 'column_b'
 
     assert c.columnFormatting.htmlExpression == '#SALES_TREND_PERCENTAGE#%'
+
+def test_column_b_security(apex_parser):
+    c: Column = apex_parser.parse(
+"""column A (
+        variant: column_b
+        type: plainText
+        security {
+            authorizationScheme: @https
+            escapeSpecialChars: true
+        }
+    )
+""")
+
+    assert isinstance(c, Column)
+    assert c.variant == 'column_b'
+
+    assert c.security.authorizationScheme == '@https'
+    assert c.security.escapeSpecialChars == True

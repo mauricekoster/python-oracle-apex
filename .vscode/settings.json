@@ -79,6 +79,17 @@
           // replace all matches
           "command": "editor.action.replaceAll"
         },
+        {
+          "command": "editor.actions.findWithArgs",
+          "args": {
+            "searchString": "<reference>", 
+            "replaceString": "reference",
+          }
+        },
+        { // run this second 
+          // replace all matches
+          "command": "editor.action.replaceAll"
+        },
         { // run this third
           // close search widget 
           "command": "closeFindWidget"

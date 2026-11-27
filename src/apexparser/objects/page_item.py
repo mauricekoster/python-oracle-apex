@@ -26,7 +26,23 @@ class PageItemSettings(ApexGroup):
     def valueProtected(self):
         return self.properties.get('valueProtected', None)
     
-        
+    @property
+    def minValue(self):
+        return self.properties.get('minValue', None)
+    
+    @property
+    def maxValue(self):
+        return self.properties.get('maxValue', None)
+    
+    @property
+    def numberAlignment(self):
+        return self.properties.get('numberAlignment', None)
+    
+    @property
+    def virtualKeyboard(self):
+        return self.properties.get('virtualKeyboard', None)
+    
+    
     
 class PageItemLayout(ApexGroup):
     @property

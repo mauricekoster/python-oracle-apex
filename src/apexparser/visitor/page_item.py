@@ -82,12 +82,12 @@ class PageItemVisitor:
     def visit_page_item_settings_property(self, node, visited_children):
         v = visited_children[0]
         match v[0].text:
-            case 'showControls' | 'valueProtected':
+            case 'showControls' | 'valueProtected' | 'minValue' | 'maxValue':
                 return (v[0].text, v[3])
-            case 'trimSpaces':
+            case 'trimSpaces' | 'numberAlignment' | 'virtualKeyboard':
                 return (v[0].text, v[3][0].text)
             case _: # pragma: no cover
-                raise RuleNotImplemented()
+                raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")
 
     def visit_page_item_session_state(self, node, visited_children):
         parts = visited_children[5]

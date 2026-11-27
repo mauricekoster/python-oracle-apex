@@ -178,6 +178,10 @@ def test_page_item_settings(apex_parser):
             trimSpaces: none
             showControls: movingOnly
             valueProtected: true
+            minValue: 0
+            maxValue: 100
+            numberAlignment: end
+            virtualKeyboard: text
         }
     )
 """)
@@ -187,4 +191,8 @@ def test_page_item_settings(apex_parser):
     assert p.settings.trimSpaces == 'none'
     assert p.settings.showControls == 'movingOnly'
     assert p.settings.valueProtected == True
+    assert p.settings.minValue == 0
+    assert p.settings.maxValue == 100
+    assert p.settings.numberAlignment == 'end'
+    assert p.settings.virtualKeyboard == 'text'
 

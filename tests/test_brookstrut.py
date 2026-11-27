@@ -39,15 +39,15 @@ def test_page_p00009(apex_parser):
 
 def test_page_p00011(apex_parser):
     p = apex_parser.parse_file("examples/brookstrut/pages/p00011-products.apx")
-    assert p.name == "Administration"
+    assert p.name == "Products"
 
 def test_page_p00012(apex_parser):
     p = apex_parser.parse_file("examples/brookstrut/pages/p00012-product.apx")
-    assert p.name == "Administration"
+    assert p.name == "Product"
 
 def test_page_p00013(apex_parser):
     p = apex_parser.parse_file("examples/brookstrut/pages/p00013-sales-history-classic.apx")
-    assert p.name == "Administration"
+    assert p.name == "Sales History Classic"
 
 def test_page_p00014(apex_parser):
     p = apex_parser.parse_file("examples/brookstrut/pages/p00014-about.apx")

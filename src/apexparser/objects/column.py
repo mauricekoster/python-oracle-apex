@@ -159,6 +159,16 @@ class ColumnColumnFormatting(ApexGroup):
     def htmlExpression(self):
         return self.properties.get('htmlExpression', None)
     
+
+class ColumnSecurity(ApexGroup):
+    @property
+    def authorizationScheme(self):
+        return self.properties.get('authorizationScheme', None)
+    
+    @property
+    def escapeSpecialChars(self):
+        return self.properties.get('escapeSpecialChars', None)
+    
     
 class Column(ApexObject):
     
@@ -221,5 +231,9 @@ class Column(ApexObject):
     @property
     def columnFormatting(self) -> ColumnColumnFormatting:
         return self.groups.get('columnFormatting', None)
+    
+    @property
+    def security(self) -> ColumnSecurity:
+        return self.groups.get('security', None)
     
     

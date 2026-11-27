@@ -482,6 +482,11 @@ page_item_settings_property_line    = indent page_item_settings_property line_en
 page_item_settings_property         = "trimSpaces" ":" ws ( "none" / "something-else" )
                                     / "showControls" ":" ws string_like_value
                                     / "valueProtected" ":" ws boolean
+                                    # NumberField
+                                    / "minValue" ":" ws number
+                                    / "maxValue" ":" ws number
+                                    / "numberAlignment" ":" ws ( "start" / "center" / "end" )
+                                    / "virtualKeyboard" ":" ws ( "decimal" / "numeric" / "text" )
 
 
 page_item_layout                    = indent "layout" ws "{" line_end page_item_layout_property_line* indent "}" line_end
@@ -989,6 +994,8 @@ column_b_body_line              = column_b_direct_property_line
 column_b_direct_property_line   = indent column_b_direct_property line_end
 column_b_direct_property        = "columnName" ":" ws string_like_value
                                 / "type" ":" ws string_like_value
+                                # Test purpose:
+                                / "variant" ":" ws "column_b"
 
 column_b_group_block            = column_b_advanced
                                 / column_b_appearance
@@ -996,6 +1003,7 @@ column_b_group_block            = column_b_advanced
                                 / column_b_heading
                                 / column_b_layout
                                 / column_b_link
+                                / column_b_security
                                 / column_b_source
 
 column_b_layout                 = indent "layout" ws "{" line_end column_b_layout_property_line* indent "}" line_end
@@ -1043,6 +1051,12 @@ column_b_link_property             = "target" ":" ws value
 column_b_column_formatting                      = indent "columnFormatting" ws "{" line_end column_b_column_formatting_property_line* indent "}" line_end
 column_b_column_formatting_property_line        = indent column_b_column_formatting_property line_end
 column_b_column_formatting_property             = "htmlExpression" ":" ws code_block
+
+column_b_security                      = indent "security" ws "{" line_end column_b_security_property_line* indent "}" line_end
+column_b_security_property_line        = indent column_b_security_property line_end
+column_b_security_property             = "authorizationScheme" ":" ws reference 
+                                       / "escapeSpecialChars" ":" ws boolean
+
 
 # column_b_child_component        = action_f
 
