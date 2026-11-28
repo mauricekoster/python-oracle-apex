@@ -116,6 +116,29 @@ class ColumnVisitor:
             case _: # pragma: no cover
                 raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")
 
+    def visit_column_export_printing(self, node, visited_children):
+        parts = visited_children[5]
+        d = {}
+        for item in parts:
+            if type(item) is tuple:
+                d[item[0]] = item[1]
+            else: # pragma: no cover
+                raise RuleNotImplemented()
+        return ('exportPrinting', ColumnExportPrinting(d))
+    
+    def visit_column_export_printing_property_line(self, node, visited_children):
+        return visited_children[1]
+    
+    def visit_column_export_printing_property(self, node, visited_children):
+        v = visited_children[0]
+        match v[0].text:
+            case 'includeInExportPrint' | 'printWidth':
+                return (v[0].text, v[3])
+            #case '':
+            #    return (v[0].text, v[3][0].text)
+            case _: # pragma: no cover
+                raise RuleNotImplemented(f"rule: {node.expr_name}   text: '{node.text}'")
+
     def visit_column_heading(self, node, visited_children):
         parts = visited_children[5]
         d = {}

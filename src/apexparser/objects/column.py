@@ -156,7 +156,17 @@ class ColumnAdvanced(ApexGroup):
     def cellWidth(self):
         return self.properties.get('cellWidth', None)
     
-        
+
+class ColumnExportPrinting(ApexGroup):
+    @property
+    def includeInExportPrint(self):
+        return self.properties.get('includeInExportPrint', None)
+    
+    @property
+    def printWidth(self):
+        return self.properties.get('printWidth', None)
+    
+    
 class ColumnLink(ApexGroup):
     @property
     def target(self):
@@ -253,4 +263,9 @@ class Column(ApexObject):
     def security(self) -> ColumnSecurity:
         return self.groups.get('security', None)
     
+    @property
+    def exportPrinting(self) -> ColumnExportPrinting:
+        return self.groups.get('exportPrinting', None)
     
+
+    # Child

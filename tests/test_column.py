@@ -87,6 +87,23 @@ def test_column_appearance(apex_parser):
     assert c.appearance.group == True
 
 
+
+def test_column_column_export_printing(apex_parser):
+    c: Column = apex_parser.parse(
+"""column A (
+        type: plainText
+        exportPrinting {
+            includeInExportPrint: false
+            printWidth: 100%
+        }
+    )
+""")
+
+    assert isinstance(c, Column)
+    assert c.exportPrinting.includeInExportPrint == False
+    assert c.exportPrinting.printWidth == '100%'
+
+
 def test_column_column_formatting(apex_parser):
     c: Column = apex_parser.parse(
 """column A (

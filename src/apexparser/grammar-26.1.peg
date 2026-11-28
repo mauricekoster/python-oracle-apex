@@ -1034,7 +1034,10 @@ column                        = indent "column" (required_ws component_id)? ws "
 column_body_line              = column_direct_property_line
                                 / column_group_block
                                 / blank_lines
-                                #/ columnhild_component
+                                / column_child_component
+
+column_child_component        = action
+
 
 column_direct_property_line   = indent column_direct_property line_end
 column_direct_property        = "name" ":" ws string_like_value
@@ -1046,6 +1049,7 @@ column_direct_property        = "name" ":" ws string_like_value
 column_group_block            = column_advanced
                                 / column_appearance
                                 / column_column_formatting
+                                / column_export_printing
                                 / column_heading
                                 / column_layout
                                 / column_link
@@ -1087,6 +1091,10 @@ column_heading_property             = "heading" ":" ws string_like_value
                                          / "alternativeLabel" ":" ws string_like_value
                                          / "alignment" ":" ws ( "start" / "center" / "end" )
 
+column_export_printing                      = indent "exportPrinting" ws "{" line_end column_export_printing_property_line* indent "}" line_end
+column_export_printing_property_line        = indent column_export_printing_property line_end
+column_export_printing_property             = "includeInExportPrint" ":" ws boolean 
+                                            / "printWidth" ":" ws string_like_value 
 
 
 column_layout                 = indent "layout" ws "{" line_end column_layout_property_line* indent "}" line_end
@@ -1123,7 +1131,6 @@ column_source_property        = "primaryKey" ":" ws boolean
                                 / "databaseColumn" ":" ws string_like_value
                                 / "sqlExpression" ":" ws code_block
 
-# column_child_component        = action_f
 
 branch               = indent "branch" (required_ws component_id)? ws "(" line_end branch_body_line* indent ")" line_end
 branch_body_line     = branch_direct_property_line
