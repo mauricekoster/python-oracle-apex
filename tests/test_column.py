@@ -88,20 +88,21 @@ def test_column_appearance(apex_parser):
 
 
 
-def test_column_column_export_printing(apex_parser):
+
+
+def test_column_column_filter(apex_parser):
     c: Column = apex_parser.parse(
 """column A (
         type: plainText
-        exportPrinting {
-            includeInExportPrint: false
-            printWidth: 100%
+        columnFilter {
+            lovType: none
         }
     )
 """)
 
     assert isinstance(c, Column)
-    assert c.exportPrinting.includeInExportPrint == False
-    assert c.exportPrinting.printWidth == '100%'
+    assert c.columnFilter.lovType == 'none'
+
 
 
 def test_column_column_formatting(apex_parser):
@@ -116,6 +117,22 @@ def test_column_column_formatting(apex_parser):
 
     assert isinstance(c, Column)
     assert c.columnFormatting.htmlExpression == '#SALES_TREND_PERCENTAGE#%'
+
+
+def test_column_export_printing(apex_parser):
+    c: Column = apex_parser.parse(
+"""column A (
+        type: plainText
+        exportPrinting {
+            includeInExportPrint: false
+            printWidth: 100%
+        }
+    )
+""")
+
+    assert isinstance(c, Column)
+    assert c.exportPrinting.includeInExportPrint == False
+    assert c.exportPrinting.printWidth == '100%'
 
 
 def test_column_heading(apex_parser):

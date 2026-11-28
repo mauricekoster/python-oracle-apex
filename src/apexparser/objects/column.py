@@ -165,7 +165,15 @@ class ColumnExportPrinting(ApexGroup):
     @property
     def printWidth(self):
         return self.properties.get('printWidth', None)
+
+
+class ColumnColumnFilter(ApexGroup):
+    @property
+    def lovType(self):
+        return self.properties.get('lovType', None)
     
+    
+
     
 class ColumnLink(ApexGroup):
     @property
@@ -258,6 +266,10 @@ class Column(ApexObject):
     @property
     def columnFormatting(self) -> ColumnColumnFormatting:
         return self.groups.get('columnFormatting', None)
+
+    @property
+    def columnFilter(self) -> ColumnColumnFilter:
+        return self.groups.get('columnFilter', None)
     
     @property
     def security(self) -> ColumnSecurity:

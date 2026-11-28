@@ -16,6 +16,7 @@ column_direct_property        = "name" ":" ws string_like_value
 
 column_group_block            = column_advanced
                                 / column_appearance
+                                / column_column_filter
                                 / column_column_formatting
                                 / column_export_printing
                                 / column_heading
@@ -47,6 +48,23 @@ column_appearance_property    = "cssClasses" ":" ws one_or_more_string_like_valu
                                 / "height" ":" ws number
                                 / "template" ":" ws reference
                                 / "group" ":" ws boolean
+
+column_column_filter                      = indent "columnFilter" ws "{" line_end column_column_filter_property_line* indent "}" line_end
+column_column_filter_property_line        = indent column_column_filter_property line_end
+column_column_filter_property             = "enabled" ":" ws boolean 
+                                          / "performanceImpactingOperators" ":" ws array_of_string_like_value 
+                                          / "textCase" ":" ws ( "upper" / "lower" / "mixed" ) 
+                                          / "lovType" ":" ws ( "none" / "distinctColumn" / "sqlQuery" / "sharedComponent" / "staticValues" / "functionBody" / "useLov" ) 
+                                          / "dateRanges" ":" ws ( "all" / "past" / "future" ) 
+                                          / "sqlQuery" ":" ws code_block 
+                                          / "namedLov" ":" ws reference 
+                                          / "staticValues" ":" ws code_block 
+                                          / "language" ":" ws ( "plsql" / "javaScript-mle" ) 
+                                          / "plsqlFunctionBody" ":" ws code_block 
+                                          / "javaScriptFunctionBody" ":" ws code_block 
+                                          / "exactMatch" ":" ws boolean 
+                                          / "type" ":" ws ( "none" / "defaultBasedOnColumnType" / "definedLovExactMatch" / "definedLovWordContains" / "namedLovExactMatch" / "namedLovWordContains" ) 
+                                   
 
 column_column_formatting                      = indent "columnFormatting" ws "{" line_end column_column_formatting_property_line* indent "}" line_end
 column_column_formatting_property_line        = indent column_column_formatting_property line_end
