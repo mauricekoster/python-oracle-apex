@@ -1,6 +1,7 @@
 action                            = indent "action" (required_ws component_id)? ws "(" line_end action_body_line* indent ")" line_end
 action_body_line                  = action_direct_property_line
                                     / action_group_block
+                                    / action_child_component
                                     / blank_lines
 
 action_direct_property_line       = indent action_direct_property line_end
