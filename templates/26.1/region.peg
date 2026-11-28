@@ -366,12 +366,9 @@ region_toolbar_property             = "show" ":" ws boolean
 
 
 region_child_component              = facet
-                                    / action_d
-                                    / action_e
-                                    / column_b
-                                    / column_c
-                                    / column_f
+                                    / action
+                                    / column
                                     / series
                                     / axis
-                                    / saved_report_a
-                                    / filter_c
+                                    / saved_report
+                                    / filter

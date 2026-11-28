@@ -1,0 +1,50 @@
+filter               = indent "filter" (required_ws component_id)? ws "(" line_end filter_body_line* indent ")" line_end
+filter_body_line     = filter_direct_property_line
+                       / filter_group_block
+                       / blank_lines
+
+filter_direct_property_line     = indent filter_direct_property line_end 
+filter_direct_property          = "name" ":" ws string_like_value 
+                                  / "type" ":" ws string_like_value 
+                                  # Test purpose
+                                  / "variant" ":" ws "filter"
+
+filter_group_block              = filter_label
+                                  / filter_lov
+                                  / filter_layout
+                                  / filter_suggestions
+                                  / filter_source
+
+filter_label                      = indent "label" ws "{" line_end filter_label_property_line* indent "}" line_end
+filter_label_property_line        = indent filter_label_property line_end
+filter_label_property             = "label" ":" ws string_like_value
+
+filter_lov                      = indent "lov" ws "{" line_end filter_lov_property_line* indent "}" line_end
+filter_lov_property_line        = indent filter_lov_property line_end
+filter_lov_property             = "type" ":" ws string_like_value 
+                                  / "lov" ":" ws reference 
+                                  / "sqlQuery" ":" ws code_block 
+                                  / "staticValues" ":" ws code_block 
+                                  / "language" ":" ws ( "plsql" / "javaScript-mle" ) 
+                                  / "plsqlFunctionBody" ":" ws code_block 
+                                  / "javaScriptFunctionBody" ":" ws code_block 
+                                  / "sortDirection" ":" ws ( "asc" / "desc" ) 
+                                  / "includeNullOption" ":" ws boolean 
+                                  / "nullDisplayValue" ":" ws string_like_value 
+
+filter_layout                      = indent "layout" ws "{" line_end filter_layout_property_line* indent "}" line_end
+filter_layout_property_line        = indent filter_layout_property line_end
+filter_layout_property             = "sequence" ":" ws number
+
+filter_suggestions                      = indent "suggestions" ws "{" line_end filter_suggestions_property_line* indent "}" line_end
+filter_suggestions_property_line        = indent filter_suggestions_property line_end
+filter_suggestions_property             = "type" ":" ws ( "dynamic" / "staticValues" / "sqlQuery" ) 
+                                          / "staticValues" ":" ws array_of_string_like_value 
+                                          / "sqlQuery" ":" ws code_block 
+                                          / "showLabel" ":" ws boolean 
+
+filter_source                      = indent "source" ws "{" line_end filter_source_property_line* indent "}" line_end
+filter_source_property_line        = indent filter_source_property line_end
+filter_source_property             = "databaseColumn" ":" ws string_like_value 
+                                     / "dbColumns" ":" ws string_like_value 
+                                     / "dataType" ":" ws ( "varchar2" / "number" / "date" / "timestamp" / "timestampWithTimeZone" / "timestampWithLocalTimeZone" / "intervalYearToMonth" / "intervalDayToSecond" / "clob" / "blob" / "boolean" / "rowid" / "bfile" / "sdoGeometry" ) 

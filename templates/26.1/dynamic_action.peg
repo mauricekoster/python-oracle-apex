@@ -46,4 +46,4 @@ dynamic_action_client_side_condition_property = "type" ":" ws ( "item=value" / "
                                     / "componentType" ":" ws ( "item" / "column" )
                                     / "column" ":" ws string_like_value
 
-dynamic_action_child_component      = action_c
+dynamic_action_child_component      = action

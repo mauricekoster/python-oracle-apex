@@ -1,24 +1,20 @@
 component                           = page_item blank_lines
                                     / dynamic_action blank_lines
-                                    / branch_a  blank_lines
-                                    / action_c  blank_lines
-                                    / action_d blank_lines
-                                    / action_e blank_lines
+                                    / branch  blank_lines
+                                    / action  blank_lines
                                     / process blank_lines
                                     / button blank_lines
-                                    / computation_a blank_lines
+                                    / computation blank_lines
                                     / facet blank_lines
-                                    / column_b blank_lines
-                                    / column_c blank_lines
-                                    / column_f blank_lines
-                                    / filter_c blank_lines
-                                    / saved_report_a blank_lines
-                                    / display_column_a blank_lines
-                                    / aggregate_a blank_lines
-                                    / sort_a blank_lines
-                                    / menu_a blank_lines
+                                    / column blank_lines
+                                    / filter blank_lines
+                                    / saved_report blank_lines
+                                    / display_column blank_lines
+                                    / aggregate blank_lines
+                                    / sort blank_lines
+                                    / menu blank_lines
                                     / series blank_lines
                                     / axis blank_lines
-                                    / validation_b blank_lines
+                                    / validation blank_lines
                                     / region blank_lines
                                     / page_object blank_lines

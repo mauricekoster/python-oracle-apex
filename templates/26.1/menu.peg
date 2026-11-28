@@ -1,0 +1,27 @@
+menu               = indent "menu" (required_ws component_id)? ws "(" line_end menu_body_line* indent ")" line_end
+menu_body_line     = menu_direct_property_line
+                       / menu_group_block
+                       #/ menu_child_component
+                       / blank_lines
+
+menu_direct_property_line     = indent menu_direct_property line_end 
+menu_direct_property          = "type" ":" ws ( "menuEntry" / "subMenu" / "separator" )
+                                / "label" ":" ws string_like_value
+                                / "parentMenu" ":" ws reference
+
+menu_group_block              = menu_layout
+                                / menu_behavior
+
+menu_layout                      = indent "layout" ws "{" line_end menu_layout_property_line* indent "}" line_end
+menu_layout_property_line        = indent menu_layout_property line_end
+menu_layout_property             = "sequence" ":" ws number
+
+
+menu_behavior                      = indent "behavior" ws "{" line_end menu_behavior_property_line* indent "}" line_end
+menu_behavior_property_line        = indent menu_behavior_property line_end
+menu_behavior_property             = "type" ":" ws ( "redirectThisApp" / "redirectOtherApp" / "redirectUrl" / "triggerAction" )
+                                     / "target" ":" ws value
+                                     / "targetUrl" ":" ws string_like_value
+                                     / "linkAttributes" ":" ws string_like_value
+
+#menu_child_component          = trigger_action_a

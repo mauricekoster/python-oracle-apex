@@ -1,0 +1,23 @@
+display_column               = indent "displayColumn" (required_ws component_id)? ws "(" line_end display_column_body_line* indent ")" line_end
+display_column_body_line     = display_column_direct_property_line
+                       / display_column_group_block
+                       / blank_lines
+
+display_column_direct_property_line     = indent display_column_direct_property line_end 
+display_column_direct_property          = "sequence" ":" ws number
+                                          / "column" ":" ws string_like_value
+                                          
+display_column_group_block              = display_column_identification
+                                        / display_column_layout
+
+display_column_identification                      = indent "identification" ws "{" line_end display_column_identification_property_line* indent "}" line_end
+display_column_identification_property_line        = indent display_column_identification_property line_end
+display_column_identification_property             = "column" ":" ws string_like_value
+
+
+display_column_layout                      = indent "layout" ws "{" line_end display_column_layout_property_line* indent "}" line_end
+display_column_layout_property_line        = indent display_column_layout_property line_end
+display_column_layout_property             = "show" ":" ws boolean 
+                                             / "frozen" ":" ws boolean 
+                                             / "width" ":" ws number 
+                                             / "sequence" ":" ws number 

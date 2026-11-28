@@ -1,25 +1,21 @@
 component                           = page_item blank_lines
                                     / dynamic_action blank_lines
-                                    / branch_a  blank_lines
-                                    / action_c  blank_lines
-                                    / action_d blank_lines
-                                    / action_e blank_lines
+                                    / branch  blank_lines
+                                    / action  blank_lines
                                     / process blank_lines
                                     / button blank_lines
-                                    / computation_a blank_lines
+                                    / computation blank_lines
                                     / facet blank_lines
-                                    / column_b blank_lines
-                                    / column_c blank_lines
-                                    / column_f blank_lines
-                                    / filter_c blank_lines
-                                    / saved_report_a blank_lines
-                                    / display_column_a blank_lines
-                                    / aggregate_a blank_lines
-                                    / sort_a blank_lines
-                                    / menu_a blank_lines
+                                    / column blank_lines
+                                    / filter blank_lines
+                                    / saved_report blank_lines
+                                    / display_column blank_lines
+                                    / aggregate blank_lines
+                                    / sort blank_lines
+                                    / menu blank_lines
                                     / series blank_lines
                                     / axis blank_lines
-                                    / validation_b blank_lines
+                                    / validation blank_lines
                                     / region blank_lines
                                     / page_object blank_lines
 page_object                         = indent "page" (required_ws component_id)? ws "(" page_body_line* indent ")" line_end
@@ -120,9 +116,9 @@ page_child_component                = region
                                     / button
                                     / dynamic_action
                                     / process
-                                    / computation_a
-                                    / branch_a
-                                    / validation_b
+                                    / computation
+                                    / branch
+                                    / validation
 #####
 # REGION
 #####
@@ -491,15 +487,12 @@ region_toolbar_property             = "show" ":" ws boolean
 
 
 region_child_component              = facet
-                                    / action_d
-                                    / action_e
-                                    / column_b
-                                    / column_c
-                                    / column_f
+                                    / action
+                                    / column
                                     / series
                                     / axis
-                                    / saved_report_a
-                                    / filter_c
+                                    / saved_report
+                                    / filter
 page_item                           = indent "pageItem" (required_ws component_id)? ws "(" line_end page_item_body_line* indent ")" line_end
 page_item_body_line                 = page_item_direct_property_line
                                     / page_item_group_block
@@ -827,25 +820,25 @@ process_server_side_condition_property             = "whenButtonPressed" ":" ws 
                                                    / "text" ":" ws string_like_value
                                                    / "list" ":" ws array_of_string_like_value
                                                    / "executeCondition" ":" ws ( "forEachRow" / "once" )
-computation_a                       = indent "computation" (required_ws component_id)? ws "(" line_end computation_a_body_line* indent ")" line_end
-computation_a_body_line             = computation_a_direct_property_line
-                                    / computation_a_group_block
+computation                       = indent "computation" (required_ws component_id)? ws "(" line_end computation_body_line* indent ")" line_end
+computation_body_line             = computation_direct_property_line
+                                    / computation_group_block
                                     / blank_lines
                                     
-computation_a_direct_property_line  = indent computation_a_direct_property line_end
-computation_a_direct_property       = "itemName" ":" ws string_like_value
+computation_direct_property_line  = indent computation_direct_property line_end
+computation_direct_property       = "itemName" ":" ws string_like_value
 
-computation_a_group_block           = computation_a_execution
-                                    / computation_a_computation
+computation_group_block           = computation_execution
+                                    / computation_computation
 
-computation_a_execution             = indent "execution" ws "{" line_end computation_a_execution_property_line* indent "}" line_end
-computation_a_execution_property_line = indent computation_a_execution_property line_end
-computation_a_execution_property    = "sequence" ":" ws number
+computation_execution             = indent "execution" ws "{" line_end computation_execution_property_line* indent "}" line_end
+computation_execution_property_line = indent computation_execution_property line_end
+computation_execution_property    = "sequence" ":" ws number
                                     / "point" ":" ws ( "newSession" / "beforeHeader" / "afterHeader" / "beforeRegions" / "afterRegions" / "beforeFooter" / "afterFooter" / "afterSubmit" )
 
-computation_a_computation           = indent "computation" ws "{" line_end computation_a_computation_property_line* indent "}" line_end
-computation_a_computation_property_line = indent computation_a_computation_property line_end
-computation_a_computation_property  = "type" ":" ws ( "staticValue" / "item" / "sqlQuerySingleValue" / "sqlQueryMultipleValues" / "expression" / "functionBody" / "preference" )
+computation_computation           = indent "computation" ws "{" line_end computation_computation_property_line* indent "}" line_end
+computation_computation_property_line = indent computation_computation_property line_end
+computation_computation_property  = "type" ":" ws ( "staticValue" / "item" / "sqlQuerySingleValue" / "sqlQueryMultipleValues" / "expression" / "functionBody" / "preference" )
                                     / "staticValue" ":" ws string_like_value
                                     / "sqlQuery" ":" ws code_block
                                     / "computationProcessed" ":" ws ( "newSession" / "replaceExisting" / "addToExisting" / "raiseErrorOnReplace" / "replaceNullValues" )
@@ -905,23 +898,32 @@ dynamic_action_client_side_condition_property = "type" ":" ws ( "item=value" / "
                                     / "componentType" ":" ws ( "item" / "column" )
                                     / "column" ":" ws string_like_value
 
-dynamic_action_child_component      = action_c
-action_c                            = indent "action" (required_ws component_id)? ws "(" line_end action_c_body_line* indent ")" line_end
-action_c_body_line                  = action_c_direct_property_line
-                                    / action_c_group_block
+dynamic_action_child_component      = action
+action                            = indent "action" (required_ws component_id)? ws "(" line_end action_body_line* indent ")" line_end
+action_body_line                  = action_direct_property_line
+                                    / action_group_block
                                     / blank_lines
 
-action_c_direct_property_line       = indent action_c_direct_property line_end
-action_c_direct_property            = "name" ":" ws string_like_value
+action_direct_property_line       = indent action_direct_property line_end
+action_direct_property            = "name" ":" ws string_like_value
                                     / "action" ":" ws string_like_value
+                                    / "type" ":" ws ( "button" / "fullCard" / "title" / "subtitle" / "media" ) 
+                                    / "label" ":" ws string_like_value
+                                    / "position" ":" ws string_like_value
+                                    / "template" ":" ws string_like_value
 
-action_c_group_block                = action_c_affected_elements
-                                    / action_c_execution
-                                    / action_c_settings
+action_group_block                = action_affected_elements
+                                    / action_appearance
+                                    / action_behavior
+                                    / action_execution
+                                    / action_layout
+                                    / action_settings
 
-action_c_affected_elements          = indent "affectedElements" ws "{" line_end action_c_affected_elements_property_line* indent "}" line_end
-action_c_affected_elements_property_line = indent action_c_affected_elements_property line_end
-action_c_affected_elements_property = "selectionType" ":" ws string_like_value
+action_child_component            = menu
+
+action_affected_elements          = indent "affectedElements" ws "{" line_end action_affected_elements_property_line* indent "}" line_end
+action_affected_elements_property_line = indent action_affected_elements_property line_end
+action_affected_elements_property = "selectionType" ":" ws string_like_value
                                     / "region" ":" ws reference
                                     / "columns" ":" ws one_or_more_string_like_values
                                     / "button" ":" ws reference
@@ -930,80 +932,45 @@ action_c_affected_elements_property = "selectionType" ":" ws string_like_value
                                     / "jquerySelector" ":" ws string_like_value
                                     / "javaScriptExpression" ":" ws code_block
 
-action_c_execution                  = indent "execution" ws "{" line_end action_c_execution_property_line* indent "}" line_end
-action_c_execution_property_line    = indent action_c_execution_property line_end
-action_c_execution_property         = "sequence" ":" ws number
+action_appearance                  = indent "appearance" ws "{" line_end action_appearance_property_line* indent "}" line_end
+action_appearance_property_line    = indent action_appearance_property line_end
+action_appearance_property         = "displayType" ":" ws ( "text" / "icon" / "textWithIcon" )
+                                    / "icon" ":" ws string_like_value
+                                    / "hot" ":" ws boolean
+                                    / "cssClasses" ":" ws one_or_more_string_like_values
+                                    / "showAsDisabled" ":" ws boolean
+
+action_behavior                   = indent "behavior" ws "{" line_end action_behavior_property_line* indent "}" line_end
+action_behavior_property_line     = indent action_behavior_property line_end
+action_behavior_property          = "type" ":" ws ( "redirectThisApp" / "redirectOtherApp" / "redirectUrl" / "triggerAction" )
+                                    / "target" ":" ws value
+                                    / "targetUrl" ":" ws string_like_value
+                                    / "linkAttributes" ":" ws string_like_value
+
+action_execution                  = indent "execution" ws "{" line_end action_execution_property_line* indent "}" line_end
+action_execution_property_line    = indent action_execution_property line_end
+action_execution_property         = "sequence" ":" ws number
                                     / "event" ":" ws reference
                                     / "fireWhenEventResultIs" ":" ws string_like_value
                                     / "fireOnInit" ":" ws boolean
                                     / "stopExecutionOnError" ":" ws boolean
                                     / "waitForResult" ":" ws boolean
 
+
+action_layout                     = indent "layout" ws "{" line_end action_layout_property_line* indent "}" line_end
+action_layout_property_line       = indent action_layout_property line_end
+action_layout_property            = "position" ":" ws ( "primary" / "secondary" ) 
+                                    / "sequence" ":" ws number
+
+
+
 # This group is undocumented
-action_c_settings                      = indent "settings" ws "{" line_end action_c_settings_property_line* indent "}" line_end
-action_c_settings_property_line        = indent action_c_settings_property line_end
-action_c_settings_property             = "type" ":" ws ( "sqlQuery" / "something-else" )
+action_settings                      = indent "settings" ws "{" line_end action_settings_property_line* indent "}" line_end
+action_settings_property_line        = indent action_settings_property line_end
+action_settings_property             = "type" ":" ws ( "sqlQuery" / "something-else" )
                                        / "sqlQuery" ":" ws code_block
                                        / "plsqlCode" ":" ws code_block
                                        / "itemsToSubmit" ":" ws one_or_more_string_like_values
-action_d                            = indent "action" (required_ws component_id)? ws "(" line_end action_d_body_line* indent ")" line_end
-action_d_body_line                  = action_d_direct_property_line
-                                    / action_d_group_block
-                                    / blank_lines
-
-action_d_direct_property_line       = indent action_d_direct_property line_end
-action_d_direct_property            = "type" ":" ws ( "button" / "fullCard" / "title" / "subtitle" / "media" ) 
-                                    / "label" ":" ws string_like_value
-
-action_d_group_block                = action_d_layout
-                                    / action_d_appearance
-
-action_d_layout                     = indent "layout" ws "{" line_end action_d_layout_property_line* indent "}" line_end
-action_d_layout_property_line       = indent action_d_layout_property line_end
-action_d_layout_property            = "position" ":" ws ( "primary" / "secondary" ) 
-                                    / "sequence" ":" ws number
-
-action_d_appearance                  = indent "appearance" ws "{" line_end action_d_appearance_property_line* indent "}" line_end
-action_d_appearance_property_line    = indent action_d_appearance_property line_end
-action_d_appearance_property         = "displayType" ":" ws ( "text" / "icon" / "textWithIcon" )
-                                    / "icon" ":" ws string_like_value
-                                    / "hot" ":" ws boolean
-                                    / "cssClasses" ":" ws one_or_more_string_like_values
-action_e                            = indent "action" (required_ws component_id)? ws "(" line_end action_e_body_line* indent ")" line_end
-action_e_body_line                  = action_e_direct_property_line
-                                    / action_e_group_block
-                                    / action_e_child_component
-                                    / blank_lines
-
-action_e_direct_property_line       = indent action_e_direct_property line_end
-action_e_direct_property            = "position" ":" ws string_like_value
-                                    / "template" ":" ws string_like_value
-                                    / "label" ":" ws string_like_value
-
-action_e_group_block                = action_e_layout
-                                    / action_e_appearance
-                                    / action_e_behavior
-
-action_e_layout                     = indent "layout" ws "{" line_end action_e_layout_property_line* indent "}" line_end
-action_e_layout_property_line       = indent action_e_layout_property line_end
-action_e_layout_property            = "sequence" ":" ws number
-
-action_e_appearance                 = indent "appearance" ws "{" line_end action_e_appearance_property_line* indent "}" line_end
-action_e_appearance_property_line   = indent action_e_appearance_property line_end
-action_e_appearance_property        = "displayType" ":" ws ( "text" / "icon" / "textWithIcon" )
-                                    / "icon" ":" ws string_like_value
-                                    / "hot" ":" ws boolean
-                                    / "showAsDisabled" ":" ws boolean
-                                    / "cssClasses" ":" ws one_or_more_string_like_values
-
-action_e_behavior                   = indent "behavior" ws "{" line_end action_e_behavior_property_line* indent "}" line_end
-action_e_behavior_property_line     = indent action_e_behavior_property line_end
-action_e_behavior_property          = "type" ":" ws ( "redirectThisApp" / "redirectOtherApp" / "redirectUrl" / "triggerAction" )
-                                    / "target" ":" ws value
-                                    / "targetUrl" ":" ws string_like_value
-                                    / "linkAttributes" ":" ws string_like_value
-
-action_e_child_component            = menu_a
 facet                       = indent "facet" (required_ws component_id)? ws "(" line_end facet_body_line* indent ")" line_end
 facet_body_line             = facet_direct_property_line
                             / facet_group_block
@@ -1062,193 +1029,120 @@ facet_list_entries_property = "computeCounts" ":" ws boolean
                             / "maxDisplayedEntries" ":" ws number
                             / "allowToExclude" ":" ws boolean
                             / "displayFilterInitially" ":" ws boolean
-column_b                        = indent "column" (required_ws component_id)? ws "(" line_end column_b_body_line* indent ")" line_end
-column_b_body_line              = column_b_direct_property_line
-                                / column_b_group_block
+column                        = indent "column" (required_ws component_id)? ws "(" line_end column_body_line* indent ")" line_end
+column_body_line              = column_direct_property_line
+                                / column_group_block
                                 / blank_lines
-                                #/ column_b_child_component
+                                #/ columnhild_component
 
-column_b_direct_property_line   = indent column_b_direct_property line_end
-column_b_direct_property        = "columnName" ":" ws string_like_value
+column_direct_property_line   = indent column_direct_property line_end
+column_direct_property        = "name" ":" ws string_like_value
+                                / "columnName" ":" ws string_like_value
+                                / "reportColumnQueryId" ":" ws string_like_value
+                                / "derivedColumn" ":" ws string_like_value
                                 / "type" ":" ws string_like_value
-                                # Test purpose:
-                                / "variant" ":" ws "column_b"
 
-column_b_group_block            = column_b_advanced
-                                / column_b_appearance
-                                / column_b_column_formatting
-                                / column_b_heading
-                                / column_b_layout
-                                / column_b_link
-                                / column_b_security
-                                / column_b_source
+column_group_block            = column_advanced
+                                / column_appearance
+                                / column_column_formatting
+                                / column_heading
+                                / column_layout
+                                / column_link
+                                / column_security
+                                / column_sorting
+                                / column_source
 
-column_b_layout                 = indent "layout" ws "{" line_end column_b_layout_property_line* indent "}" line_end
-column_b_layout_property_line   = indent column_b_layout_property line_end
-column_b_layout_property        = "sequence" ":" ws number
-                                / "columnAlignment" ":" ws ( "start" / "center" / "end" )
-                                / "group" ":" ws reference
+column_advanced                      = indent "advanced" ws "{" line_end column_advanced_property_line* indent "}" line_end
+column_advanced_property_line        = indent column_advanced_property line_end
+column_advanced_property             = "htmlDomId" ":" ws string_like_value
+                                       / "endUserAlias" ":" ws string_like_value
+                                       / "cssClasses" ":" ws array_of_string_like_value 
+                                       / "customAttributes" ":" ws string_like_value 
+                                       / "cellWidth" ":" ws number 
+                                       / "computeSum" ":" ws boolean 
 
-column_b_appearance             = indent "appearance" ws "{" line_end column_b_appearance_property_line* indent "}" line_end
-column_b_appearance_property_line = indent column_b_appearance_property line_end
-column_b_appearance_property    = "cssClasses" ":" ws one_or_more_string_like_values
+column_appearance             = indent "appearance" ws "{" line_end column_appearance_property_line* indent "}" line_end
+column_appearance_property_line = indent column_appearance_property line_end
+column_appearance_property    = "cssClasses" ":" ws one_or_more_string_like_values
                                 / "formatMask" ":" ws string_like_value
                                 / "backgroundColor" ":" ws string_like_value
                                 / "foregroundColor" ":" ws string_like_value
                                 / "barWidth" ":" ws number
                                 / "viewFileAs" ":" ws ( "attachment" / "inline" )
                                 / "downloadText" ":" ws string_like_value
+                                / "width" ":" ws number
+                                / "height" ":" ws number
+                                / "template" ":" ws reference
+                                / "group" ":" ws boolean
 
-column_b_source                 = indent "source" ws "{" line_end column_b_source_property_line* indent "}" line_end
-column_b_source_property_line   = indent column_b_source_property line_end
-column_b_source_property        = "primaryKey" ":" ws boolean
+column_column_formatting                      = indent "columnFormatting" ws "{" line_end column_column_formatting_property_line* indent "}" line_end
+column_column_formatting_property_line        = indent column_column_formatting_property line_end
+column_column_formatting_property             = "htmlExpression" ":" ws code_block
+
+
+column_heading                      = indent "heading" ws "{" line_end column_heading_property_line* indent "}" line_end
+column_heading_property_line        = indent column_heading_property line_end
+column_heading_property             = "heading" ":" ws string_like_value
+                                         / "alternativeLabel" ":" ws string_like_value
+                                         / "alignment" ":" ws ( "start" / "center" / "end" )
+
+
+
+column_layout                 = indent "layout" ws "{" line_end column_layout_property_line* indent "}" line_end
+column_layout_property_line   = indent column_layout_property line_end
+column_layout_property        = "sequence" ":" ws number
+                                / "columnAlignment" ":" ws ( "start" / "center" / "end" )
+                                / "group" ":" ws reference
+
+column_link                      = indent "link" ws "{" line_end column_link_property_line* indent "}" line_end
+column_link_property_line        = indent column_link_property line_end
+column_link_property             = "target" ":" ws value
+                                   / "linkText" ":" ws string_like_value
+                                   / "linkAttributes" ":" ws string_like_value
+
+column_security                      = indent "security" ws "{" line_end column_security_property_line* indent "}" line_end
+column_security_property_line        = indent column_security_property line_end
+column_security_property             = "authorizationScheme" ":" ws reference 
+                                       / "escapeSpecialChars" ":" ws boolean
+
+column_sorting                      = indent "sorting" ws "{" line_end column_sorting_property_line* indent "}" line_end
+column_sorting_property_line        = indent column_sorting_property line_end
+column_sorting_property             = "defaultSequence" ":" ws ( "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" )
+                                      / "direction" ":" ws ( "desc" ) 
+                                      / "sortable" ":" ws boolean
+
+column_source                 = indent "source" ws "{" line_end column_source_property_line* indent "}" line_end
+column_source_property_line   = indent column_source_property line_end
+column_source_property        = "primaryKey" ":" ws boolean
                                 / "dataType" ":" ws string_like_value
                                 / "availableOnClient" ":" ws boolean
                                 / "valueProtected" ":" ws boolean
                                 / "timezoneAware" ":" ws string_like_value
-
-column_b_heading                      = indent "heading" ws "{" line_end column_b_heading_property_line* indent "}" line_end
-column_b_heading_property_line        = indent column_b_heading_property line_end
-column_b_heading_property             = "heading" ":" ws string_like_value
-                                         / "alternativeLabel" ":" ws string_like_value
-                                         / "alignment" ":" ws ( "start" / "center" / "end" )
-
-column_b_advanced                      = indent "advanced" ws "{" line_end column_b_advanced_property_line* indent "}" line_end
-column_b_advanced_property_line        = indent column_b_advanced_property line_end
-column_b_advanced_property             = "htmlDomId" ":" ws string_like_value
-                                       / "endUserAlias" ":" ws string_like_value
-
-column_b_link                      = indent "link" ws "{" line_end column_b_link_property_line* indent "}" line_end
-column_b_link_property_line        = indent column_b_link_property line_end
-column_b_link_property             = "target" ":" ws value
-                                   / "linkText" ":" ws string_like_value
-                                   / "linkAttributes" ":" ws string_like_value
-
-
-column_b_column_formatting                      = indent "columnFormatting" ws "{" line_end column_b_column_formatting_property_line* indent "}" line_end
-column_b_column_formatting_property_line        = indent column_b_column_formatting_property line_end
-column_b_column_formatting_property             = "htmlExpression" ":" ws code_block
-
-column_b_security                      = indent "security" ws "{" line_end column_b_security_property_line* indent "}" line_end
-column_b_security_property_line        = indent column_b_security_property line_end
-column_b_security_property             = "authorizationScheme" ":" ws reference 
-                                       / "escapeSpecialChars" ":" ws boolean
-
-
-# column_b_child_component        = action_f
-
-column_c                        = indent "column" (required_ws component_id)? ws "(" line_end column_c_body_line* indent ")" line_end
-column_c_body_line              = column_c_direct_property_line
-                                / column_c_group_block
-                                / blank_lines
-                                #/ column_c_child_component
-
-column_c_direct_property_line   = indent column_c_direct_property line_end
-column_c_direct_property        = "columnName" ":" ws string_like_value
-                                / "reportColumnQueryId" ":" ws string_like_value
-                                / "derivedColumn" ":" ws string_like_value
-                                / "type" ":" ws ( "plainText" / "plainTextBasedOnLov" / "richText" / "link" / "displayImage" / "downloadBlob" / "percentGraph" / "hidden" / "displayAsTextSavesState" / "datePickerClassic" / "datePicker" / "textField" / "textArea" / "selectList" / "radioGroup" / "hiddenField" / "popupLov" / "popupKeyLov" / "simpleCheckbox" / "rowSelector" )
-                                # Testing purpose
-                                / "variant" ":" ws "column_c"
-
-column_c_group_block            = column_c_advanced
-                                / column_c_appearance
-                                / column_c_heading
-                                / column_c_layout
-                                / column_c_link
-                                / column_c_sorting
-
-column_c_layout                 = indent "layout" ws "{" line_end column_c_layout_property_line* indent "}" line_end
-column_c_layout_property_line   = indent column_c_layout_property line_end
-column_c_layout_property        = "sequence" ":" ws number
-                                / "columnAlignment" ":" ws ( "start" / "center" / "end" )
-
-column_c_appearance             = indent "appearance" ws "{" line_end column_c_appearance_property_line* indent "}" line_end
-column_c_appearance_property_line = indent column_c_appearance_property line_end
-column_c_appearance_property    = "formatMask" ":" ws string_like_value
-                                / "backgroundColor" ":" ws string_like_value
-                                / "foregroundColor" ":" ws string_like_value
-                                / "barWidth" ":" ws number
-                                / "width" ":" ws number
-                                / "height" ":" ws number
-                                / "viewFileAs" ":" ws ( "attachment" / "inline" )
-                                / "downloadText" ":" ws string_like_value
-                                / "template" ":" ws reference
-
-column_c_heading                = indent "heading" ws "{" line_end column_c_heading_property_line* indent "}" line_end
-column_c_heading_property_line  = indent column_c_heading_property line_end
-column_c_heading_property       = "heading" ":" ws string_like_value
-                                / "alignment" ":" ws ( "start" / "center" / "end" ) 
-
-column_c_sorting                      = indent "sorting" ws "{" line_end column_c_sorting_property_line* indent "}" line_end
-column_c_sorting_property_line        = indent column_c_sorting_property line_end
-column_c_sorting_property             = "defaultSequence" ":" ws ( "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" )
-                                      / "direction" ":" ws ( "desc" ) 
-                                      / "sortable" ":" ws boolean
-
-column_c_link                      = indent "link" ws "{" line_end column_c_link_property_line* indent "}" line_end
-column_c_link_property_line        = indent column_c_link_property line_end
-column_c_link_property             = "target" ":" ws value
-                                   / "linkText" ":" ws string_like_value
-                                   / "linkAttributes" ":" ws string_like_value
-
-column_c_advanced                      = indent "advanced" ws "{" line_end column_c_advanced_property_line* indent "}" line_end
-column_c_advanced_property_line        = indent column_c_advanced_property line_end
-column_c_advanced_property             = "cssClasses" ":" ws array_of_string_like_value 
-                                       / "customAttributes" ":" ws string_like_value 
-                                       / "cellWidth" ":" ws number 
-                                       / "computeSum" ":" ws boolean 
-                                                                          
-column_f                        = indent "column" (required_ws component_id)? ws "(" line_end column_f_body_line* indent ")" line_end
-column_f_body_line              = column_f_direct_property_line
-                                / column_f_group_block
-                                / blank_lines
-
-column_f_direct_property_line   = indent column_f_direct_property line_end
-column_f_direct_property        = "name" ":" ws string_like_value
-
-column_f_group_block            = column_f_layout
-                                / column_f_appearance
-                                / column_f_source
-
-column_f_layout                 = indent "layout" ws "{" line_end column_f_layout_property_line* indent "}" line_end
-column_f_layout_property_line   = indent column_f_layout_property line_end
-column_f_layout_property        = "sequence" ":" ws number
-
-column_f_appearance             = indent "appearance" ws "{" line_end column_f_appearance_property_line* indent "}" line_end
-column_f_appearance_property_line = indent column_f_appearance_property line_end
-column_f_appearance_property    = "formatMask" ":" ws string_like_value
-                                / "group" ":" ws boolean
-
-column_f_source                 = indent "source" ws "{" line_end column_f_source_property_line* indent "}" line_end
-column_f_source_property_line   = indent column_f_source_property line_end
-column_f_source_property        = "type" ":" ws ( "databaseColumn" / "sqlExpression" / "none" )
+                                / "type" ":" ws ( "databaseColumn" / "sqlExpression" / "none" )
                                 / "databaseColumn" ":" ws string_like_value
                                 / "sqlExpression" ":" ws code_block
-                                / "dataType" ":" ws ( "timestampWithTimeZone" / "timestampWithLocalTimeZone" / "intervalYearToMonth" / "intervalDayToSecond" / "clob" / "blob" / "boolean" / "rowid" / "bfile" / "sdoGeometry" / "varchar2" / "number" / "date" / "timestamp" )
-                                / "primaryKey" ":" ws boolean
-                                / "availableOnClient" ":" ws boolean
-                                / "valueProtected" ":" ws boolean
 
-branch_a               = indent "branch" (required_ws component_id)? ws "(" line_end branch_a_body_line* indent ")" line_end
-branch_a_body_line     = branch_a_direct_property_line
-                       / branch_a_group_block
+# column_child_component        = action_f
+
+branch               = indent "branch" (required_ws component_id)? ws "(" line_end branch_body_line* indent ")" line_end
+branch_body_line     = branch_direct_property_line
+                       / branch_group_block
                        / blank_lines
 
-branch_a_direct_property_line     = indent branch_a_direct_property line_end 
-branch_a_direct_property          = "name" ":" ws string_like_value
+branch_direct_property_line     = indent branch_direct_property line_end 
+branch_direct_property          = "name" ":" ws string_like_value
 
-branch_a_group_block              = branch_a_execution
-                                  / branch_a_behavior
+branch_group_block              = branch_execution
+                                  / branch_behavior
 
-branch_a_execution                      = indent "execution" ws "{" line_end branch_a_execution_property_line* indent "}" line_end
-branch_a_execution_property_line        = indent branch_a_execution_property line_end
-branch_a_execution_property             = "sequence" ":" ws number
+branch_execution                      = indent "execution" ws "{" line_end branch_execution_property_line* indent "}" line_end
+branch_execution_property_line        = indent branch_execution_property line_end
+branch_execution_property             = "sequence" ":" ws number
                                         / "point" ":" ws ( "beforeHeader" / "afterSubmit" / "validating" / "processing" / "afterProcessing" )
 
-branch_a_behavior                      = indent "behavior" ws "{" line_end branch_a_behavior_property_line* indent "}" line_end
-branch_a_behavior_property_line        = indent branch_a_behavior_property line_end
-branch_a_behavior_property             = "type" ":" ws ( "pageOrUrl" / "urlIdentifiedByItem" / "functionReturningUrl" / "page" 
+branch_behavior                      = indent "behavior" ws "{" line_end branch_behavior_property_line* indent "}" line_end
+branch_behavior_property_line        = indent branch_behavior_property line_end
+branch_behavior_property             = "type" ":" ws ( "pageOrUrl" / "urlIdentifiedByItem" / "functionReturningUrl" / "page" 
                                        / "pageIdentifiedByItem" / "functionReturningPage" / "plsqlProcedure" / "pageProcessing" )
                                        / "target" ":" ws value
                                        / "saveStateBeforeBranching" ":" ws boolean
@@ -1372,53 +1266,53 @@ axis_minor_ticks                      = indent "minorTicks" ws "{" line_end axis
 axis_minor_ticks_property_line        = indent axis_minor_ticks_property line_end
 axis_minor_ticks_property             = "show" ":" ws ( "auto" / "true" / "false" )
                                       / "step" ":" ws number
-menu_a               = indent "menu" (required_ws component_id)? ws "(" line_end menu_a_body_line* indent ")" line_end
-menu_a_body_line     = menu_a_direct_property_line
-                       / menu_a_group_block
-                       #/ menu_a_child_component
+menu               = indent "menu" (required_ws component_id)? ws "(" line_end menu_body_line* indent ")" line_end
+menu_body_line     = menu_direct_property_line
+                       / menu_group_block
+                       #/ menu_child_component
                        / blank_lines
 
-menu_a_direct_property_line     = indent menu_a_direct_property line_end 
-menu_a_direct_property          = "type" ":" ws ( "menuEntry" / "subMenu" / "separator" )
+menu_direct_property_line     = indent menu_direct_property line_end 
+menu_direct_property          = "type" ":" ws ( "menuEntry" / "subMenu" / "separator" )
                                 / "label" ":" ws string_like_value
                                 / "parentMenu" ":" ws reference
 
-menu_a_group_block              = menu_a_layout
-                                / menu_a_behavior
+menu_group_block              = menu_layout
+                                / menu_behavior
 
-menu_a_layout                      = indent "layout" ws "{" line_end menu_a_layout_property_line* indent "}" line_end
-menu_a_layout_property_line        = indent menu_a_layout_property line_end
-menu_a_layout_property             = "sequence" ":" ws number
+menu_layout                      = indent "layout" ws "{" line_end menu_layout_property_line* indent "}" line_end
+menu_layout_property_line        = indent menu_layout_property line_end
+menu_layout_property             = "sequence" ":" ws number
 
 
-menu_a_behavior                      = indent "behavior" ws "{" line_end menu_a_behavior_property_line* indent "}" line_end
-menu_a_behavior_property_line        = indent menu_a_behavior_property line_end
-menu_a_behavior_property             = "type" ":" ws ( "redirectThisApp" / "redirectOtherApp" / "redirectUrl" / "triggerAction" )
+menu_behavior                      = indent "behavior" ws "{" line_end menu_behavior_property_line* indent "}" line_end
+menu_behavior_property_line        = indent menu_behavior_property line_end
+menu_behavior_property             = "type" ":" ws ( "redirectThisApp" / "redirectOtherApp" / "redirectUrl" / "triggerAction" )
                                      / "target" ":" ws value
                                      / "targetUrl" ":" ws string_like_value
                                      / "linkAttributes" ":" ws string_like_value
 
-#menu_a_child_component          = trigger_action_a
-validation_b               = indent "validation" (required_ws component_id)? ws "(" line_end validation_b_body_line* indent ")" line_end
-validation_b_body_line     = validation_b_direct_property_line
-                       / validation_b_group_block
+#menu_child_component          = trigger_action_a
+validation               = indent "validation" (required_ws component_id)? ws "(" line_end validation_body_line* indent ")" line_end
+validation_body_line     = validation_direct_property_line
+                       / validation_group_block
                        / blank_lines
 
-validation_b_direct_property_line     = indent validation_b_direct_property line_end 
-validation_b_direct_property          = "name" ":" ws string_like_value
+validation_direct_property_line     = indent validation_direct_property line_end 
+validation_direct_property          = "name" ":" ws string_like_value
 
-validation_b_group_block              = validation_b_execution
-                                      / validation_b_validation
-                                      / validation_b_error
-                                      / validation_b_server_side_condition
+validation_group_block              = validation_execution
+                                      / validation_validation
+                                      / validation_error
+                                      / validation_server_side_condition
 
-validation_b_execution                      = indent "execution" ws "{" line_end validation_b_execution_property_line* indent "}" line_end
-validation_b_execution_property_line        = indent validation_b_execution_property line_end
-validation_b_execution_property             =  "sequence" ":" ws number
+validation_execution                      = indent "execution" ws "{" line_end validation_execution_property_line* indent "}" line_end
+validation_execution_property_line        = indent validation_execution_property line_end
+validation_execution_property             =  "sequence" ":" ws number
 
-validation_b_validation                      = indent "validation" ws "{" line_end validation_b_validation_property_line* indent "}" line_end
-validation_b_validation_property_line        = indent validation_b_validation_property line_end
-validation_b_validation_property             = "editableRegion" ":" ws reference
+validation_validation                      = indent "validation" ws "{" line_end validation_validation_property_line* indent "}" line_end
+validation_validation_property_line        = indent validation_validation_property line_end
+validation_validation_property             = "editableRegion" ":" ws reference
                                              / "type" ":" ws ( "rowsReturned" / "noRowsReturned" / "expression" / "plsqlError" 
                                                 / "functionBodyReturningBoolean" / "functionBody" / "itemIsNotNull" / "itemIsNotNullOrZero"
                                                 / "itemIsNotZero" / "itemContainsNoSpaces" / "itemIsAlphanumeric" / "itemIsNumeric" 
@@ -1440,16 +1334,16 @@ validation_b_validation_property             = "editableRegion" ":" ws reference
                                              / "column" ":" ws string_like_value
                                              / "alwaysExecute" ":" ws boolean
 
-validation_b_error                      = indent "error" ws "{" line_end validation_b_error_property_line* indent "}" line_end
-validation_b_error_property_line        = indent validation_b_error_property line_end
-validation_b_error_property             = "errorMessage" ":" ws code_block
+validation_error                      = indent "error" ws "{" line_end validation_error_property_line* indent "}" line_end
+validation_error_property_line        = indent validation_error_property line_end
+validation_error_property             = "errorMessage" ":" ws code_block
                                         / "displayLocation" ":" ws ( "inlineWithFieldAndInNotification" / "inlineWithField" / "inlineInNotification" / "onErrorPage" )
                                         / "associatedItem" ":" ws reference
                                         / "associatedColumn" ":" ws string_like_value
 
-validation_b_server_side_condition                      = indent "serverSideCondition" ws "{" line_end validation_b_server_side_condition_property_line* indent "}" line_end
-validation_b_server_side_condition_property_line        = indent validation_b_server_side_condition_property line_end
-validation_b_server_side_condition_property             = "whenButtonPressed" ":" ws reference
+validation_server_side_condition                      = indent "serverSideCondition" ws "{" line_end validation_server_side_condition_property_line* indent "}" line_end
+validation_server_side_condition_property_line        = indent validation_server_side_condition_property line_end
+validation_server_side_condition_property             = "whenButtonPressed" ":" ws reference
                                                         / "executionScope" ":" ws ( "forCreatedAndModifiedRows" / "allSubmittedRows" )
                                                         / "type" ":" ws string_like_value
                                                         / "sqlQuery" ":" ws code_block
@@ -1468,98 +1362,124 @@ validation_b_server_side_condition_property             = "whenButtonPressed" ":
                                                         / "list" ":" ws array_of_string_like_value
                                                         / "executeCondition" ":" ws ( "forEachRow" / "once" )
 
-saved_report_a               = indent "savedReport" (required_ws component_id)? ws "(" line_end saved_report_a_body_line* indent ")" line_end
-saved_report_a_body_line     = saved_report_a_direct_property_line
-                       / saved_report_a_group_block
-                       / saved_report_a_child_component
+saved_report               = indent "savedReport" (required_ws component_id)? ws "(" line_end saved_report_body_line* indent ")" line_end
+saved_report_body_line     = saved_report_direct_property_line
+                       / saved_report_group_block
+                       / saved_report_child_component
                        / blank_lines
 
-saved_report_a_direct_property_line     = indent saved_report_a_direct_property line_end 
-saved_report_a_direct_property          = "visibility" ":" ws ( "primaryDefault" / "alternativeDefault" / "public" / "private" )
+saved_report_direct_property_line     = indent saved_report_direct_property line_end 
+saved_report_direct_property          = "visibility" ":" ws ( "primaryDefault" / "alternativeDefault" / "primary" / "alternative" / "public" / "private" )
                                         / "name" ":" ws string_like_value
                                         / "staticId" ":" ws string_like_value
 
 
-saved_report_a_group_block              = saved_report_a_description
-                                        / saved_report_a_view
+saved_report_group_block              = saved_report_description
+                                        / saved_report_view
+                                        / saved_report_single_row_view
 
-saved_report_a_child_component          = aggregate_a
-                                        / display_column_a
-                                        / sort_a
+saved_report_child_component          = aggregate
+                                        / display_column
+                                        / sort
 
 
-saved_report_a_description                      = indent "description" ws "{" line_end saved_report_a_description_property_line* indent "}" line_end
-saved_report_a_description_property_line        = indent saved_report_a_description_property line_end
-saved_report_a_description_property             = "description" ":" ws code_block
+saved_report_description                      = indent "description" ws "{" line_end saved_report_description_property_line* indent "}" line_end
+saved_report_description_property_line        = indent saved_report_description_property line_end
+saved_report_description_property             = "description" ":" ws code_block
 
-saved_report_a_view                      = indent "view" ws "{" line_end saved_report_a_view_property_line* indent "}" line_end
-saved_report_a_view_property_line        = indent saved_report_a_view_property line_end
-saved_report_a_view_property             = "chart" ":" ws boolean
+saved_report_view                      = indent "view" ws "{" line_end saved_report_view_property_line* indent "}" line_end
+saved_report_view_property_line        = indent saved_report_view_property line_end
+saved_report_view_property             = "chart" ":" ws boolean
                                          / "groupBy" ":" ws boolean
                                          / "pivot" ":" ws boolean
                                          / "default" ":" ws string_like_value
                                          / "rowsPerPage" ":" ws string_like_value
+                                         / "stretchColumns" ":" ws boolean 
+                                         / "settingsAreaExpanded" ":" ws boolean 
 
-aggregate_a               = indent "aggregate" (required_ws component_id)? ws "(" line_end aggregate_a_body_line* indent ")" line_end
-aggregate_a_body_line     = aggregate_a_direct_property_line
-                       / blank_lines
+saved_report_single_row_view                      = indent "singleRowView" ws "{" line_end saved_report_single_row_view_property_line* indent "}" line_end
+saved_report_single_row_view_property_line        = indent saved_report_single_row_view_property line_end
+saved_report_single_row_view_property             = "excludeNullValues" ":" ws boolean 
+                                                    / "displayedColumns" ":" ws boolean 
+aggregate               = indent "aggregate" (required_ws component_id)? ws "(" line_end aggregate_body_line* indent ")" line_end
+aggregate_body_line     = aggregate_direct_property_line
+                        / aggregate_group_block
+                        / blank_lines
 
-aggregate_a_direct_property_line     = indent aggregate_a_direct_property line_end 
-aggregate_a_direct_property          = "function" ":" ws ( "sum" / "average" / "count" / "countDistinct" / "min" / "max" / "median" )
+aggregate_direct_property_line     = indent aggregate_direct_property line_end 
+aggregate_direct_property          = "function" ":" ws ( "sum" / "average" / "count" / "countDistinct" / "min" / "max" / "median" )
                                      / "column" ":" ws string_like_value
+                                     / "showGrandTotal" ":" ws boolean 
+                                     / "tooltip" ":" ws string_like_value 
 
-sort_a               = indent "sort" (required_ws component_id)? ws "(" line_end sort_a_body_line* indent ")" line_end
-sort_a_body_line     = sort_a_direct_property_line
-                       / sort_a_group_block
+aggregate_group_block              = aggregate_advanced
+
+aggregate_advanced                      = indent "advanced" ws "{" line_end aggregate_advanced_property_line* indent "}" line_end
+aggregate_advanced_property_line        = indent aggregate_advanced_property line_end
+aggregate_advanced_property             = "staticId" ":" ws string_like_value 
+                                          / "enabled" ":" ws boolean 
+sort               = indent "sort" (required_ws component_id)? ws "(" line_end sort_body_line* indent ")" line_end
+sort_body_line     = sort_direct_property_line
+                       / sort_group_block
                        / blank_lines
 
-sort_a_direct_property_line     = indent sort_a_direct_property line_end 
-sort_a_direct_property          = "column" ":" ws string_like_value
+sort_direct_property_line     = indent sort_direct_property line_end 
+sort_direct_property          = "column" ":" ws string_like_value
 
-sort_a_group_block              = sort_a_sort
+sort_group_block              = sort_sort
 
-sort_a_sort                      = indent "sort" ws "{" line_end sort_a_sort_property_line* indent "}" line_end
-sort_a_sort_property_line        = indent sort_a_sort_property line_end
-sort_a_sort_property             = "direction" ":" ws ( "asc" / "desc" )
+sort_sort                      = indent "sort" ws "{" line_end sort_sort_property_line* indent "}" line_end
+sort_sort_property_line        = indent sort_sort_property line_end
+sort_sort_property             = "direction" ":" ws ( "asc" / "desc" )
                                  / "nulls" ":" ws ( "first" / "last" )
                                  / "sequence" ":" ws number
-display_column_a               = indent "displayColumn" (required_ws component_id)? ws "(" line_end display_column_a_body_line* indent ")" line_end
-display_column_a_body_line     = display_column_a_direct_property_line
-                       / display_column_a_group_block
+display_column               = indent "displayColumn" (required_ws component_id)? ws "(" line_end display_column_body_line* indent ")" line_end
+display_column_body_line     = display_column_direct_property_line
+                       / display_column_group_block
                        / blank_lines
 
-display_column_a_direct_property_line     = indent display_column_a_direct_property line_end 
-display_column_a_direct_property          = "sequence" ":" ws number
+display_column_direct_property_line     = indent display_column_direct_property line_end 
+display_column_direct_property          = "sequence" ":" ws number
+                                          / "column" ":" ws string_like_value
+                                          
+display_column_group_block              = display_column_identification
+                                        / display_column_layout
 
-display_column_a_group_block              = display_column_a_identification
+display_column_identification                      = indent "identification" ws "{" line_end display_column_identification_property_line* indent "}" line_end
+display_column_identification_property_line        = indent display_column_identification_property line_end
+display_column_identification_property             = "column" ":" ws string_like_value
 
-display_column_a_identification                      = indent "identification" ws "{" line_end display_column_a_identification_property_line* indent "}" line_end
-display_column_a_identification_property_line        = indent display_column_a_identification_property line_end
-display_column_a_identification_property             = "column" ":" ws string_like_value
-filter_c               = indent "filter" (required_ws component_id)? ws "(" line_end filter_c_body_line* indent ")" line_end
-filter_c_body_line     = filter_c_direct_property_line
-                       / filter_c_group_block
+
+display_column_layout                      = indent "layout" ws "{" line_end display_column_layout_property_line* indent "}" line_end
+display_column_layout_property_line        = indent display_column_layout_property line_end
+display_column_layout_property             = "show" ":" ws boolean 
+                                             / "frozen" ":" ws boolean 
+                                             / "width" ":" ws number 
+                                             / "sequence" ":" ws number 
+filter               = indent "filter" (required_ws component_id)? ws "(" line_end filter_body_line* indent ")" line_end
+filter_body_line     = filter_direct_property_line
+                       / filter_group_block
                        / blank_lines
 
-filter_c_direct_property_line     = indent filter_c_direct_property line_end 
-filter_c_direct_property          = "name" ":" ws string_like_value 
+filter_direct_property_line     = indent filter_direct_property line_end 
+filter_direct_property          = "name" ":" ws string_like_value 
                                   / "type" ":" ws string_like_value 
                                   # Test purpose
-                                  / "variant" ":" ws "filter_c"
+                                  / "variant" ":" ws "filter"
 
-filter_c_group_block              = filter_c_label
-                                  / filter_c_lov
-                                  / filter_c_layout
-                                  / filter_c_suggestions
-                                  / filter_c_source
+filter_group_block              = filter_label
+                                  / filter_lov
+                                  / filter_layout
+                                  / filter_suggestions
+                                  / filter_source
 
-filter_c_label                      = indent "label" ws "{" line_end filter_c_label_property_line* indent "}" line_end
-filter_c_label_property_line        = indent filter_c_label_property line_end
-filter_c_label_property             = "label" ":" ws string_like_value
+filter_label                      = indent "label" ws "{" line_end filter_label_property_line* indent "}" line_end
+filter_label_property_line        = indent filter_label_property line_end
+filter_label_property             = "label" ":" ws string_like_value
 
-filter_c_lov                      = indent "lov" ws "{" line_end filter_c_lov_property_line* indent "}" line_end
-filter_c_lov_property_line        = indent filter_c_lov_property line_end
-filter_c_lov_property             = "type" ":" ws string_like_value 
+filter_lov                      = indent "lov" ws "{" line_end filter_lov_property_line* indent "}" line_end
+filter_lov_property_line        = indent filter_lov_property line_end
+filter_lov_property             = "type" ":" ws string_like_value 
                                   / "lov" ":" ws reference 
                                   / "sqlQuery" ":" ws code_block 
                                   / "staticValues" ":" ws code_block 
@@ -1570,20 +1490,20 @@ filter_c_lov_property             = "type" ":" ws string_like_value
                                   / "includeNullOption" ":" ws boolean 
                                   / "nullDisplayValue" ":" ws string_like_value 
 
-filter_c_layout                      = indent "layout" ws "{" line_end filter_c_layout_property_line* indent "}" line_end
-filter_c_layout_property_line        = indent filter_c_layout_property line_end
-filter_c_layout_property             = "sequence" ":" ws number
+filter_layout                      = indent "layout" ws "{" line_end filter_layout_property_line* indent "}" line_end
+filter_layout_property_line        = indent filter_layout_property line_end
+filter_layout_property             = "sequence" ":" ws number
 
-filter_c_suggestions                      = indent "suggestions" ws "{" line_end filter_c_suggestions_property_line* indent "}" line_end
-filter_c_suggestions_property_line        = indent filter_c_suggestions_property line_end
-filter_c_suggestions_property             = "type" ":" ws ( "dynamic" / "staticValues" / "sqlQuery" ) 
+filter_suggestions                      = indent "suggestions" ws "{" line_end filter_suggestions_property_line* indent "}" line_end
+filter_suggestions_property_line        = indent filter_suggestions_property line_end
+filter_suggestions_property             = "type" ":" ws ( "dynamic" / "staticValues" / "sqlQuery" ) 
                                           / "staticValues" ":" ws array_of_string_like_value 
                                           / "sqlQuery" ":" ws code_block 
                                           / "showLabel" ":" ws boolean 
 
-filter_c_source                      = indent "source" ws "{" line_end filter_c_source_property_line* indent "}" line_end
-filter_c_source_property_line        = indent filter_c_source_property line_end
-filter_c_source_property             = "databaseColumn" ":" ws string_like_value 
+filter_source                      = indent "source" ws "{" line_end filter_source_property_line* indent "}" line_end
+filter_source_property_line        = indent filter_source_property line_end
+filter_source_property             = "databaseColumn" ":" ws string_like_value 
                                      / "dbColumns" ":" ws string_like_value 
                                      / "dataType" ":" ws ( "varchar2" / "number" / "date" / "timestamp" / "timestampWithTimeZone" / "timestampWithLocalTimeZone" / "intervalYearToMonth" / "intervalDayToSecond" / "clob" / "blob" / "boolean" / "rowid" / "bfile" / "sdoGeometry" ) 
 

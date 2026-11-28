@@ -27,6 +27,24 @@ class SavedReportView(ApexGroup):
     def rowsPerPage(self):
         return self.properties.get('rowsPerPage', None)
     
+    @property
+    def stretchColumns(self):
+        return self.properties.get('stretchColumns', None)
+    
+    @property
+    def settingsAreaExpanded(self):
+        return self.properties.get('settingsAreaExpanded', None)
+    
+    
+class SavedReportSingleRowView(ApexGroup):
+    @property
+    def excludeNullValues(self):
+        return self.properties.get('excludeNullValues', None)
+    
+    @property
+    def displayedColumns(self):
+        return self.properties.get('displayedColumns', None)
+    
 
 class SavedReport(ApexObject):
 
@@ -54,5 +72,9 @@ class SavedReport(ApexObject):
     @property
     def view(self) -> SavedReportView:
         return self.groups.get('view', None)
+    
+    @property
+    def singleRowView(self) -> SavedReportSingleRowView:
+        return self.groups.get('singleRowView', None)
     
     

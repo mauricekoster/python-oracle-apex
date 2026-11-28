@@ -1,0 +1,17 @@
+aggregate               = indent "aggregate" (required_ws component_id)? ws "(" line_end aggregate_body_line* indent ")" line_end
+aggregate_body_line     = aggregate_direct_property_line
+                        / aggregate_group_block
+                        / blank_lines
+
+aggregate_direct_property_line     = indent aggregate_direct_property line_end 
+aggregate_direct_property          = "function" ":" ws ( "sum" / "average" / "count" / "countDistinct" / "min" / "max" / "median" )
+                                     / "column" ":" ws string_like_value
+                                     / "showGrandTotal" ":" ws boolean 
+                                     / "tooltip" ":" ws string_like_value 
+
+aggregate_group_block              = aggregate_advanced
+
+aggregate_advanced                      = indent "advanced" ws "{" line_end aggregate_advanced_property_line* indent "}" line_end
+aggregate_advanced_property_line        = indent aggregate_advanced_property line_end
+aggregate_advanced_property             = "staticId" ":" ws string_like_value 
+                                          / "enabled" ":" ws boolean 

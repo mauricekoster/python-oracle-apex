@@ -1,0 +1,15 @@
+sort               = indent "sort" (required_ws component_id)? ws "(" line_end sort_body_line* indent ")" line_end
+sort_body_line     = sort_direct_property_line
+                       / sort_group_block
+                       / blank_lines
+
+sort_direct_property_line     = indent sort_direct_property line_end 
+sort_direct_property          = "column" ":" ws string_like_value
+
+sort_group_block              = sort_sort
+
+sort_sort                      = indent "sort" ws "{" line_end sort_sort_property_line* indent "}" line_end
+sort_sort_property_line        = indent sort_sort_property line_end
+sort_sort_property             = "direction" ":" ws ( "asc" / "desc" )
+                                 / "nulls" ":" ws ( "first" / "last" )
+                                 / "sequence" ":" ws number

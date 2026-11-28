@@ -1,8 +1,0 @@
-aggregate_a               = indent "aggregate" (required_ws component_id)? ws "(" line_end aggregate_a_body_line* indent ")" line_end
-aggregate_a_body_line     = aggregate_a_direct_property_line
-                       / blank_lines
-
-aggregate_a_direct_property_line     = indent aggregate_a_direct_property line_end 
-aggregate_a_direct_property          = "function" ":" ws ( "sum" / "average" / "count" / "countDistinct" / "min" / "max" / "median" )
-                                     / "column" ":" ws string_like_value
-

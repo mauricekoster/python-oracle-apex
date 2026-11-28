@@ -5,25 +5,21 @@ from .region import RegionVisitor
 from .page_item import PageItemVisitor
 from .button import ButtonVisitor
 from .dynamic_action import DynamicActionVisitor
-from .action_c import ActionCVisitor
-from .action_d import ActionDVisitor
-from .action_e import ActionEVisitor
+from .action import ActionVisitor
 from .process import ProcessVisitor
-from .computation_a import ComputationAVisitor
+from .computation import ComputationVisitor
 from .facet import FacetVisitor
-from .column_b import ColumnBVisitor
-from .column_c import ColumnCVisitor
-from .column_f import ColumnFVisitor
-from .branch_a import BranchAVisitor
+from .column import ColumnVisitor
+from .branch import BranchVisitor
 from .series import SeriesVisitor
 from .axis import AxisVisitor
-from .menu_a import MenuAVisitor
-from .validation_b import ValidationBVisitor
-from .display_column_a import DisplayColumnAVisitor
-from .aggregate_a import AggregateAVisitor
-from .sort_a import SortAVisitor
-from .saved_report_a import SavedReportAVisitor
-from .filter_c import FilterCVisitor
+from .menu import MenuVisitor
+from .validation import ValidationVisitor
+from .display_column import DisplayColumnVisitor
+from .aggregate import AggregateVisitor
+from .sort import SortVisitor
+from .saved_report import SavedReportVisitor
+from .filter import FilterVisitor
 
 from . import RuleNotImplemented
 
@@ -33,25 +29,21 @@ class ApxNodeVisitor(NodeVisitor,
                      PageItemVisitor,
                      ButtonVisitor,
                      DynamicActionVisitor,
-                     ActionCVisitor,
-                     ActionDVisitor,
-                     ActionEVisitor,
+                     ActionVisitor,
                      ProcessVisitor,
-                     ComputationAVisitor,
+                     ComputationVisitor,
                      FacetVisitor,
-                     BranchAVisitor,
-                     ColumnBVisitor,
-                     ColumnCVisitor,
-                     ColumnFVisitor,
+                     BranchVisitor,
+                     ColumnVisitor,
                      SeriesVisitor,
                      AxisVisitor,
-                     MenuAVisitor,
-                     ValidationBVisitor,
-                     DisplayColumnAVisitor,
-                     AggregateAVisitor,
-                     SortAVisitor,
-                     SavedReportAVisitor,
-                     FilterCVisitor
+                     MenuVisitor,
+                     ValidationVisitor,
+                     DisplayColumnVisitor,
+                     AggregateVisitor,
+                     SortVisitor,
+                     SavedReportVisitor,
+                     FilterVisitor
                      ):
 
     def visit_component(self, node, visited_children):

@@ -1,0 +1,39 @@
+saved_report               = indent "savedReport" (required_ws component_id)? ws "(" line_end saved_report_body_line* indent ")" line_end
+saved_report_body_line     = saved_report_direct_property_line
+                       / saved_report_group_block
+                       / saved_report_child_component
+                       / blank_lines
+
+saved_report_direct_property_line     = indent saved_report_direct_property line_end 
+saved_report_direct_property          = "visibility" ":" ws ( "primaryDefault" / "alternativeDefault" / "primary" / "alternative" / "public" / "private" )
+                                        / "name" ":" ws string_like_value
+                                        / "staticId" ":" ws string_like_value
+
+
+saved_report_group_block              = saved_report_description
+                                        / saved_report_view
+                                        / saved_report_single_row_view
+
+saved_report_child_component          = aggregate
+                                        / display_column
+                                        / sort
+
+
+saved_report_description                      = indent "description" ws "{" line_end saved_report_description_property_line* indent "}" line_end
+saved_report_description_property_line        = indent saved_report_description_property line_end
+saved_report_description_property             = "description" ":" ws code_block
+
+saved_report_view                      = indent "view" ws "{" line_end saved_report_view_property_line* indent "}" line_end
+saved_report_view_property_line        = indent saved_report_view_property line_end
+saved_report_view_property             = "chart" ":" ws boolean
+                                         / "groupBy" ":" ws boolean
+                                         / "pivot" ":" ws boolean
+                                         / "default" ":" ws string_like_value
+                                         / "rowsPerPage" ":" ws string_like_value
+                                         / "stretchColumns" ":" ws boolean 
+                                         / "settingsAreaExpanded" ":" ws boolean 
+
+saved_report_single_row_view                      = indent "singleRowView" ws "{" line_end saved_report_single_row_view_property_line* indent "}" line_end
+saved_report_single_row_view_property_line        = indent saved_report_single_row_view_property line_end
+saved_report_single_row_view_property             = "excludeNullValues" ":" ws boolean 
+                                                    / "displayedColumns" ":" ws boolean 

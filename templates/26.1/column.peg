@@ -1,0 +1,95 @@
+column                        = indent "column" (required_ws component_id)? ws "(" line_end column_body_line* indent ")" line_end
+column_body_line              = column_direct_property_line
+                                / column_group_block
+                                / blank_lines
+                                #/ columnhild_component
+
+column_direct_property_line   = indent column_direct_property line_end
+column_direct_property        = "name" ":" ws string_like_value
+                                / "columnName" ":" ws string_like_value
+                                / "reportColumnQueryId" ":" ws string_like_value
+                                / "derivedColumn" ":" ws string_like_value
+                                / "type" ":" ws string_like_value
+
+column_group_block            = column_advanced
+                                / column_appearance
+                                / column_column_formatting
+                                / column_heading
+                                / column_layout
+                                / column_link
+                                / column_security
+                                / column_sorting
+                                / column_source
+
+column_advanced                      = indent "advanced" ws "{" line_end column_advanced_property_line* indent "}" line_end
+column_advanced_property_line        = indent column_advanced_property line_end
+column_advanced_property             = "htmlDomId" ":" ws string_like_value
+                                       / "endUserAlias" ":" ws string_like_value
+                                       / "cssClasses" ":" ws array_of_string_like_value 
+                                       / "customAttributes" ":" ws string_like_value 
+                                       / "cellWidth" ":" ws number 
+                                       / "computeSum" ":" ws boolean 
+
+column_appearance             = indent "appearance" ws "{" line_end column_appearance_property_line* indent "}" line_end
+column_appearance_property_line = indent column_appearance_property line_end
+column_appearance_property    = "cssClasses" ":" ws one_or_more_string_like_values
+                                / "formatMask" ":" ws string_like_value
+                                / "backgroundColor" ":" ws string_like_value
+                                / "foregroundColor" ":" ws string_like_value
+                                / "barWidth" ":" ws number
+                                / "viewFileAs" ":" ws ( "attachment" / "inline" )
+                                / "downloadText" ":" ws string_like_value
+                                / "width" ":" ws number
+                                / "height" ":" ws number
+                                / "template" ":" ws reference
+                                / "group" ":" ws boolean
+
+column_column_formatting                      = indent "columnFormatting" ws "{" line_end column_column_formatting_property_line* indent "}" line_end
+column_column_formatting_property_line        = indent column_column_formatting_property line_end
+column_column_formatting_property             = "htmlExpression" ":" ws code_block
+
+
+column_heading                      = indent "heading" ws "{" line_end column_heading_property_line* indent "}" line_end
+column_heading_property_line        = indent column_heading_property line_end
+column_heading_property             = "heading" ":" ws string_like_value
+                                         / "alternativeLabel" ":" ws string_like_value
+                                         / "alignment" ":" ws ( "start" / "center" / "end" )
+
+
+
+column_layout                 = indent "layout" ws "{" line_end column_layout_property_line* indent "}" line_end
+column_layout_property_line   = indent column_layout_property line_end
+column_layout_property        = "sequence" ":" ws number
+                                / "columnAlignment" ":" ws ( "start" / "center" / "end" )
+                                / "group" ":" ws reference
+
+column_link                      = indent "link" ws "{" line_end column_link_property_line* indent "}" line_end
+column_link_property_line        = indent column_link_property line_end
+column_link_property             = "target" ":" ws value
+                                   / "linkText" ":" ws string_like_value
+                                   / "linkAttributes" ":" ws string_like_value
+
+column_security                      = indent "security" ws "{" line_end column_security_property_line* indent "}" line_end
+column_security_property_line        = indent column_security_property line_end
+column_security_property             = "authorizationScheme" ":" ws reference 
+                                       / "escapeSpecialChars" ":" ws boolean
+
+column_sorting                      = indent "sorting" ws "{" line_end column_sorting_property_line* indent "}" line_end
+column_sorting_property_line        = indent column_sorting_property line_end
+column_sorting_property             = "defaultSequence" ":" ws ( "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" )
+                                      / "direction" ":" ws ( "desc" ) 
+                                      / "sortable" ":" ws boolean
+
+column_source                 = indent "source" ws "{" line_end column_source_property_line* indent "}" line_end
+column_source_property_line   = indent column_source_property line_end
+column_source_property        = "primaryKey" ":" ws boolean
+                                / "dataType" ":" ws string_like_value
+                                / "availableOnClient" ":" ws boolean
+                                / "valueProtected" ":" ws boolean
+                                / "timezoneAware" ":" ws string_like_value
+                                / "type" ":" ws ( "databaseColumn" / "sqlExpression" / "none" )
+                                / "databaseColumn" ":" ws string_like_value
+                                / "sqlExpression" ":" ws code_block
+
+# column_child_component        = action_f
+

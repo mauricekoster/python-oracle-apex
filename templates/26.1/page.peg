@@ -96,6 +96,6 @@ page_child_component                = region
                                     / button
                                     / dynamic_action
                                     / process
-                                    / computation_a
-                                    / branch_a
-                                    / validation_b
+                                    / computation
+                                    / branch
+                                    / validation
